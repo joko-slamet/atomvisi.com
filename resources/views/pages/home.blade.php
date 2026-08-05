@@ -116,12 +116,17 @@
             </div>
         </div>
 
-        <div class="absolute inset-x-0 bottom-8 flex flex-col items-center gap-2 text-cream/50">
+        <div class="absolute inset-x-0 bottom-16 flex flex-col items-center gap-2 text-cream/50">
             <span class="text-[0.6rem] font-medium uppercase tracking-[0.3em]">Scroll</span>
             <span class="relative h-10 w-px overflow-hidden bg-cream/20">
                 <span class="absolute inset-x-0 top-0 h-1/2 animate-bounce bg-gold-400"></span>
             </span>
         </div>
+
+        {{-- Wave divider into the next section --}}
+        <svg class="pointer-events-none absolute inset-x-0 bottom-0 h-16 w-full text-cream sm:h-20 lg:h-28" viewBox="0 0 1440 100" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
+            <path d="M0,40 C240,90 480,10 720,35 C960,60 1200,95 1440,45 L1440,100 L0,100 Z" />
+        </svg>
     </section>
 
     {{-- SERVICES --}}
