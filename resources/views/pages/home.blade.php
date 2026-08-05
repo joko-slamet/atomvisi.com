@@ -2,41 +2,70 @@
     description="Atom Visi Indonesia adalah lembaga riset independen di bidang riset kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategis. Insight with Precision. Strategy with Impact."
 >
     {{-- HERO --}}
-    <section class="relative flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-forest-800 via-forest-700 to-forest-600">
-        <div
-            x-data
-            x-init="
-                gsap.to($refs.watermark, {
-                    yPercent: 15,
-                    ease: 'none',
-                    scrollTrigger: { trigger: $el, start: 'top top', end: 'bottom top', scrub: true },
-                });
-            "
-            class="pointer-events-none absolute inset-0"
-        >
-            <x-watermark x-ref="watermark" class="absolute -right-32 -top-24 h-[36rem] w-[36rem] text-forest-500/20 sm:-right-16" />
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(212,165,61,0.12),transparent_45%)]"></div>
+    <section
+        x-data="heroSection()"
+        class="relative isolate flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-600"
+    >
+        {{-- Atmosphere: grain, dot-grid, drifting glow orb, parallax watermark --}}
+        <div class="pointer-events-none absolute inset-0">
+            <div class="absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
+
+            <div data-parallax="12" class="absolute inset-0 bg-dot-grid text-cream/[0.07]"></div>
+
+            <div data-parallax="35" class="animate-drift-slow absolute -left-24 top-1/4 h-[28rem] w-[28rem] rounded-full bg-gold-500/10 blur-3xl"></div>
+
+            <x-watermark
+                data-parallax="25"
+                class="absolute -right-32 -top-24 h-[36rem] w-[36rem] text-forest-500/20 sm:-right-16"
+            />
+
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(216,180,65,0.14),transparent_45%)]"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-900 via-transparent to-transparent"></div>
         </div>
 
         <div class="relative mx-auto grid w-full max-w-7xl grid-cols-1 gap-16 px-6 py-32 lg:grid-cols-12 lg:items-center lg:px-8">
             <div class="lg:col-span-7">
-                <span data-aos="fade-up" class="inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300">
+                <span data-reveal class="inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300 backdrop-blur-sm">
+                    <span class="relative flex h-1.5 w-1.5">
+                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-400 opacity-75"></span>
+                        <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold-400"></span>
+                    </span>
                     Lembaga Riset Independen
                 </span>
 
-                <h1 data-aos="fade-up" data-aos-delay="100" class="mt-6 font-serif text-4xl font-semibold leading-[1.1] text-cream sm:text-5xl lg:text-6xl">
-                    Insight with <span class="text-gold-400">Precision</span>.
-                    <br>Strategy with <span class="text-gold-400">Impact</span>.
+                <h1 x-ref="headline" class="mt-6 font-serif text-4xl font-semibold leading-[1.1] text-cream sm:text-5xl lg:text-6xl">
+                    <span class="block overflow-hidden pb-1"><span data-line class="block">Insight with Precision.</span></span>
+                    <span class="block overflow-hidden pb-1">
+                        <span data-line class="block">
+                            Strategy with
+                            <span class="relative inline-block whitespace-nowrap text-gold-400">
+                                Impact.
+                                <svg class="absolute -bottom-1 left-0 h-2.5 w-full text-gold-400" viewBox="0 0 220 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
+                                    <path x-ref="underline" d="M2 9.5C40 3 160 2 218 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                                </svg>
+                            </span>
+                        </span>
+                    </span>
                 </h1>
 
-                <p data-aos="fade-up" data-aos-delay="200" class="mt-6 max-w-xl text-lg leading-relaxed text-forest-100/80">
+                <div data-reveal class="mt-5 h-6 overflow-hidden text-sm font-medium uppercase tracking-[0.15em] text-sage-300">
+                    <span class="inline-flex items-center gap-2">
+                        Spesialis dalam
+                        <span class="relative inline-block overflow-hidden">
+                            <span x-ref="rotatingWord" x-text="words[wordIndex]" class="inline-block text-gold-300"></span>
+                        </span>
+                    </span>
+                </div>
+
+                <p data-reveal class="mt-6 max-w-xl text-lg leading-relaxed text-forest-100/80">
                     Atom Visi Indonesia menghadirkan riset kebijakan publik, analisis politik &amp; geopolitik, survey sosial, serta konsultasi strategis yang membantu para pengambil keputusan bertindak dengan keyakinan.
                 </p>
 
-                <div data-aos="fade-up" data-aos-delay="300" class="mt-10 flex flex-wrap items-center gap-4">
+                <div data-reveal class="mt-10 flex flex-wrap items-center gap-4">
                     <a href="{{ route('services.index') }}"
-                       class="rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold text-forest-900 shadow-lg shadow-gold-500/20 transition-all hover:bg-gold-400 hover:shadow-xl">
-                        Lihat Layanan Kami
+                       class="group relative overflow-hidden rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold text-forest-900 shadow-lg shadow-gold-500/20 transition-all hover:shadow-xl">
+                        <span class="relative z-10">Lihat Layanan Kami</span>
+                        <span class="absolute inset-0 -translate-x-full bg-gold-400 transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
                     </a>
                     <a href="{{ route('contact') }}"
                        class="rounded-full border border-cream/30 px-7 py-3.5 text-sm font-semibold text-cream transition-all hover:border-gold-400 hover:text-gold-300">
@@ -45,22 +74,53 @@
                 </div>
             </div>
 
-            <div data-aos="fade-up" data-aos-delay="150" class="lg:col-span-5">
-                <div class="group relative aspect-video overflow-hidden rounded-2xl border border-cream/10 bg-forest-900/50 shadow-2xl">
+            <div data-reveal class="relative lg:col-span-5">
+                {{-- Floating credibility badges --}}
+                @if ($stats->count() >= 1)
+                    <div data-parallax="18" class="animate-float absolute -left-4 -top-6 z-20 hidden rounded-2xl border border-cream/10 bg-forest-900/70 px-5 py-3 shadow-xl backdrop-blur-md sm:flex sm:items-center sm:gap-3">
+                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold-500/15 text-gold-400">
+                            <x-icon :name="$stats->first()->icon ?? 'heroicon-o-magnifying-glass'" class="h-5 w-5" />
+                        </span>
+                        <div class="leading-tight">
+                            <p class="font-serif text-lg font-semibold text-cream">{{ $stats->first()->value }}{{ $stats->first()->suffix }}</p>
+                            <p class="text-[0.65rem] uppercase tracking-wide text-forest-100/60">{{ $stats->first()->label }}</p>
+                        </div>
+                    </div>
+                @endif
+
+                @if ($stats->count() >= 3)
+                    <div data-parallax="22" class="animate-float-delayed absolute -bottom-6 -right-2 z-20 hidden rounded-2xl border border-cream/10 bg-forest-900/70 px-5 py-3 shadow-xl backdrop-blur-md sm:flex sm:items-center sm:gap-3">
+                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold-500/15 text-gold-400">
+                            <x-icon :name="$stats->get(2)->icon ?? 'heroicon-o-calendar-days'" class="h-5 w-5" />
+                        </span>
+                        <div class="leading-tight">
+                            <p class="font-serif text-lg font-semibold text-cream">{{ $stats->get(2)->value }}{{ $stats->get(2)->suffix }}</p>
+                            <p class="text-[0.65rem] uppercase tracking-wide text-forest-100/60">{{ $stats->get(2)->label }}</p>
+                        </div>
+                    </div>
+                @endif
+
+                <div x-data="tiltCard()"
+                     class="group relative aspect-[16/10] w-full overflow-hidden rounded-[3rem_1.5rem_3rem_1.5rem] border border-cream/10 bg-forest-900/50 shadow-2xl transition-[border-radius] duration-500 hover:rounded-[1.5rem_3rem_1.5rem_3rem]">
                     <div class="absolute inset-0 bg-gradient-to-br from-forest-600/60 to-forest-900/80"></div>
+                    <div class="animate-glow-pulse absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(216,180,65,0.25),transparent_60%)]"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <button type="button" aria-label="Putar video profil perusahaan"
-                                class="flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-forest-900 shadow-lg transition-transform duration-300 group-hover:scale-110">
-                            <svg class="ml-1 h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                class="relative flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-forest-900 shadow-lg transition-transform duration-300 group-hover:scale-110">
+                            <span class="absolute inset-0 animate-ping rounded-full bg-gold-400/60"></span>
+                            <svg class="relative ml-1 h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                         </button>
                     </div>
-                    <span class="absolute bottom-4 left-4 text-xs font-medium uppercase tracking-wider text-cream/70">Profil Perusahaan</span>
+                    <span class="absolute bottom-5 left-6 text-xs font-medium uppercase tracking-wider text-cream/70">Profil Perusahaan</span>
                 </div>
             </div>
         </div>
 
-        <div class="absolute inset-x-0 bottom-8 flex justify-center">
-            <svg class="h-6 w-6 animate-bounce text-cream/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+        <div class="absolute inset-x-0 bottom-8 flex flex-col items-center gap-2 text-cream/50">
+            <span class="text-[0.6rem] font-medium uppercase tracking-[0.3em]">Scroll</span>
+            <span class="relative h-10 w-px overflow-hidden bg-cream/20">
+                <span class="absolute inset-x-0 top-0 h-1/2 animate-bounce bg-gold-400"></span>
+            </span>
         </div>
     </section>
 
