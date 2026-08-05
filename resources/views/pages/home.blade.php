@@ -544,23 +544,29 @@
     @endif
 
     {{-- CTA --}}
-    <section class="relative overflow-hidden bg-gradient-to-br from-forest-800 to-forest-600 py-24">
-        <x-watermark class="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-forest-500/20" />
-        <div class="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
-            <x-section-heading kicker="Tetap Terhubung" align="center" light class="mx-auto">
-                <x-slot:title>Mari Berdiskusi tentang Kebutuhan Riset Anda</x-slot:title>
-                <x-slot:description>Tim kami siap membantu merancang riset, survey, atau kajian strategis yang sesuai dengan kebutuhan organisasi Anda.</x-slot:description>
-            </x-section-heading>
+    <section class="bg-cream py-24 sm:py-32">
+        <div class="mx-auto max-w-5xl px-6 lg:px-8">
+            <div data-aos="fade-up" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-forest-800 to-forest-600 px-6 py-16 text-center shadow-2xl shadow-forest-900/20 sm:px-16 sm:py-20">
+                <div class="pointer-events-none absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
+                <x-watermark class="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-forest-500/20" />
 
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-aos="fade-up">
-                <a href="{{ route('contact') }}"
-                   class="rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold text-forest-900 shadow-lg shadow-gold-500/20 transition-all hover:bg-gold-400 hover:shadow-xl">
-                    Hubungi Kami
-                </a>
-                <a href="{{ route('articles.index') }}"
-                   class="rounded-full border border-cream/30 px-7 py-3.5 text-sm font-semibold text-cream transition-all hover:border-gold-400 hover:text-gold-300">
-                    Baca Insight Terbaru
-                </a>
+                <div class="relative">
+                    <x-section-heading kicker="Tetap Terhubung" align="center" light class="mx-auto">
+                        <x-slot:title>Mari Berdiskusi tentang Kebutuhan Riset Anda</x-slot:title>
+                        <x-slot:description>Tim kami siap membantu merancang riset, survey, atau kajian strategis yang sesuai dengan kebutuhan organisasi Anda.</x-slot:description>
+                    </x-section-heading>
+
+                    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+                        <a href="{{ route('contact') }}"
+                           class="rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold text-forest-900 shadow-lg shadow-gold-500/20 transition-all hover:bg-gold-400 hover:shadow-xl">
+                            Hubungi Kami
+                        </a>
+                        <a href="{{ route('articles.index') }}"
+                           class="rounded-full border border-cream/30 px-7 py-3.5 text-sm font-semibold text-cream transition-all hover:border-gold-400 hover:text-gold-300">
+                            Baca Insight Terbaru
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

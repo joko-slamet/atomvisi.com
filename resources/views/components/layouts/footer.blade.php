@@ -1,4 +1,8 @@
 <footer class="relative overflow-hidden bg-forest-800 text-cream">
+    <svg class="pointer-events-none relative z-10 block h-16 w-full text-cream sm:h-24 lg:h-32" viewBox="0 0 1440 100" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
+        <path d="M0,50 C200,195 900,-75 1440,85 L1440,0 L0,0 Z" />
+    </svg>
+
     <x-watermark class="pointer-events-none absolute -bottom-24 -right-24 h-96 w-96 text-forest-700/40" />
 
     <div class="relative mx-auto max-w-7xl px-6 py-16 lg:px-8">
