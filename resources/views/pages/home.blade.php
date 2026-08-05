@@ -543,23 +543,25 @@
         </section>
     @endif
 
-    {{-- CTA / NEWSLETTER --}}
+    {{-- CTA --}}
     <section class="relative overflow-hidden bg-gradient-to-br from-forest-800 to-forest-600 py-24">
         <x-watermark class="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-forest-500/20" />
         <div class="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
             <x-section-heading kicker="Tetap Terhubung" align="center" light class="mx-auto">
-                <x-slot:title>Dapatkan Insight Terbaru dari Kami</x-slot:title>
-                <x-slot:description>Berlangganan newsletter kami untuk mendapatkan ringkasan riset, analisis kebijakan, dan undangan diskusi publik langsung ke email Anda.</x-slot:description>
+                <x-slot:title>Mari Berdiskusi tentang Kebutuhan Riset Anda</x-slot:title>
+                <x-slot:description>Tim kami siap membantu merancang riset, survey, atau kajian strategis yang sesuai dengan kebutuhan organisasi Anda.</x-slot:description>
             </x-section-heading>
 
-            <div class="mx-auto mt-8 max-w-md" data-aos="fade-up">
-                @livewire('newsletter-subscribe')
+            <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-aos="fade-up">
+                <a href="{{ route('contact') }}"
+                   class="rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold text-forest-900 shadow-lg shadow-gold-500/20 transition-all hover:bg-gold-400 hover:shadow-xl">
+                    Hubungi Kami
+                </a>
+                <a href="{{ route('articles.index') }}"
+                   class="rounded-full border border-cream/30 px-7 py-3.5 text-sm font-semibold text-cream transition-all hover:border-gold-400 hover:text-gold-300">
+                    Baca Insight Terbaru
+                </a>
             </div>
-
-            <p class="mt-8 text-sm text-forest-100/70">
-                Punya kebutuhan riset atau konsultasi strategis?
-                <a href="{{ route('contact') }}" class="font-semibold text-gold-300 underline decoration-gold-400/40 underline-offset-4 hover:text-gold-200">Hubungi tim kami &rarr;</a>
-            </p>
         </div>
     </section>
 </x-layouts.app>
