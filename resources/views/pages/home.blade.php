@@ -127,20 +127,149 @@
     </section>
 
     {{-- SERVICES --}}
-    <section class="relative bg-cream py-24 sm:py-32">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <section class="relative overflow-hidden bg-cream py-24 sm:py-32">
+        <x-watermark class="pointer-events-none absolute -left-40 top-1/2 h-[34rem] w-[34rem] -translate-y-1/2 text-forest-900/[0.03]" />
+
+        <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
             <x-section-heading kicker="Layanan Kami" align="center" class="mx-auto">
                 <x-slot:title>Solusi Riset &amp; Strategi yang Komprehensif</x-slot:title>
-                <x-slot:description>Kami menghadirkan enam lini layanan utama untuk mendukung pengambilan keputusan berbasis data dan bukti.</x-slot:description>
+                <x-slot:description>Enam lini layanan utama kami, dirancang untuk mendukung pengambilan keputusan berbasis data dan bukti.</x-slot:description>
             </x-section-heading>
 
-            <div class="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                @foreach ($services as $index => $service)
-                    <div data-aos="fade-up" data-aos-delay="{{ ($index % 3) * 100 }}">
-                        <x-service-card :service="$service" />
+            @php
+                $serviceSubItems = [
+                    'strategy-private-class' => [
+                        'Analisis Politik & Geopolitik',
+                        'Kajian Strategis & Rekomendasi Program',
+                    ],
+                    'survey-data-analyses' => [
+                        'Riset Kebijakan Publik',
+                        'Survey & Kajian Sosial Strategis',
+                        'Kajian Strategis & Rekomendasi Program',
+                    ],
+                ];
+            @endphp
+
+            @if ($services->isNotEmpty())
+                <div x-data="serviceShowcase({{ $services->count() }})" @mouseenter="paused = true" @mouseleave="paused = false" class="mt-16">
+
+                    {{-- ORBIT (desktop) --}}
+                    <div class="relative mx-auto hidden aspect-square w-full max-w-xl lg:block" data-aos="zoom-in">
+                        {{-- decorative orbit rings --}}
+                        <div class="animate-orbit-slow absolute inset-[6%] rounded-full border border-dashed border-forest-200"></div>
+                        <div class="animate-orbit-slow-reverse absolute inset-[20%] rounded-full border border-dashed border-gold-200"></div>
+
+                        {{-- spokes + nodes + per-node cards --}}
+                        @foreach ($services as $index => $service)
+                            @php
+                                $step = 360 / $services->count();
+                                $angleDeg = -90 + ($step / 2) + $index * $step;
+                                $angleRad = deg2rad($angleDeg);
+                                $nodeX = 50 + 42 * cos($angleRad);
+                                $nodeY = 50 + 42 * sin($angleRad);
+                                $isRight = cos($angleRad) >= 0;
+                                $isBottom = sin($angleRad) >= 0.15;
+                                $isTop = sin($angleRad) <= -0.15;
+                            @endphp
+
+                            <div class="absolute left-1/2 top-1/2 h-px origin-left bg-forest-200"
+                                 style="width: 42%; transform: rotate({{ $angleDeg }}deg);"></div>
+
+                            <button type="button" @click="select({{ $index }})" @mouseenter="select({{ $index }})"
+                                    data-aos="zoom-in" data-aos-delay="{{ $index * 80 }}"
+                                    class="absolute z-10 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 bg-white shadow-lg transition-all duration-300"
+                                    :class="active === {{ $index }} ? 'border-gold-500 scale-110 shadow-gold-500/30' : 'border-forest-100 hover:border-forest-300 hover:scale-105'"
+                                    style="left: {{ $nodeX }}%; top: {{ $nodeY }}%;">
+                                <span :class="active === {{ $index }} ? 'text-gold-600' : 'text-forest-700'">
+                                    <x-icon :name="$service->icon ?? 'heroicon-o-briefcase'" class="h-6 w-6" />
+                                </span>
+                            </button>
+
+                            {{-- Floating card(s) anchored to this node --}}
+                            @php $subItems = $serviceSubItems[$service->slug] ?? []; @endphp
+                            <div x-show="active === {{ $index }}"
+                                 x-transition:enter="transition ease-out duration-300"
+                                 x-transition:enter-start="opacity-0 scale-95"
+                                 x-transition:enter-end="opacity-100 scale-100"
+                                 x-transition:leave="transition ease-in duration-150"
+                                 x-transition:leave-start="opacity-100 scale-100"
+                                 x-transition:leave-end="opacity-0 scale-95"
+                                 class="absolute z-30 w-56 text-left"
+                                 style="
+                                     {{ $isRight ? 'left: calc(' . $nodeX . '% + 2.25rem);' : 'right: calc(' . (100 - $nodeX) . '% + 2.25rem);' }}
+                                     {{ $isBottom ? 'top: calc(' . $nodeY . '% - 0.5rem);' : ($isTop ? 'bottom: calc(' . (100 - $nodeY) . '% - 0.5rem);' : 'top: calc(' . $nodeY . '% - 4.5rem);') }}
+                                 ">
+                                {{-- Main service card --}}
+                                <div class="rounded-2xl border border-forest-100 bg-white p-4 shadow-2xl shadow-forest-900/10">
+                                    <span class="text-xs font-semibold uppercase tracking-wider text-gold-600">
+                                        {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                                    </span>
+                                    <h3 class="mt-1 font-serif text-lg font-semibold leading-snug text-forest-800">
+                                        {{ $service->name }}
+                                    </h3>
+                                    @if (empty($subItems))
+                                        <p class="mt-2 text-sm leading-relaxed text-charcoal/70">
+                                            {{ $service->short_description }}
+                                        </p>
+                                        <a href="{{ route('services.show', $service) }}"
+                                           class="group mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-forest-700 transition-colors hover:text-gold-600">
+                                            Pelajari Lebih Lanjut
+                                            <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                                            </svg>
+                                        </a>
+                                    @endif
+                                </div>
+
+                                {{-- Sub-item cards --}}
+                                @if (! empty($subItems))
+                                    <div class="mt-2 space-y-2">
+                                        @foreach ($subItems as $subItem)
+                                            <div class="rounded-xl border border-forest-100 bg-white p-3 shadow-lg shadow-forest-900/5">
+                                                <div class="flex items-start gap-2">
+                                                    <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500"></span>
+                                                    <span class="text-sm leading-snug text-charcoal/80">{{ $subItem }}</span>
+                                                </div>
+                                                <a href="{{ route('services.show', $service) }}"
+                                                   class="group mt-2 inline-flex items-center gap-1 pl-3.5 text-xs font-semibold text-forest-700 transition-colors hover:text-gold-600">
+                                                    Pelajari Lebih Lanjut
+                                                    <svg class="h-3 w-3 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+
+                        {{-- nucleus --}}
+                        <div class="absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-forest-700 shadow-2xl shadow-forest-900/30">
+                            <span class="animate-glow-pulse absolute inset-0 rounded-full bg-gold-400/20"></span>
+                            <x-watermark class="relative h-10 w-10 text-gold-400" />
+                        </div>
                     </div>
-                @endforeach
-            </div>
+
+                    {{-- Progress dots (desktop, indicates autoplay + lets you jump) --}}
+                    <div class="mt-8 hidden items-center justify-center gap-2 lg:flex">
+                        @foreach ($services as $index => $service)
+                            <button type="button" @click="select({{ $index }})" aria-label="Lihat {{ $service->name }}"
+                                    class="h-1.5 rounded-full bg-forest-200 transition-all duration-300"
+                                    :class="active === {{ $index }} ? 'w-8 bg-gold-500' : 'w-1.5 hover:bg-forest-300'"></button>
+                        @endforeach
+                    </div>
+
+                    {{-- Fallback grid (mobile/tablet) --}}
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:hidden">
+                        @foreach ($services as $index => $service)
+                            <div data-aos="fade-up" data-aos-delay="{{ ($index % 2) * 100 }}">
+                                <x-service-card :service="$service" />
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 

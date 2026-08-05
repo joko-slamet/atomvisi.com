@@ -50,6 +50,8 @@
     --animate-float-delayed: float 6s ease-in-out 1.5s infinite;
     --animate-glow-pulse: glow-pulse 4s ease-in-out infinite;
     --animate-drift-slow: drift 22s ease-in-out infinite;
+    --animate-orbit-slow: orbit-spin 60s linear infinite;
+    --animate-orbit-slow-reverse: orbit-spin-reverse 45s linear infinite;
 
     @keyframes fade-up {
         from {
@@ -93,6 +95,22 @@
         }
         50% {
             transform: translate(-2%, 3%) rotate(3deg);
+        }
+    }
+    @keyframes orbit-spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes orbit-spin-reverse {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(-360deg);
         }
     }
 }

@@ -53,34 +53,28 @@ class DatabaseSeeder extends Seeder
     {
         $services = [
             [
-                'name' => 'Riset Kebijakan Publik',
+                'name' => 'Policy & Government Performance',
                 'icon' => 'heroicon-o-scale',
-                'short_description' => 'Riset mendalam untuk mendukung perumusan kebijakan berbasis data dan bukti.',
-                'description' => '<p>Kami melakukan riset kebijakan publik yang komprehensif untuk membantu pemerintah, lembaga, dan organisasi memahami dampak kebijakan serta merumuskan solusi berbasis bukti.</p>',
+                'short_description' => 'Analisis kebijakan dan evaluasi kinerja pemerintahan berbasis data dan bukti.',
+                'description' => '<p>Kami melakukan analisis kebijakan dan evaluasi kinerja pemerintahan untuk membantu pemerintah, lembaga, dan organisasi memahami dampak kebijakan serta merumuskan solusi berbasis bukti.</p>',
             ],
             [
-                'name' => 'Analisis Politik & Geopolitik',
-                'icon' => 'heroicon-o-globe-alt',
-                'short_description' => 'Pemetaan dinamika politik domestik dan geopolitik regional maupun global.',
-                'description' => '<p>Tim analis kami memantau dan menganalisis perkembangan politik serta geopolitik untuk memberikan wawasan strategis bagi pengambilan keputusan.</p>',
-            ],
-            [
-                'name' => 'Survey & Kajian Sosial Strategis',
+                'name' => 'Survey & Data Analyses',
                 'icon' => 'heroicon-o-chart-bar',
-                'short_description' => 'Survey opini publik dan kajian sosial dengan metodologi yang terukur.',
-                'description' => '<p>Kami merancang dan melaksanakan survey sosial berskala nasional maupun regional dengan metodologi ilmiah yang dapat dipertanggungjawabkan.</p>',
+                'short_description' => 'Survey opini publik dan analisis data dengan metodologi yang terukur.',
+                'description' => '<p>Kami merancang dan melaksanakan survey serta analisis data berskala nasional maupun regional dengan metodologi ilmiah yang dapat dipertanggungjawabkan.</p>',
             ],
             [
-                'name' => 'Kajian Strategis & Rekomendasi Program',
+                'name' => 'Strategy Private Class',
                 'icon' => 'heroicon-o-light-bulb',
-                'short_description' => 'Rekomendasi strategis dan desain program yang aplikatif bagi pemangku kepentingan.',
-                'description' => '<p>Kami menerjemahkan hasil riset menjadi rekomendasi strategis dan desain program yang dapat diimplementasikan oleh pemangku kepentingan.</p>',
+                'short_description' => 'Kelas privat strategi dan konsultasi intensif bagi pemangku kepentingan.',
+                'description' => '<p>Kami menyelenggarakan kelas privat strategi yang menerjemahkan hasil riset menjadi rekomendasi dan kapasitas strategis yang aplikatif bagi pemangku kepentingan.</p>',
             ],
             [
-                'name' => 'Policy Brief & Laporan Analisis',
-                'icon' => 'heroicon-o-document-text',
-                'short_description' => 'Ringkasan kebijakan yang tajam dan mudah dicerna oleh pengambil keputusan.',
-                'description' => '<p>Kami menyusun policy brief dan laporan analisis yang ringkas, tajam, dan siap digunakan oleh pengambil keputusan di berbagai tingkatan.</p>',
+                'name' => 'Media Handling',
+                'icon' => 'heroicon-o-chat-bubble-left-right',
+                'short_description' => 'Pengelolaan komunikasi dan media untuk mendukung narasi strategis klien.',
+                'description' => '<p>Kami membantu pengelolaan komunikasi dan media, termasuk penyusunan narasi strategis dan respons publik bagi klien institusi.</p>',
             ],
             [
                 'name' => 'Event & Workshop',

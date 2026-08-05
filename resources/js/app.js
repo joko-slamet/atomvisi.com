@@ -118,6 +118,47 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
+    Alpine.data('serviceShowcase', (count) => ({
+        active: 0,
+        count,
+        paused: false,
+        progress: 0,
+        timer: null,
+
+        init() {
+            this.$watch('active', () => {
+                this.progress = 0;
+            });
+
+            if (!prefersReducedMotion) {
+                this.startAutoplay();
+            }
+        },
+
+        select(index) {
+            this.active = index;
+            this.progress = 0;
+        },
+
+        startAutoplay() {
+            const durationMs = 5000;
+            const stepMs = 50;
+
+            this.timer = setInterval(() => {
+                if (this.paused) {
+                    return;
+                }
+
+                this.progress += (stepMs / durationMs) * 100;
+
+                if (this.progress >= 100) {
+                    this.active = (this.active + 1) % this.count;
+                    this.progress = 0;
+                }
+            }, stepMs);
+        },
+    }));
+
     Alpine.data('tiltCard', () => ({
         init() {
             if (!canHover || prefersReducedMotion) {
