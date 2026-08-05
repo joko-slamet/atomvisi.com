@@ -4,7 +4,7 @@
     {{-- HERO --}}
     <section
         x-data="heroSection()"
-        class="relative isolate flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-600"
+        class="relative isolate flex min-h-screen flex-col overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-600"
     >
         {{-- Atmosphere: grain, dot-grid, drifting glow orb, parallax watermark --}}
         <div class="pointer-events-none absolute inset-0">
@@ -23,9 +23,9 @@
             <div class="absolute inset-0 bg-gradient-to-t from-forest-900 via-transparent to-transparent"></div>
         </div>
 
-        <div class="relative mx-auto grid w-full max-w-7xl grid-cols-1 gap-16 px-6 py-32 lg:grid-cols-12 lg:items-center lg:px-8">
-            <div class="lg:col-span-7">
-                <span data-reveal class="inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300 backdrop-blur-sm">
+        <div class="relative mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-12 px-6 pb-20 pt-40 lg:grid-cols-12 lg:gap-8 lg:px-8">
+            <div class="lg:col-span-6">
+                <span data-reveal class="inline-flex w-fit items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300 backdrop-blur-sm">
                     <span class="relative flex h-1.5 w-1.5">
                         <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-400 opacity-75"></span>
                         <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold-400"></span>
@@ -33,14 +33,14 @@
                     Lembaga Riset Independen
                 </span>
 
-                <h1 x-ref="headline" class="mt-6 font-serif text-4xl font-semibold leading-[1.1] text-cream sm:text-5xl lg:text-6xl">
+                <h1 x-ref="headline" class="relative z-10 mt-6 font-serif text-4xl font-semibold leading-[1.08] text-cream sm:text-5xl lg:text-6xl">
                     <span class="block overflow-hidden pb-1"><span data-line class="block">Insight with Precision.</span></span>
                     <span class="block overflow-hidden pb-1">
                         <span data-line class="block">
                             Strategy with
                             <span class="relative inline-block whitespace-nowrap text-gold-400">
                                 Impact.
-                                <svg class="absolute -bottom-1 left-0 h-2.5 w-full text-gold-400" viewBox="0 0 220 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
+                                <svg class="absolute -bottom-1 left-0 h-2 w-full text-gold-400 sm:h-2.5" viewBox="0 0 220 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
                                     <path x-ref="underline" d="M2 9.5C40 3 160 2 218 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
                                 </svg>
                             </span>
@@ -48,7 +48,7 @@
                     </span>
                 </h1>
 
-                <div data-reveal class="mt-5 h-6 overflow-hidden text-sm font-medium uppercase tracking-[0.15em] text-sage-300">
+                <div data-reveal class="relative z-10 mt-5 h-6 overflow-hidden text-sm font-medium uppercase tracking-[0.15em] text-sage-300">
                     <span class="inline-flex items-center gap-2">
                         Spesialis dalam
                         <span class="relative inline-block overflow-hidden">
@@ -57,11 +57,11 @@
                     </span>
                 </div>
 
-                <p data-reveal class="mt-6 max-w-xl text-lg leading-relaxed text-forest-100/80">
+                <p data-reveal class="relative z-10 mt-6 max-w-lg text-lg leading-relaxed text-forest-100/80">
                     Atom Visi Indonesia menghadirkan riset kebijakan publik, analisis politik &amp; geopolitik, survey sosial, serta konsultasi strategis yang membantu para pengambil keputusan bertindak dengan keyakinan.
                 </p>
 
-                <div data-reveal class="mt-10 flex flex-wrap items-center gap-4">
+                <div data-reveal class="relative z-10 mt-10 flex flex-wrap items-center gap-4">
                     <a href="{{ route('services.index') }}"
                        class="group relative overflow-hidden rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold text-forest-900 shadow-lg shadow-gold-500/20 transition-all hover:shadow-xl">
                         <span class="relative z-10">Lihat Layanan Kami</span>
@@ -74,58 +74,55 @@
                 </div>
             </div>
 
-            <div data-reveal class="relative lg:col-span-5">
-                {{-- Floating credibility badges --}}
+            <div data-reveal class="relative lg:col-span-6">
+                {{-- Floating credibility badges over the image --}}
                 @if ($stats->count() >= 1)
-                    <div data-parallax="18" class="animate-float absolute -left-4 -top-6 z-20 hidden rounded-2xl border border-cream/10 bg-forest-900/70 px-5 py-3 shadow-xl backdrop-blur-md sm:flex sm:items-center sm:gap-3">
-                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold-500/15 text-gold-400">
-                            <x-icon :name="$stats->first()->icon ?? 'heroicon-o-magnifying-glass'" class="h-5 w-5" />
+                    <div data-parallax="16" class="animate-float absolute -left-4 top-6 z-20 hidden items-center gap-3 rounded-2xl bg-cream px-5 py-3 shadow-xl sm:flex lg:-left-10">
+                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-forest-700/10 text-forest-700">
+                            <x-icon :name="$stats->get(2)->icon ?? 'heroicon-o-calendar-days'" class="h-4 w-4" />
                         </span>
                         <div class="leading-tight">
-                            <p class="font-serif text-lg font-semibold text-cream">{{ $stats->first()->value }}{{ $stats->first()->suffix }}</p>
-                            <p class="text-[0.65rem] uppercase tracking-wide text-forest-100/60">{{ $stats->first()->label }}</p>
+                            <p class="font-serif text-lg font-semibold text-forest-800">{{ $stats->get(2)->value ?? $stats->first()->value }}{{ $stats->get(2)->suffix ?? $stats->first()->suffix }}</p>
+                            <p class="text-[0.65rem] uppercase tracking-wide text-charcoal/50">{{ $stats->get(2)->label ?? $stats->first()->label }}</p>
                         </div>
                     </div>
                 @endif
 
-                @if ($stats->count() >= 3)
-                    <div data-parallax="22" class="animate-float-delayed absolute -bottom-6 -right-2 z-20 hidden rounded-2xl border border-cream/10 bg-forest-900/70 px-5 py-3 shadow-xl backdrop-blur-md sm:flex sm:items-center sm:gap-3">
-                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-gold-500/15 text-gold-400">
-                            <x-icon :name="$stats->get(2)->icon ?? 'heroicon-o-calendar-days'" class="h-5 w-5" />
+                @if ($stats->count() >= 2)
+                    <div data-parallax="22" class="animate-float-delayed absolute -right-4 top-1/3 z-20 hidden items-center gap-3 rounded-2xl bg-forest-900 px-5 py-3 shadow-xl ring-1 ring-cream/10 sm:flex lg:-right-8">
+                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold-500/15 text-gold-400">
+                            <x-icon :name="$stats->get(1)->icon ?? 'heroicon-o-users'" class="h-4 w-4" />
                         </span>
                         <div class="leading-tight">
-                            <p class="font-serif text-lg font-semibold text-cream">{{ $stats->get(2)->value }}{{ $stats->get(2)->suffix }}</p>
-                            <p class="text-[0.65rem] uppercase tracking-wide text-forest-100/60">{{ $stats->get(2)->label }}</p>
+                            <p class="font-serif text-lg font-semibold text-cream">{{ $stats->get(1)->value }}{{ $stats->get(1)->suffix }}</p>
+                            <p class="text-[0.65rem] uppercase tracking-wide text-forest-100/60">{{ $stats->get(1)->label }}</p>
+                        </div>
+                    </div>
+                @endif
+
+                @if ($stats->count() >= 1)
+                    <div data-parallax="18" class="animate-float absolute -bottom-6 right-6 z-20 hidden items-center gap-3 rounded-2xl bg-cream px-5 py-3 shadow-xl sm:flex lg:right-10">
+                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-forest-700/10 text-forest-700">
+                            <x-icon :name="$stats->first()->icon ?? 'heroicon-o-magnifying-glass'" class="h-4 w-4" />
+                        </span>
+                        <div class="leading-tight">
+                            <p class="font-serif text-lg font-semibold text-forest-800">{{ $stats->first()->value }}{{ $stats->first()->suffix }}</p>
+                            <p class="text-[0.65rem] uppercase tracking-wide text-charcoal/50">{{ $stats->first()->label }}</p>
                         </div>
                     </div>
                 @endif
 
                 <div x-data="tiltCard()"
-                     class="group relative aspect-[16/10] w-full overflow-hidden rounded-[3rem_1.5rem_3rem_1.5rem] border border-cream/10 bg-forest-900/50 shadow-2xl transition-[border-radius] duration-500 hover:rounded-[1.5rem_3rem_1.5rem_3rem]">
-                    <div class="absolute inset-0 bg-gradient-to-br from-forest-600/60 to-forest-900/80"></div>
-                    <div class="animate-glow-pulse absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(216,180,65,0.25),transparent_60%)]"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <button type="button" aria-label="Putar video profil perusahaan"
-                                class="relative flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-forest-900 shadow-lg transition-transform duration-300 group-hover:scale-110">
-                            <span class="absolute inset-0 animate-ping rounded-full bg-gold-400/60"></span>
-                            <svg class="relative ml-1 h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </button>
-                    </div>
-                    <span class="absolute bottom-5 left-6 text-xs font-medium uppercase tracking-wider text-cream/70">Profil Perusahaan</span>
+                     class="group relative aspect-[4/5] w-full overflow-hidden rounded-[63%_37%_54%_46%/45%_39%_61%_55%] border border-cream/10 shadow-2xl sm:aspect-[5/6]">
+                    <img src="{{ asset('images/hero.jpg') }}" alt="Pusat riset dan analisis Atom Visi Indonesia" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-forest-900/50 via-transparent to-transparent"></div>
                 </div>
             </div>
         </div>
 
-        <div class="absolute inset-x-0 bottom-16 flex flex-col items-center gap-2 text-cream/50">
-            <span class="text-[0.6rem] font-medium uppercase tracking-[0.3em]">Scroll</span>
-            <span class="relative h-10 w-px overflow-hidden bg-cream/20">
-                <span class="absolute inset-x-0 top-0 h-1/2 animate-bounce bg-gold-400"></span>
-            </span>
-        </div>
-
-        {{-- Wave divider into the next section --}}
-        <svg class="pointer-events-none absolute inset-x-0 bottom-0 h-16 w-full text-cream sm:h-20 lg:h-28" viewBox="0 0 1440 100" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
-            <path d="M0,40 C240,90 480,10 720,35 C960,60 1200,95 1440,45 L1440,100 L0,100 Z" />
+        {{-- Curved divider into the next section --}}
+        <svg class="pointer-events-none relative z-10 block h-16 w-full text-cream sm:h-24 lg:h-32" viewBox="0 0 1440 100" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
+            <path d="M0,50 C200,195 900,-75 1440,85 L1440,100 L0,100 Z" />
         </svg>
     </section>
 
