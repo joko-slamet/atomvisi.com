@@ -4,9 +4,7 @@
     <div class="relative mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
             <div>
-                <div class="text-cream">
-                    <x-logo />
-                </div>
+                <x-logo variant="light" />
                 <p class="mt-5 max-w-xs text-sm leading-relaxed text-forest-100/80">
                     Insight with Precision. Strategy with Impact.
                 </p>

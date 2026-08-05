@@ -11,28 +11,28 @@
     --font-serif: 'Fraunces', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 
     /* Atom Visi Indonesia brand palette */
-    --color-forest-50: #f0f5f2;
-    --color-forest-100: #dbe8e0;
-    --color-forest-200: #b7d1c1;
-    --color-forest-300: #8fb396;
-    --color-forest-400: #5c8f6c;
-    --color-forest-500: #2f6b48;
-    --color-forest-600: #1f5538;
-    --color-forest-700: #1b4332;
-    --color-forest-800: #16362a;
-    --color-forest-900: #112b21;
-    --color-forest-950: #0a1a14;
+    --color-forest-50: #e0f5f1;
+    --color-forest-100: #c6ede7;
+    --color-forest-200: #9aded3;
+    --color-forest-300: #68caba;
+    --color-forest-400: #36a593;
+    --color-forest-500: #167465;
+    --color-forest-600: #0c584c;
+    --color-forest-700: #0b433a;
+    --color-forest-800: #09332d;
+    --color-forest-900: #062621;
+    --color-forest-950: #03110f;
 
-    --color-gold-50: #fdf9ef;
-    --color-gold-100: #faf0d6;
-    --color-gold-200: #f3ddab;
-    --color-gold-300: #ebc678;
-    --color-gold-400: #e2b155;
-    --color-gold-500: #d4a53d;
-    --color-gold-600: #b3862c;
-    --color-gold-700: #8f6825;
-    --color-gold-800: #745424;
-    --color-gold-900: #614721;
+    --color-gold-50: #fefcf6;
+    --color-gold-100: #fbf4dd;
+    --color-gold-200: #f5e5b1;
+    --color-gold-300: #eed37d;
+    --color-gold-400: #e5c45a;
+    --color-gold-500: #d8b441;
+    --color-gold-600: #bc992b;
+    --color-gold-700: #977c25;
+    --color-gold-800: #7c6724;
+    --color-gold-900: #695821;
 
     --color-sage-50: #f3f8f4;
     --color-sage-100: #e3efe5;

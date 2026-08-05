@@ -5,8 +5,13 @@
     :class="scrolled || mobileOpen ? 'bg-cream/95 backdrop-blur-md shadow-sm' : 'bg-transparent'"
 >
     <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8" aria-label="Navigasi utama">
-        <div class="transition-colors duration-300" :class="scrolled || mobileOpen ? 'text-forest-800' : 'text-cream'">
-            <x-logo />
+        <div class="flex items-center">
+            <template x-if="scrolled || mobileOpen">
+                <x-logo variant="dark" />
+            </template>
+            <template x-if="!(scrolled || mobileOpen)">
+                <x-logo variant="light" />
+            </template>
         </div>
 
         <div class="hidden items-center gap-8 lg:flex">
