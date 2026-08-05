@@ -3,6 +3,7 @@
 >
     {{-- HERO --}}
     <section
+        id="hero"
         x-data="heroSection()"
         class="relative isolate flex min-h-screen flex-col overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-600"
     >
