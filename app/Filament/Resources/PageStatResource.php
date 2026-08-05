@@ -16,8 +16,6 @@ class PageStatResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar-square';
 
-    protected static ?string $navigationGroup = 'Konten';
-
     protected static ?string $navigationLabel = 'Statistik Homepage';
 
     protected static ?int $navigationSort = 7;

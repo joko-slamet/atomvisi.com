@@ -17,8 +17,6 @@ class ServiceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
-    protected static ?string $navigationGroup = 'Konten';
-
     protected static ?int $navigationSort = 3;
 
     public const ICON_OPTIONS = [

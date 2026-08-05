@@ -17,8 +17,6 @@ class ResearchProjectResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-magnifying-glass';
 
-    protected static ?string $navigationGroup = 'Konten';
-
     protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
