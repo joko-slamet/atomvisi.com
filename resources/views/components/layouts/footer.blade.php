@@ -1,5 +1,7 @@
+@props(['waveColor' => 'text-cream'])
+
 <footer class="relative overflow-hidden bg-forest-800 text-cream">
-    <svg class="pointer-events-none relative z-10 block h-16 w-full text-cream sm:h-24 lg:h-32" viewBox="0 0 1440 100" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
+    <svg class="pointer-events-none relative z-10 block h-16 w-full {{ $waveColor }} sm:h-24 lg:h-32" viewBox="0 0 1440 100" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
         <path d="M0,50 C200,195 900,-75 1440,85 L1440,0 L0,0 Z" />
     </svg>
 

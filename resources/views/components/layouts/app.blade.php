@@ -2,6 +2,7 @@
     'title' => null,
     'description' => 'Atom Visi Indonesia — lembaga riset independen di bidang kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategis.',
     'ogImage' => null,
+    'footerWaveColor' => 'text-cream',
 ])
 
 <!DOCTYPE html>
@@ -33,7 +34,7 @@
         {{ $slot }}
     </main>
 
-    <x-layouts.footer />
+    <x-layouts.footer :wave-color="$footerWaveColor" />
 
     @livewireScripts
 </body>

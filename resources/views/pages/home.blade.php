@@ -411,7 +411,7 @@
         $pentagonPath = 'M ' . implode(' L ', array_map(fn ($p) => $p[0].','.$p[1], $pentagon)) . ' Z';
     @endphp
 
-    <section x-data="whyReasons()" class="relative overflow-hidden bg-cream py-24 sm:py-32">
+    <section x-data="whyReasons()" class="relative bg-cream py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="grid grid-cols-1 gap-16 lg:grid-cols-12">
                 {{-- Pinned indicator --}}
