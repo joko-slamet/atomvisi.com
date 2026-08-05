@@ -127,8 +127,10 @@
     </section>
 
     {{-- SERVICES --}}
-    <section class="relative overflow-hidden bg-cream py-24 sm:py-32">
-        <x-watermark class="pointer-events-none absolute -left-40 top-1/2 h-[34rem] w-[34rem] -translate-y-1/2 text-forest-900/[0.03]" />
+    <section class="relative bg-cream py-24 sm:py-32">
+        <div class="pointer-events-none absolute inset-0 overflow-hidden">
+            <x-watermark class="absolute -left-40 top-1/2 h-[34rem] w-[34rem] -translate-y-1/2 text-forest-900/[0.03]" />
+        </div>
 
         <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
             <x-section-heading kicker="Layanan Kami" align="center" class="mx-auto">
@@ -194,7 +196,7 @@
                                  x-transition:leave="transition ease-in duration-150"
                                  x-transition:leave-start="opacity-100 scale-100"
                                  x-transition:leave-end="opacity-0 scale-95"
-                                 class="absolute z-30 w-56 text-left"
+                                 class="absolute z-50 w-56 text-left"
                                  style="
                                      {{ $isRight ? 'left: calc(' . $nodeX . '% + 2.25rem);' : 'right: calc(' . (100 - $nodeX) . '% + 2.25rem);' }}
                                      {{ $isBottom ? 'top: calc(' . $nodeY . '% - 0.5rem);' : ($isTop ? 'bottom: calc(' . (100 - $nodeY) . '% - 0.5rem);' : 'top: calc(' . $nodeY . '% - 4.5rem);') }}
@@ -275,13 +277,116 @@
 
     {{-- STATS --}}
     @if ($stats->isNotEmpty())
-        <section class="relative overflow-hidden bg-forest-800 py-20">
-            <x-watermark class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 text-forest-700/40" />
+        <section class="mt-20 relative overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-700 py-24 sm:py-28">
+            <div class="pointer-events-none absolute inset-0">
+                <div class="absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
+                <div class="absolute inset-0 bg-dot-grid text-cream/[0.06]"></div>
+                <div class="animate-drift-slow absolute -right-24 top-0 h-96 w-96 rounded-full bg-gold-500/10 blur-3xl"></div>
+                <x-watermark class="absolute -bottom-24 -left-24 h-80 w-80 text-forest-600/30" />
+            </div>
+
             <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
-                <div class="grid grid-cols-2 gap-10 sm:grid-cols-4">
-                    @foreach ($stats as $stat)
-                        <x-stat-counter :value="$stat->value" :suffix="$stat->suffix" :label="$stat->label" />
-                    @endforeach
+                <x-section-heading kicker="Pencapaian Kami" align="center" light class="mx-auto">
+                    <x-slot:title>Dipercaya, Terukur, Berdampak</x-slot:title>
+                    <x-slot:description>Angka-angka yang mencerminkan komitmen kami dalam menghadirkan riset berkualitas selama bertahun-tahun.</x-slot:description>
+                </x-section-heading>
+
+                <div class="mt-14 grid grid-cols-1 items-center gap-10 lg:grid-cols-5 lg:gap-16">
+                    {{-- Featured stat --}}
+                    @if ($stats->isNotEmpty())
+                        @php $featured = $stats->first(); @endphp
+                        <div data-aos="fade-up" class="relative lg:col-span-3">
+                            <div
+                                x-data="{ display: 0 }"
+                                x-init="
+                                    ScrollTrigger.create({
+                                        trigger: $el, start: 'top 85%', once: true,
+                                        onEnter: () => gsap.to($data, {
+                                            display: {{ (int) $featured->value }}, duration: 2, ease: 'power2.out',
+                                            onUpdate: () => display = Math.round(display),
+                                        }),
+                                    })
+                                "
+                                class="relative"
+                            >
+                                <span class="pointer-events-none absolute -left-4 -top-10 select-none font-serif text-[12rem] leading-none text-cream/[0.04]" aria-hidden="true">
+                                    <x-icon :name="$featured->icon ?? 'heroicon-o-chart-bar'" class="h-40 w-40" />
+                                </span>
+
+                                <span class="relative flex h-12 w-12 items-center justify-center rounded-full bg-gold-500/10 text-gold-400">
+                                    <x-icon :name="$featured->icon ?? 'heroicon-o-chart-bar'" class="h-6 w-6" />
+                                </span>
+
+                                <span class="relative mt-4 block font-serif text-7xl font-semibold text-cream sm:text-8xl">
+                                    <span x-text="display">0</span>{{ $featured->suffix }}
+                                </span>
+                                <span class="relative mt-2 block text-base font-medium uppercase tracking-wide text-gold-300">
+                                    {{ $featured->label }}
+                                </span>
+                                <p class="relative mt-4 max-w-md text-sm leading-relaxed text-forest-100/70">
+                                    Angka ini terus bertambah seiring komitmen kami mendampingi mitra institusi dengan riset yang independen dan berbasis bukti.
+                                </p>
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Secondary stats --}}
+                    <div data-aos="fade-up" data-aos-delay="150" class="divide-y divide-cream/10 border-t border-cream/10 lg:col-span-2">
+                        @foreach ($stats->slice(1) as $stat)
+                            <div
+                                x-data="{ display: 0, filled: false }"
+                                x-init="
+                                    ScrollTrigger.create({
+                                        trigger: $el, start: 'top 90%', once: true,
+                                        onEnter: () => {
+                                            filled = true;
+                                            gsap.to($data, {
+                                                display: {{ (int) $stat->value }}, duration: 1.6, ease: 'power2.out',
+                                                onUpdate: () => display = Math.round(display),
+                                            });
+                                        },
+                                    })
+                                "
+                                class="flex items-center gap-4 py-5"
+                            >
+                                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cream/5 text-gold-400">
+                                    <x-icon :name="$stat->icon ?? 'heroicon-o-chart-bar'" class="h-5 w-5" />
+                                </span>
+                                <div class="flex-1">
+                                    <div class="flex items-baseline justify-between gap-3">
+                                        <span class="text-sm font-medium text-forest-100/70">{{ $stat->label }}</span>
+                                        <span class="font-serif text-2xl font-semibold text-cream">
+                                            <span x-text="display">0</span>{{ $stat->suffix }}
+                                        </span>
+                                    </div>
+                                    <div class="mt-2 h-1 overflow-hidden rounded-full bg-cream/10">
+                                        <div class="h-full origin-left scale-x-0 rounded-full bg-gold-500 transition-transform duration-1000 ease-out"
+                                             :class="filled ? 'scale-x-100' : 'scale-x-0'"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            {{-- Marquee ticker --}}
+            <div class="relative mt-16 overflow-hidden border-y border-cream/10 py-4" data-aos="fade-up">
+                <div class="animate-marquee flex w-max items-center gap-8 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.25em] text-cream/40">
+                    @for ($i = 0; $i < 2; $i++)
+                        <span class="flex items-center gap-8">
+                            <span>Riset Independen</span>
+                            <span class="text-gold-500">&bull;</span>
+                            <span>Kebijakan Publik</span>
+                            <span class="text-gold-500">&bull;</span>
+                            <span>Politik &amp; Geopolitik</span>
+                            <span class="text-gold-500">&bull;</span>
+                            <span>Survey Sosial</span>
+                            <span class="text-gold-500">&bull;</span>
+                            <span>Strategi &amp; Konsultasi</span>
+                            <span class="text-gold-500">&bull;</span>
+                        </span>
+                    @endfor
                 </div>
             </div>
         </section>
