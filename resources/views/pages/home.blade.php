@@ -393,33 +393,73 @@
     @endif
 
     {{-- WHY CHOOSE US --}}
-    <section class="bg-cream py-24 sm:py-32">
+    @php
+        $reasons = [
+            ['icon' => 'heroicon-o-shield-check', 'title' => 'Independensi & Objektivitas', 'text' => 'Riset kami bebas dari kepentingan politik atau komersial tertentu, menjaga integritas hasil analisis.'],
+            ['icon' => 'heroicon-o-academic-cap', 'title' => 'Tim Peneliti Berpengalaman', 'text' => 'Didukung oleh peneliti dan analis dengan latar belakang akademik dan praktik yang kuat.'],
+            ['icon' => 'heroicon-o-chart-bar', 'title' => 'Metodologi yang Kredibel', 'text' => 'Menggunakan metode riset kuantitatif dan kualitatif yang teruji dan dapat dipertanggungjawabkan.'],
+            ['icon' => 'heroicon-o-bolt', 'title' => 'Rekomendasi yang Aplikatif', 'text' => 'Hasil riset diterjemahkan menjadi rekomendasi strategis yang siap diimplementasikan.'],
+            ['icon' => 'heroicon-o-clock', 'title' => 'Ketepatan Waktu', 'text' => 'Kami memahami pentingnya timing dalam pengambilan keputusan strategis.'],
+        ];
+        $reasonCount = count($reasons);
+        $pentagon = [];
+        foreach ($reasons as $i => $reason) {
+            $a = deg2rad(-90 + $i * (360 / $reasonCount));
+            $pentagon[] = [50 + 40 * cos($a), 50 + 40 * sin($a)];
+        }
+        $pentagonPath = 'M ' . implode(' L ', array_map(fn ($p) => $p[0].','.$p[1], $pentagon)) . ' Z';
+    @endphp
+
+    <section x-data="whyReasons()" class="relative overflow-hidden bg-cream py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:items-start">
-                <x-section-heading kicker="Mengapa Memilih Kami">
-                    <x-slot:title>Keunggulan yang Membedakan Kami</x-slot:title>
-                    <x-slot:description>Komitmen kami pada independensi, ketelitian, dan dampak nyata menjadikan Atom Visi Indonesia mitra riset yang tepercaya.</x-slot:description>
-                </x-section-heading>
+            <div class="grid grid-cols-1 gap-16 lg:grid-cols-12">
+                {{-- Pinned indicator --}}
+                <div class="lg:col-span-4">
+                    <div class="lg:sticky lg:top-32">
+                        <x-section-heading kicker="Mengapa Memilih Kami">
+                            <x-slot:title>Keunggulan yang Membedakan Kami</x-slot:title>
+                            <x-slot:description>Komitmen kami pada independensi, ketelitian, dan dampak nyata menjadikan Atom Visi Indonesia mitra riset yang tepercaya.</x-slot:description>
+                        </x-section-heading>
 
-                <div class="space-y-6">
-                    @php
-                        $reasons = [
-                            ['icon' => 'heroicon-o-shield-check', 'title' => 'Independensi & Objektivitas', 'text' => 'Riset kami bebas dari kepentingan politik atau komersial tertentu, menjaga integritas hasil analisis.'],
-                            ['icon' => 'heroicon-o-academic-cap', 'title' => 'Tim Peneliti Berpengalaman', 'text' => 'Didukung oleh peneliti dan analis dengan latar belakang akademik dan praktik yang kuat.'],
-                            ['icon' => 'heroicon-o-chart-bar', 'title' => 'Metodologi yang Kredibel', 'text' => 'Menggunakan metode riset kuantitatif dan kualitatif yang teruji dan dapat dipertanggungjawabkan.'],
-                            ['icon' => 'heroicon-o-bolt', 'title' => 'Rekomendasi yang Aplikatif', 'text' => 'Hasil riset diterjemahkan menjadi rekomendasi strategis yang siap diimplementasikan.'],
-                            ['icon' => 'heroicon-o-clock', 'title' => 'Ketepatan Waktu', 'text' => 'Kami memahami pentingnya timing dalam pengambilan keputusan strategis.'],
-                        ];
-                    @endphp
+                        <div class="mt-10 flex items-center gap-6">
+                            <span class="font-serif text-6xl font-semibold text-gold-500" x-text="String(active + 1).padStart(2, '0')">01</span>
+                            <span class="text-sm text-charcoal/30">/ {{ str_pad($reasonCount, 2, '0', STR_PAD_LEFT) }}</span>
+                        </div>
 
+                        {{-- Pentagon motif, one vertex active per reason --}}
+                        <svg viewBox="0 0 100 100" class="mt-8 h-40 w-40" aria-hidden="true">
+                            <path d="{{ $pentagonPath }}" fill="none" stroke="currentColor" class="text-forest-100" stroke-width="1" />
+                            @foreach ($pentagon as $index => $point)
+                                <line x1="50" y1="50" x2="{{ $point[0] }}" y2="{{ $point[1] }}"
+                                      stroke="currentColor" stroke-width="1"
+                                      :class="active === {{ $index }} ? 'text-gold-400' : 'text-forest-100'" />
+                            @endforeach
+                            @foreach ($pentagon as $index => $point)
+                                <circle cx="{{ $point[0] }}" cy="{{ $point[1] }}" r="4" fill="currentColor"
+                                        class="transition-all duration-300"
+                                        :class="active === {{ $index }} ? 'text-gold-500' : 'text-forest-200'"
+                                        :r="active === {{ $index }} ? 5 : 3"></circle>
+                            @endforeach
+                        </svg>
+                    </div>
+                </div>
+
+                {{-- Scrolling reason list --}}
+                <div x-ref="items" class="space-y-24 lg:col-span-8 lg:space-y-32">
                     @foreach ($reasons as $index => $reason)
-                        <div data-aos="fade-up" data-aos-delay="{{ $index * 80 }}" class="flex gap-4 rounded-xl border border-transparent p-4 transition-colors hover:border-forest-100 hover:bg-forest-50/60">
-                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest-700 text-gold-400">
-                                <x-icon :name="$reason['icon']" class="h-5 w-5" />
-                            </span>
+                        <div data-reason class="flex gap-6 transition-opacity duration-500" :class="active === {{ $index }} ? 'opacity-100' : 'opacity-40'">
+                            <span class="shrink-0 font-serif text-sm text-gold-600">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
                             <div>
-                                <h3 class="font-serif text-lg font-semibold text-forest-800">{{ $reason['title'] }}</h3>
-                                <p class="mt-1 text-sm leading-relaxed text-charcoal/70">{{ $reason['text'] }}</p>
+                                <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-forest-700 text-gold-400 shadow-lg transition-transform duration-500"
+                                      :class="active === {{ $index }} ? 'scale-100' : 'scale-90'">
+                                    <x-icon :name="$reason['icon']" class="h-7 w-7" />
+                                </span>
+                                <h3 class="mt-6 font-serif text-3xl font-semibold leading-snug text-forest-800 sm:text-4xl">
+                                    {{ $reason['title'] }}
+                                </h3>
+                                <p class="mt-4 max-w-md text-base leading-relaxed text-charcoal/70">
+                                    {{ $reason['text'] }}
+                                </p>
                             </div>
                         </div>
                     @endforeach

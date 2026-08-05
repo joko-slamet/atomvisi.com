@@ -159,6 +159,24 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
+    Alpine.data('whyReasons', () => ({
+        active: 0,
+
+        init() {
+            const items = this.$refs.items.querySelectorAll('[data-reason]');
+
+            items.forEach((el, index) => {
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: 'top 55%',
+                    end: 'bottom 45%',
+                    onEnter: () => (this.active = index),
+                    onEnterBack: () => (this.active = index),
+                });
+            });
+        },
+    }));
+
     Alpine.data('tiltCard', () => ({
         init() {
             if (!canHover || prefersReducedMotion) {
