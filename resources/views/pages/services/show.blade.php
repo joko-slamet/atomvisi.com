@@ -4,7 +4,7 @@
 
         <div class="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
             <a href="{{ route('services.index') }}" data-aos="fade-up" class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300 hover:text-gold-200">
-                &larr; Semua Layanan
+                &larr; {{ __('Semua Layanan') }}
             </a>
             <div data-aos="fade-up" data-aos-delay="80" class="mx-auto mt-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-forest-700/60 text-gold-400">
                 <x-icon :name="$service->icon ?? 'heroicon-o-briefcase'" class="h-8 w-8" />
@@ -25,10 +25,10 @@
             </div>
 
             <div data-aos="fade-up" data-aos-delay="150" class="mt-12 rounded-2xl border border-forest-100 bg-forest-50/60 p-8 text-center">
-                <h2 class="font-serif text-xl font-semibold text-forest-800">Tertarik dengan Layanan Ini?</h2>
-                <p class="mt-2 text-sm text-charcoal/70">Hubungi tim kami untuk mendiskusikan kebutuhan riset atau konsultasi strategis Anda.</p>
+                <h2 class="font-serif text-xl font-semibold text-forest-800">{{ __('Tertarik dengan Layanan Ini?') }}</h2>
+                <p class="mt-2 text-sm text-charcoal/70">{{ __('Hubungi tim kami untuk mendiskusikan kebutuhan riset atau konsultasi strategis Anda.') }}</p>
                 <a href="{{ route('contact') }}" class="mt-6 inline-flex rounded-full bg-forest-700 px-7 py-3 text-sm font-semibold text-cream shadow-sm transition-all hover:bg-forest-600">
-                    Hubungi Kami
+                    {{ __('Hubungi Kami') }}
                 </a>
             </div>
         </div>
@@ -37,8 +37,8 @@
     @if ($otherServices->isNotEmpty())
         <section class="bg-forest-50/50 py-24">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <x-section-heading kicker="Layanan Lainnya" align="center" class="mx-auto">
-                    <x-slot:title>Jelajahi Layanan Kami yang Lain</x-slot:title>
+                <x-section-heading kicker="{{ __('Layanan Lainnya') }}" align="center" class="mx-auto">
+                    <x-slot:title>{{ __('Jelajahi Layanan Kami yang Lain') }}</x-slot:title>
                 </x-section-heading>
 
                 <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">

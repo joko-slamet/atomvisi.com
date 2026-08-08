@@ -7,7 +7,7 @@
                 <div data-aos="fade-up" class="mb-12 flex flex-wrap items-center justify-center gap-2">
                     <a href="{{ route('newsletter.index') }}"
                        class="rounded-full px-4 py-1.5 text-xs font-semibold transition-colors {{ request('category') ? 'bg-forest-50 text-forest-700 hover:bg-forest-100' : 'bg-forest-700 text-cream' }}">
-                        Semua Kategori
+                        {{ __('Semua Kategori') }}
                     </a>
                     @foreach ($categories as $category)
                         <a href="{{ route('newsletter.index', ['category' => $category->slug]) }}"
@@ -19,7 +19,7 @@
             @endif
 
             @if ($articles->isEmpty())
-                <p class="text-center text-sm text-charcoal/60">Belum ada newsletter untuk kategori ini.</p>
+                <p class="text-center text-sm text-charcoal/60">{{ __('Belum ada newsletter untuk kategori ini.') }}</p>
             @else
                 <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
                     @foreach ($articles as $index => $article)

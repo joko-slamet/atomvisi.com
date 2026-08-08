@@ -19,8 +19,8 @@ class ArticleController extends Controller
         return view('pages.articles.index', [
             'articles' => $articles,
             'type' => 'op-ed',
-            'title' => 'OP-EDS',
-            'subtitle' => 'Opini dan analisis dari para peneliti kami tentang isu-isu strategis terkini.',
+            'title' => __('OP-EDS'),
+            'subtitle' => __('Opini dan analisis dari para peneliti kami tentang isu-isu strategis terkini.'),
         ]);
     }
 
@@ -42,8 +42,8 @@ class ArticleController extends Controller
         return view('pages.articles.newsletter', [
             'articles' => $articles,
             'categories' => $categories,
-            'title' => 'Newsletters',
-            'subtitle' => 'Arsip newsletter dan kajian berkala Atom Visi Indonesia.',
+            'title' => __('Newsletters'),
+            'subtitle' => __('Arsip newsletter dan kajian berkala Atom Visi Indonesia.'),
         ]);
     }
 
@@ -58,8 +58,8 @@ class ArticleController extends Controller
         return view('pages.articles.index', [
             'articles' => $articles,
             'type' => 'article',
-            'title' => 'Insight & Artikel',
-            'subtitle' => 'Wawasan terbaru seputar riset kebijakan, politik, dan strategi.',
+            'title' => __('Insight & Artikel'),
+            'subtitle' => __('Wawasan terbaru seputar riset kebijakan, politik, dan strategi.'),
         ]);
     }
 

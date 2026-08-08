@@ -11,7 +11,7 @@
                 };
             @endphp
             <a href="{{ $backRoute }}" data-aos="fade-up" class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300 hover:text-gold-200">
-                &larr; Kembali
+                &larr; {{ __('Kembali') }}
             </a>
 
             <div data-aos="fade-up" data-aos-delay="80" class="mt-6 flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300">
@@ -28,7 +28,7 @@
 
             @if ($article->author)
                 <p data-aos="fade-up" data-aos-delay="200" class="mt-5 text-sm text-forest-100/70">
-                    Oleh <span class="font-medium text-cream">{{ $article->author->name }}</span>, {{ $article->author->role }}
+                    {{ __('Oleh') }} <span class="font-medium text-cream">{{ $article->author->name }}</span>, {{ $article->author->role }}
                 </p>
             @endif
         </div>
@@ -50,8 +50,8 @@
     @if ($related->isNotEmpty())
         <section class="bg-forest-50/50 py-24">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <x-section-heading kicker="Baca Juga" align="center" class="mx-auto">
-                    <x-slot:title>Artikel Terkait</x-slot:title>
+                <x-section-heading kicker="{{ __('Baca Juga') }}" align="center" class="mx-auto">
+                    <x-slot:title>{{ __('Artikel Terkait') }}</x-slot:title>
                 </x-section-heading>
 
                 <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">

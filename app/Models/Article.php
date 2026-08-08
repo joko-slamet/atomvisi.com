@@ -6,11 +6,19 @@ use Database\Factories\ArticleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Translatable\HasTranslations;
 
 class Article extends Model
 {
     /** @use HasFactory<ArticleFactory> */
     use HasFactory;
+    use HasTranslations;
+
+    public array $translatable = [
+        'title',
+        'excerpt',
+        'content',
+    ];
 
     protected $fillable = [
         'category_id',

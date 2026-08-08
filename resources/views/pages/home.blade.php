@@ -1,10 +1,15 @@
 <x-layouts.app
-    description="Atom Visi Indonesia adalah lembaga riset independen di bidang riset kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategis. Insight with Precision. Strategy with Impact."
+    :description="__('Atom Visi Indonesia adalah lembaga riset independen di bidang riset kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategis. Insight with Precision. Strategy with Impact.')"
 >
     {{-- HERO --}}
     <section
         id="hero"
-        x-data="heroSection()"
+        x-data="heroSection({{ Illuminate\Support\Js::from([
+            __('Riset Kebijakan Publik'),
+            __('Analisis Politik & Geopolitik'),
+            __('Survey & Kajian Sosial'),
+            __('Strategi & Konsultasi'),
+        ]) }})"
         class="relative isolate flex min-h-screen flex-col overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-600"
     >
         {{-- Atmosphere: grain, dot-grid, drifting glow orb, parallax watermark --}}
@@ -31,16 +36,16 @@
                         <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-400 opacity-75"></span>
                         <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold-400"></span>
                     </span>
-                    Lembaga Riset Independen
+                    {{ __('Lembaga Riset Independen') }}
                 </span>
 
                 <h1 x-ref="headline" class="relative z-10 mt-6 font-serif text-4xl font-semibold leading-[1.08] text-cream sm:text-5xl lg:text-6xl">
-                    <span class="block overflow-hidden pb-1"><span data-line class="block">Insight with Precision.</span></span>
+                    <span class="block overflow-hidden pb-1"><span data-line class="block">{{ __('Insight with Precision.') }}</span></span>
                     <span class="block overflow-hidden pb-1">
                         <span data-line class="block">
-                            Strategy with
+                            {{ __('Strategy with') }}
                             <span class="relative inline-block whitespace-nowrap text-gold-400">
-                                Impact.
+                                {{ __('Impact.') }}
                                 <svg class="absolute -bottom-1 left-0 h-2 w-full text-gold-400 sm:h-2.5" viewBox="0 0 220 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
                                     <path x-ref="underline" d="M2 9.5C40 3 160 2 218 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
                                 </svg>
@@ -51,7 +56,7 @@
 
                 <div data-reveal class="relative z-10 mt-5 h-6 overflow-hidden text-sm font-medium uppercase tracking-[0.15em] text-sage-300">
                     <span class="inline-flex items-center gap-2">
-                        Spesialis dalam
+                        {{ __('Spesialis dalam') }}
                         <span class="relative inline-block overflow-hidden">
                             <span x-ref="rotatingWord" x-text="words[wordIndex]" class="inline-block text-gold-300"></span>
                         </span>
@@ -59,18 +64,18 @@
                 </div>
 
                 <p data-reveal class="relative z-10 mt-6 max-w-lg text-lg leading-relaxed text-forest-100/80">
-                    Atom Visi Indonesia menghadirkan riset kebijakan publik, analisis politik &amp; geopolitik, survey sosial, serta konsultasi strategis yang membantu para pengambil keputusan bertindak dengan keyakinan.
+                    {{ __('Atom Visi Indonesia menghadirkan riset kebijakan publik, analisis politik & geopolitik, survey sosial, serta konsultasi strategis yang membantu para pengambil keputusan bertindak dengan keyakinan.') }}
                 </p>
 
                 <div data-reveal class="relative z-10 mt-10 flex flex-wrap items-center gap-4">
                     <a href="{{ route('services.index') }}"
                        class="group relative overflow-hidden rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold text-forest-900 shadow-lg shadow-gold-500/20 transition-all hover:shadow-xl">
-                        <span class="relative z-10">Lihat Layanan Kami</span>
+                        <span class="relative z-10">{{ __('Lihat Layanan Kami') }}</span>
                         <span class="absolute inset-0 -translate-x-full bg-gold-400 transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
                     </a>
                     <a href="{{ route('contact') }}"
                        class="rounded-full border border-cream/30 px-7 py-3.5 text-sm font-semibold text-cream transition-all hover:border-gold-400 hover:text-gold-300">
-                        Hubungi Kami
+                        {{ __('Hubungi Kami') }}
                     </a>
                 </div>
             </div>
@@ -115,7 +120,7 @@
 
                 <div x-data="tiltCard()"
                      class="group relative aspect-[4/5] w-full overflow-hidden rounded-[63%_37%_54%_46%/45%_39%_61%_55%] border border-cream/10 shadow-2xl sm:aspect-[5/6]">
-                    <img src="{{ asset('images/hero.jpg') }}" alt="Pusat riset dan analisis Atom Visi Indonesia" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <img src="{{ asset('images/hero.jpg') }}" alt="{{ __('Pusat riset dan analisis Atom Visi Indonesia') }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-forest-900/50 via-transparent to-transparent"></div>
                 </div>
             </div>
@@ -134,21 +139,21 @@
         </div>
 
         <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
-            <x-section-heading kicker="Layanan Kami" align="center" class="mx-auto">
-                <x-slot:title>Solusi Riset &amp; Strategi yang Komprehensif</x-slot:title>
-                <x-slot:description>Enam lini layanan utama kami, dirancang untuk mendukung pengambilan keputusan berbasis data dan bukti.</x-slot:description>
+            <x-section-heading :kicker="__('Layanan Kami')" align="center" class="mx-auto">
+                <x-slot:title>{{ __('Solusi Riset & Strategi yang Komprehensif') }}</x-slot:title>
+                <x-slot:description>{{ __('Enam lini layanan utama kami, dirancang untuk mendukung pengambilan keputusan berbasis data dan bukti.') }}</x-slot:description>
             </x-section-heading>
 
             @php
                 $serviceSubItems = [
                     'strategy-private-class' => [
-                        'Analisis Politik & Geopolitik',
-                        'Kajian Strategis & Rekomendasi Program',
+                        __('Analisis Politik & Geopolitik'),
+                        __('Kajian Strategis & Rekomendasi Program'),
                     ],
                     'survey-data-analyses' => [
-                        'Riset Kebijakan Publik',
-                        'Survey & Kajian Sosial Strategis',
-                        'Kajian Strategis & Rekomendasi Program',
+                        __('Riset Kebijakan Publik'),
+                        __('Survey & Kajian Sosial Strategis'),
+                        __('Kajian Strategis & Rekomendasi Program'),
                     ],
                 ];
             @endphp
@@ -216,7 +221,7 @@
                                         </p>
                                         <a href="{{ route('services.show', $service) }}"
                                            class="group mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-forest-700 transition-colors hover:text-gold-600">
-                                            Pelajari Lebih Lanjut
+                                            {{ __('Pelajari Lebih Lanjut') }}
                                             <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                                             </svg>
@@ -235,7 +240,7 @@
                                                 </div>
                                                 <a href="{{ route('services.show', $service) }}"
                                                    class="group mt-2 inline-flex items-center gap-1 pl-3.5 text-xs font-semibold text-forest-700 transition-colors hover:text-gold-600">
-                                                    Pelajari Lebih Lanjut
+                                                    {{ __('Pelajari Lebih Lanjut') }}
                                                     <svg class="h-3 w-3 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                                                     </svg>
@@ -257,7 +262,7 @@
                     {{-- Progress dots (desktop, indicates autoplay + lets you jump) --}}
                     <div class="mt-8 hidden items-center justify-center gap-2 lg:flex">
                         @foreach ($services as $index => $service)
-                            <button type="button" @click="select({{ $index }})" aria-label="Lihat {{ $service->name }}"
+                            <button type="button" @click="select({{ $index }})" aria-label="{{ __('Lihat') }} {{ $service->name }}"
                                     class="h-1.5 rounded-full bg-forest-200 transition-all duration-300"
                                     :class="active === {{ $index }} ? 'w-8 bg-gold-500' : 'w-1.5 hover:bg-forest-300'"></button>
                         @endforeach
@@ -287,9 +292,9 @@
             </div>
 
             <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
-                <x-section-heading kicker="Pencapaian Kami" align="center" light class="mx-auto">
-                    <x-slot:title>Dipercaya, Terukur, Berdampak</x-slot:title>
-                    <x-slot:description>Angka-angka yang mencerminkan komitmen kami dalam menghadirkan riset berkualitas selama bertahun-tahun.</x-slot:description>
+                <x-section-heading :kicker="__('Pencapaian Kami')" align="center" light class="mx-auto">
+                    <x-slot:title>{{ __('Dipercaya, Terukur, Berdampak') }}</x-slot:title>
+                    <x-slot:description>{{ __('Angka-angka yang mencerminkan komitmen kami dalam menghadirkan riset berkualitas selama bertahun-tahun.') }}</x-slot:description>
                 </x-section-heading>
 
                 <div class="mt-14 grid grid-cols-1 items-center gap-10 lg:grid-cols-5 lg:gap-16">
@@ -325,7 +330,7 @@
                                     {{ $featured->label }}
                                 </span>
                                 <p class="relative mt-4 max-w-md text-sm leading-relaxed text-forest-100/70">
-                                    Angka ini terus bertambah seiring komitmen kami mendampingi mitra institusi dengan riset yang independen dan berbasis bukti.
+                                    {{ __('Angka ini terus bertambah seiring komitmen kami mendampingi mitra institusi dengan riset yang independen dan berbasis bukti.') }}
                                 </p>
                             </div>
                         </div>
@@ -376,15 +381,15 @@
                 <div class="animate-marquee flex w-max items-center gap-8 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.25em] text-cream/40">
                     @for ($i = 0; $i < 2; $i++)
                         <span class="flex items-center gap-8">
-                            <span>Riset Independen</span>
+                            <span>{{ __('Riset Independen') }}</span>
                             <span class="text-gold-500">&bull;</span>
-                            <span>Kebijakan Publik</span>
+                            <span>{{ __('Kebijakan Publik') }}</span>
                             <span class="text-gold-500">&bull;</span>
-                            <span>Politik &amp; Geopolitik</span>
+                            <span>{{ __('Politik & Geopolitik') }}</span>
                             <span class="text-gold-500">&bull;</span>
-                            <span>Survey Sosial</span>
+                            <span>{{ __('Survey Sosial') }}</span>
                             <span class="text-gold-500">&bull;</span>
-                            <span>Strategi &amp; Konsultasi</span>
+                            <span>{{ __('Strategi & Konsultasi') }}</span>
                             <span class="text-gold-500">&bull;</span>
                         </span>
                     @endfor
@@ -396,11 +401,11 @@
     {{-- WHY CHOOSE US --}}
     @php
         $reasons = [
-            ['icon' => 'heroicon-o-shield-check', 'title' => 'Independensi & Objektivitas', 'text' => 'Riset kami bebas dari kepentingan politik atau komersial tertentu, menjaga integritas hasil analisis.'],
-            ['icon' => 'heroicon-o-academic-cap', 'title' => 'Tim Peneliti Berpengalaman', 'text' => 'Didukung oleh peneliti dan analis dengan latar belakang akademik dan praktik yang kuat.'],
-            ['icon' => 'heroicon-o-chart-bar', 'title' => 'Metodologi yang Kredibel', 'text' => 'Menggunakan metode riset kuantitatif dan kualitatif yang teruji dan dapat dipertanggungjawabkan.'],
-            ['icon' => 'heroicon-o-bolt', 'title' => 'Rekomendasi yang Aplikatif', 'text' => 'Hasil riset diterjemahkan menjadi rekomendasi strategis yang siap diimplementasikan.'],
-            ['icon' => 'heroicon-o-clock', 'title' => 'Ketepatan Waktu', 'text' => 'Kami memahami pentingnya timing dalam pengambilan keputusan strategis.'],
+            ['icon' => 'heroicon-o-shield-check', 'title' => __('Independensi & Objektivitas'), 'text' => __('Riset kami bebas dari kepentingan politik atau komersial tertentu, menjaga integritas hasil analisis.')],
+            ['icon' => 'heroicon-o-academic-cap', 'title' => __('Tim Peneliti Berpengalaman'), 'text' => __('Didukung oleh peneliti dan analis dengan latar belakang akademik dan praktik yang kuat.')],
+            ['icon' => 'heroicon-o-chart-bar', 'title' => __('Metodologi yang Kredibel'), 'text' => __('Menggunakan metode riset kuantitatif dan kualitatif yang teruji dan dapat dipertanggungjawabkan.')],
+            ['icon' => 'heroicon-o-bolt', 'title' => __('Rekomendasi yang Aplikatif'), 'text' => __('Hasil riset diterjemahkan menjadi rekomendasi strategis yang siap diimplementasikan.')],
+            ['icon' => 'heroicon-o-clock', 'title' => __('Ketepatan Waktu'), 'text' => __('Kami memahami pentingnya timing dalam pengambilan keputusan strategis.')],
         ];
         $reasonCount = count($reasons);
         $pentagon = [];
@@ -417,9 +422,9 @@
                 {{-- Pinned indicator --}}
                 <div class="lg:col-span-4">
                     <div class="lg:sticky lg:top-32">
-                        <x-section-heading kicker="Mengapa Memilih Kami">
-                            <x-slot:title>Keunggulan yang Membedakan Kami</x-slot:title>
-                            <x-slot:description>Komitmen kami pada independensi, ketelitian, dan dampak nyata menjadikan Atom Visi Indonesia mitra riset yang tepercaya.</x-slot:description>
+                        <x-section-heading :kicker="__('Mengapa Memilih Kami')">
+                            <x-slot:title>{{ __('Keunggulan yang Membedakan Kami') }}</x-slot:title>
+                            <x-slot:description>{{ __('Komitmen kami pada independensi, ketelitian, dan dampak nyata menjadikan Atom Visi Indonesia mitra riset yang tepercaya.') }}</x-slot:description>
                         </x-section-heading>
 
                         <div class="mt-10 flex items-center gap-6">
@@ -474,11 +479,11 @@
         <section class="bg-forest-50/50 py-24 sm:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-                    <x-section-heading kicker="Insight Terbaru">
-                        <x-slot:title>Artikel &amp; Analisis Terkini</x-slot:title>
+                    <x-section-heading :kicker="__('Insight Terbaru')">
+                        <x-slot:title>{{ __('Artikel & Analisis Terkini') }}</x-slot:title>
                     </x-section-heading>
                     <a href="{{ route('articles.index') }}" data-aos="fade-up" class="shrink-0 text-sm font-semibold text-forest-700 hover:text-gold-600">
-                        Lihat Semua Artikel &rarr;
+                        {{ __('Lihat Semua Artikel') }} &rarr;
                     </a>
                 </div>
 
@@ -517,8 +522,8 @@
     @if ($testimonials->isNotEmpty())
         <section class="bg-cream py-24 sm:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <x-section-heading kicker="Kata Mereka" align="center" class="mx-auto">
-                    <x-slot:title>Dipercaya oleh Mitra &amp; Klien Kami</x-slot:title>
+                <x-section-heading :kicker="__('Kata Mereka')" align="center" class="mx-auto">
+                    <x-slot:title>{{ __('Dipercaya oleh Mitra & Klien Kami') }}</x-slot:title>
                 </x-section-heading>
 
                 <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -551,19 +556,19 @@
                 <x-watermark class="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-forest-500/20" />
 
                 <div class="relative">
-                    <x-section-heading kicker="Tetap Terhubung" align="center" light class="mx-auto">
-                        <x-slot:title>Mari Berdiskusi tentang Kebutuhan Riset Anda</x-slot:title>
-                        <x-slot:description>Tim kami siap membantu merancang riset, survey, atau kajian strategis yang sesuai dengan kebutuhan organisasi Anda.</x-slot:description>
+                    <x-section-heading :kicker="__('Tetap Terhubung')" align="center" light class="mx-auto">
+                        <x-slot:title>{{ __('Mari Berdiskusi tentang Kebutuhan Riset Anda') }}</x-slot:title>
+                        <x-slot:description>{{ __('Tim kami siap membantu merancang riset, survey, atau kajian strategis yang sesuai dengan kebutuhan organisasi Anda.') }}</x-slot:description>
                     </x-section-heading>
 
                     <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
                         <a href="{{ route('contact') }}"
                            class="rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold text-forest-900 shadow-lg shadow-gold-500/20 transition-all hover:bg-gold-400 hover:shadow-xl">
-                            Hubungi Kami
+                            {{ __('Hubungi Kami') }}
                         </a>
                         <a href="{{ route('articles.index') }}"
                            class="rounded-full border border-cream/30 px-7 py-3.5 text-sm font-semibold text-cream transition-all hover:border-gold-400 hover:text-gold-300">
-                            Baca Insight Terbaru
+                            {{ __('Baca Insight Terbaru') }}
                         </a>
                     </div>
                 </div>

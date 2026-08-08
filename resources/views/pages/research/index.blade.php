@@ -1,15 +1,15 @@
-<x-layouts.app title="Riset">
+<x-layouts.app title="{{ __('Riset') }}">
     <x-page-hero
-        kicker="Riset"
-        title="Portofolio Riset &amp; Kajian Kami"
-        description="Kumpulan hasil riset, kajian, dan survey yang telah kami laksanakan bersama berbagai mitra institusi."
+        kicker="{{ __('Riset') }}"
+        title="{{ __('Portofolio Riset & Kajian Kami') }}"
+        description="{{ __('Kumpulan hasil riset, kajian, dan survey yang telah kami laksanakan bersama berbagai mitra institusi.') }}"
     />
 
     <section class="bg-cream py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             @if ($featured->isNotEmpty())
                 <div class="mb-16">
-                    <span data-aos="fade-up" class="text-xs font-semibold uppercase tracking-[0.25em] text-gold-600">Riset Unggulan</span>
+                    <span data-aos="fade-up" class="text-xs font-semibold uppercase tracking-[0.25em] text-gold-600">{{ __('Riset Unggulan') }}</span>
                     <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
                         @foreach ($featured as $index => $project)
                             <a href="{{ route('research.show', $project) }}" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}"
@@ -35,7 +35,7 @@
                 </div>
             @endif
 
-            <span data-aos="fade-up" class="text-xs font-semibold uppercase tracking-[0.25em] text-gold-600">Seluruh Riset</span>
+            <span data-aos="fade-up" class="text-xs font-semibold uppercase tracking-[0.25em] text-gold-600">{{ __('Seluruh Riset') }}</span>
             <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($projects as $index => $project)
                     <a href="{{ route('research.show', $project) }}" data-aos="fade-up" data-aos-delay="{{ ($index % 3) * 100 }}"
@@ -44,7 +44,7 @@
                         <h3 class="mt-2 font-serif text-base font-semibold leading-snug text-forest-800 group-hover:text-forest-600">{{ $project->title }}</h3>
                         <p class="mt-2 line-clamp-2 text-sm text-charcoal/70">{{ $project->summary }}</p>
                         @if ($project->client)
-                            <p class="mt-3 text-xs text-charcoal/50">Mitra: {{ $project->client }}</p>
+                            <p class="mt-3 text-xs text-charcoal/50">{{ __('Mitra') }}: {{ $project->client }}</p>
                         @endif
                     </a>
                 @endforeach

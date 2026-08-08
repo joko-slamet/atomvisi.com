@@ -1,8 +1,8 @@
-<x-layouts.app title="Layanan">
+<x-layouts.app title="{{ __('Layanan') }}">
     <x-page-hero
-        kicker="Layanan Kami"
-        title="Solusi Riset &amp; Strategi yang Komprehensif"
-        description="Enam lini layanan utama yang dirancang untuk mendukung pengambilan keputusan berbasis data di berbagai sektor."
+        kicker="{{ __('Layanan Kami') }}"
+        title="{{ __('Solusi Riset & Strategi yang Komprehensif') }}"
+        description="{{ __('Enam lini layanan utama yang dirancang untuk mendukung pengambilan keputusan berbasis data di berbagai sektor.') }}"
     />
 
     <section class="bg-cream py-24 sm:py-32">

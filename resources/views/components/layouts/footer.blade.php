@@ -12,7 +12,7 @@
             <div>
                 <x-logo variant="light" />
                 <p class="mt-5 max-w-xs text-sm leading-relaxed text-forest-100/80">
-                    Insight with Precision. Strategy with Impact.
+                    {{ __('Insight with Precision. Strategy with Impact.') }}
                 </p>
                 <div class="mt-6 flex items-center gap-4">
                     @if ($settings->instagram_url)
@@ -53,27 +53,27 @@
             </div>
 
             <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-gold-400">Perusahaan</h3>
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-gold-400">{{ __('Perusahaan') }}</h3>
                 <ul class="mt-5 space-y-3 text-sm text-forest-100/80">
-                    <li><a href="{{ route('about') }}" class="transition-colors hover:text-gold-300">Tentang Kami</a></li>
-                    <li><a href="{{ route('core-values') }}" class="transition-colors hover:text-gold-300">Core Values</a></li>
-                    <li><a href="{{ route('vision') }}" class="transition-colors hover:text-gold-300">Visi &amp; Misi</a></li>
-                    <li><a href="{{ route('team') }}" class="transition-colors hover:text-gold-300">Tim Kami</a></li>
+                    <li><a href="{{ route('about') }}" class="transition-colors hover:text-gold-300">{{ __('Tentang Kami') }}</a></li>
+                    <li><a href="{{ route('core-values') }}" class="transition-colors hover:text-gold-300">{{ __('Core Values') }}</a></li>
+                    <li><a href="{{ route('vision') }}" class="transition-colors hover:text-gold-300">{{ __('Visi & Misi') }}</a></li>
+                    <li><a href="{{ route('team') }}" class="transition-colors hover:text-gold-300">{{ __('Tim Kami') }}</a></li>
                 </ul>
             </div>
 
             <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-gold-400">Layanan &amp; Riset</h3>
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-gold-400">{{ __('Layanan & Riset') }}</h3>
                 <ul class="mt-5 space-y-3 text-sm text-forest-100/80">
-                    <li><a href="{{ route('services.index') }}" class="transition-colors hover:text-gold-300">Layanan</a></li>
-                    <li><a href="{{ route('research.index') }}" class="transition-colors hover:text-gold-300">Riset</a></li>
-                    <li><a href="{{ route('op-ed.index') }}" class="transition-colors hover:text-gold-300">Op-Ed</a></li>
-                    <li><a href="{{ route('newsletter.index') }}" class="transition-colors hover:text-gold-300">Newsletter</a></li>
+                    <li><a href="{{ route('services.index') }}" class="transition-colors hover:text-gold-300">{{ __('Layanan') }}</a></li>
+                    <li><a href="{{ route('research.index') }}" class="transition-colors hover:text-gold-300">{{ __('Riset') }}</a></li>
+                    <li><a href="{{ route('op-ed.index') }}" class="transition-colors hover:text-gold-300">{{ __('Op-Ed') }}</a></li>
+                    <li><a href="{{ route('newsletter.index') }}" class="transition-colors hover:text-gold-300">{{ __('Newsletter') }}</a></li>
                 </ul>
             </div>
 
             <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-gold-400">Kontak</h3>
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-gold-400">{{ __('Kontak') }}</h3>
                 <ul class="mt-5 space-y-3 text-sm text-forest-100/80">
                     <li>{!! nl2br(e($settings->address)) !!}</li>
                     <li><a href="mailto:{{ $settings->email }}" class="transition-colors hover:text-gold-300">{{ $settings->email }}</a></li>
@@ -83,8 +83,8 @@
         </div>
 
         <div class="mt-14 flex flex-col items-center justify-between gap-4 border-t border-forest-700 pt-8 text-xs text-forest-100/60 md:flex-row">
-            <p>&copy; {{ now()->year }} Atom Visi Indonesia. Seluruh hak cipta dilindungi.</p>
-            <p class="italic">Insight with Precision. Strategy with Impact.</p>
+            <p>&copy; {{ now()->year }} Atom Visi Indonesia. {{ __('Seluruh hak cipta dilindungi.') }}</p>
+            <p class="italic">{{ __('Insight with Precision. Strategy with Impact.') }}</p>
         </div>
     </div>
 </footer>

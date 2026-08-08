@@ -1,8 +1,8 @@
-<x-layouts.app title="Tim Kami">
+<x-layouts.app title="{{ __('Tim Kami') }}">
     <x-page-hero
-        kicker="Tim Kami"
-        title="Peneliti &amp; Analis di Balik Setiap Kajian"
-        description="Ditopang oleh individu-individu dengan latar belakang akademik dan pengalaman praktis di bidang kebijakan publik, politik, dan riset sosial."
+        kicker="{{ __('Tim Kami') }}"
+        title="{{ __('Peneliti & Analis di Balik Setiap Kajian') }}"
+        description="{{ __('Ditopang oleh individu-individu dengan latar belakang akademik dan pengalaman praktis di bidang kebijakan publik, politik, dan riset sosial.') }}"
     />
 
     <section class="bg-cream py-24 sm:py-32">
@@ -32,7 +32,7 @@
                             @if ($member->linkedin_url)
                                 <a href="{{ $member->linkedin_url }}" target="_blank" rel="noopener"
                                    class="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-forest-700 hover:text-gold-600">
-                                    LinkedIn
+                                    {{ __('LinkedIn') }}
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
                                 </a>
                             @endif

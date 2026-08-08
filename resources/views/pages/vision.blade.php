@@ -1,8 +1,8 @@
-<x-layouts.app title="Visi & Misi">
+<x-layouts.app title="{{ __('Visi & Misi') }}">
     <x-page-hero
-        kicker="Visi &amp; Misi"
-        title="Arah yang Menuntun Setiap Langkah Kami"
-        description="Fondasi yang membentuk cara kami berpikir, bekerja, dan memberikan dampak bagi setiap mitra."
+        kicker="{{ __('Visi & Misi') }}"
+        title="{{ __('Arah yang Menuntun Setiap Langkah Kami') }}"
+        description="{{ __('Fondasi yang membentuk cara kami berpikir, bekerja, dan memberikan dampak bagi setiap mitra.') }}"
     />
 
     {{-- Visi: dark statement panel --}}
@@ -20,11 +20,11 @@
             </span>
             <span data-aos="fade-up" data-aos-delay="100" class="mt-6 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-gold-400">
                 <span class="h-px w-6 bg-current"></span>
-                Visi
+                {{ __('Visi') }}
                 <span class="h-px w-6 bg-current"></span>
             </span>
             <p data-aos="fade-up" data-aos-delay="200" class="mx-auto mt-6 max-w-3xl font-serif text-2xl font-medium leading-snug text-cream sm:text-3xl lg:text-4xl">
-                Menjadi firma riset dan konsultansi strategis terdepan yang menyediakan intelijen politik&ndash;ekonomi berbasis data, pemetaan wilayah, dan analisis mendalam untuk mendukung pengambilan keputusan yang presisi dan berdampak.
+                {{ __('Menjadi firma riset dan konsultansi strategis terdepan yang menyediakan intelijen politik–ekonomi berbasis data, pemetaan wilayah, dan analisis mendalam untuk mendukung pengambilan keputusan yang presisi dan berdampak.') }}
             </p>
         </div>
 
@@ -37,19 +37,19 @@
     <section class="bg-cream py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <x-section-heading
-                kicker="Misi"
-                title="Empat Pilar yang Mengarahkan Kerja Kami"
-                description="Langkah konkret yang kami tempuh untuk mewujudkan visi tersebut, dari lapangan hingga meja pengambil keputusan."
+                kicker="{{ __('Misi') }}"
+                title="{{ __('Empat Pilar yang Mengarahkan Kerja Kami') }}"
+                description="{{ __('Langkah konkret yang kami tempuh untuk mewujudkan visi tersebut, dari lapangan hingga meja pengambil keputusan.') }}"
                 align="center"
                 class="mx-auto"
             />
 
             @php
                 $missions = [
-                    ['icon' => 'heroicon-o-map', 'title' => 'Pemetaan Strategis', 'text' => 'Menyediakan pemetaan wilayah, aktor, dan dinamika kepentingan secara komprehensif untuk membaca perubahan politik dan ekonomi dengan ketepatan tinggi.'],
-                    ['icon' => 'heroicon-o-chart-bar-square', 'title' => 'Analisis Berbasis Data', 'text' => 'Mengelola serta menganalisis data dengan metodologi ilmiah mutakhir sebagai dasar keputusan yang objektif, terukur, dan akuntabel.'],
-                    ['icon' => 'heroicon-o-document-chart-bar', 'title' => 'Kajian Strategis', 'text' => 'Mengembangkan kajian strategis yang mengintegrasikan teori, data, dan realitas lapangan guna merumuskan skenario dan rekomendasi yang relevan serta efektif.'],
-                    ['icon' => 'heroicon-o-shield-check', 'title' => 'Integritas & Etika', 'text' => 'Menegakkan integritas, kerahasiaan, dan standar etika profesi yang tinggi dalam memberikan layanan konsultasi yang eksklusif dan dapat dipercaya.'],
+                    ['icon' => 'heroicon-o-map', 'title' => __('Pemetaan Strategis'), 'text' => __('Menyediakan pemetaan wilayah, aktor, dan dinamika kepentingan secara komprehensif untuk membaca perubahan politik dan ekonomi dengan ketepatan tinggi.')],
+                    ['icon' => 'heroicon-o-chart-bar-square', 'title' => __('Analisis Berbasis Data'), 'text' => __('Mengelola serta menganalisis data dengan metodologi ilmiah mutakhir sebagai dasar keputusan yang objektif, terukur, dan akuntabel.')],
+                    ['icon' => 'heroicon-o-document-chart-bar', 'title' => __('Kajian Strategis'), 'text' => __('Mengembangkan kajian strategis yang mengintegrasikan teori, data, dan realitas lapangan guna merumuskan skenario dan rekomendasi yang relevan serta efektif.')],
+                    ['icon' => 'heroicon-o-shield-check', 'title' => __('Integritas & Etika'), 'text' => __('Menegakkan integritas, kerahasiaan, dan standar etika profesi yang tinggi dalam memberikan layanan konsultasi yang eksklusif dan dapat dipercaya.')],
                 ];
             @endphp
 

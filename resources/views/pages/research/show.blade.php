@@ -4,7 +4,7 @@
 
         <div class="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
             <a href="{{ route('research.index') }}" data-aos="fade-up" class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300 hover:text-gold-200">
-                &larr; Semua Riset
+                &larr; {{ __('Semua Riset') }}
             </a>
             <span data-aos="fade-up" data-aos-delay="80" class="mt-6 block text-xs font-semibold uppercase tracking-[0.25em] text-gold-300">
                 {{ $project->category?->name }} &middot; {{ $project->year }}
@@ -13,7 +13,7 @@
                 {{ $project->title }}
             </h1>
             @if ($project->client)
-                <p data-aos="fade-up" data-aos-delay="200" class="mt-4 text-sm text-forest-100/70">Mitra: {{ $project->client }}</p>
+                <p data-aos="fade-up" data-aos-delay="200" class="mt-4 text-sm text-forest-100/70">{{ __('Mitra') }}: {{ $project->client }}</p>
             @endif
         </div>
     </section>
@@ -37,7 +37,7 @@
                 <a href="{{ asset('storage/'.$project->report_file) }}" target="_blank" rel="noopener" data-aos="fade-up" data-aos-delay="150"
                    class="mt-10 inline-flex items-center gap-2 rounded-full bg-forest-700 px-7 py-3 text-sm font-semibold text-cream shadow-sm transition-all hover:bg-forest-600">
                     <x-icon name="heroicon-o-document-arrow-down" class="h-4 w-4" />
-                    Unduh Laporan Lengkap
+                    {{ __('Unduh Laporan Lengkap') }}
                 </a>
             @endif
         </div>

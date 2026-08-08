@@ -23,13 +23,13 @@ document.addEventListener('livewire:navigated', () => AOS.refresh());
 // Alpine ships bundled with Livewire, so custom components are registered
 // via the alpine:init hook rather than importing/starting Alpine ourselves.
 document.addEventListener('alpine:init', () => {
-    Alpine.data('heroSection', () => ({
-        words: [
-            'Riset Kebijakan Publik',
-            'Analisis Politik & Geopolitik',
-            'Survey & Kajian Sosial',
-            'Strategi & Konsultasi',
-        ],
+    Alpine.data('heroSection', (words = [
+        'Riset Kebijakan Publik',
+        'Analisis Politik & Geopolitik',
+        'Survey & Kajian Sosial',
+        'Strategi & Konsultasi',
+    ]) => ({
+        words,
         wordIndex: 0,
 
         init() {

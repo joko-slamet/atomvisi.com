@@ -4,7 +4,7 @@
     <section class="bg-cream py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             @if ($articles->isEmpty())
-                <p class="text-center text-sm text-charcoal/60">Belum ada artikel yang dipublikasikan.</p>
+                <p class="text-center text-sm text-charcoal/60">{{ __('Belum ada artikel yang dipublikasikan.') }}</p>
             @else
                 <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
                     @foreach ($articles as $index => $article)
