@@ -12,7 +12,6 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\SpatieLaravelTranslatablePlugin;
 use Filament\View\PanelsRenderHook;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -33,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('Atom Visi Indonesia')
             ->brandLogo(fn () => asset('images/logo-light.png'))
             ->brandLogoHeight('2.25rem')
-            ->homeUrl(fn () => route('home'))
+            ->homeUrl(fn () => route('home', ['locale' => app()->getLocale()]))
             ->colors([
                 'primary' => [
                     50 => '224, 245, 241',
@@ -61,6 +60,10 @@ class AdminPanelProvider extends PanelProvider
                     900 => '105, 88, 33',
                 ],
             ])
+            ->renderHook(
+                PanelsRenderHook::TOPBAR_END,
+                fn () => view('filament.topbar.view-website-button'),
+            )
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
                 fn () => new HtmlString(<<<'HTML'
@@ -103,10 +106,6 @@ class AdminPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
-            ])
             ->plugin(
                 SpatieLaravelTranslatablePlugin::make()->defaultLocales(['id', 'en'])
             )
