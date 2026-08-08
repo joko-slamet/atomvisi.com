@@ -1,7 +1,7 @@
 <x-layouts.app
     :description="__('Atom Visi Indonesia adalah lembaga riset independen di bidang riset kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategis. Insight with Precision. Strategy with Impact.')"
 >
-    {{-- HERO --}}
+    {{-- HERO + SERVICES --}}
     <section
         id="hero"
         x-data="heroSection({{ Illuminate\Support\Js::from([
@@ -10,141 +10,59 @@
             __('Survey & Kajian Sosial'),
             __('Strategi & Konsultasi'),
         ]) }})"
-        class="relative isolate flex min-h-screen flex-col overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-600"
+        class="relative isolate z-10 bg-cream"
     >
-        {{-- Atmosphere: grain, dot-grid, drifting glow orb, parallax watermark --}}
-        <div class="pointer-events-none absolute inset-0">
-            <div class="absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
-
-            <div data-parallax="12" class="absolute inset-0 bg-dot-grid text-cream/[0.07]"></div>
-
-            <div data-parallax="35" class="animate-drift-slow absolute -left-24 top-1/4 h-[28rem] w-[28rem] rounded-full bg-gold-500/10 blur-3xl"></div>
-
+        {{-- Shared atmosphere across hero + services: grain, dot-grid, parallax watermarks --}}
+        <div class="pointer-events-none absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 bg-noise opacity-[0.05] mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-dot-grid text-forest-900/[0.06]"></div>
             <x-watermark
                 data-parallax="25"
-                class="absolute -right-32 -top-24 h-[36rem] w-[36rem] text-forest-500/20 sm:-right-16"
+                class="absolute -right-32 -top-24 h-[36rem] w-[36rem] text-forest-500/10 sm:-right-16"
             />
-
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(216,180,65,0.14),transparent_45%)]"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-forest-900 via-transparent to-transparent"></div>
+            <x-watermark class="absolute -left-40 top-[65%] h-[34rem] w-[34rem] -translate-y-1/2 text-forest-900/[0.03]" />
         </div>
 
-        <div class="relative mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-12 px-6 pb-20 pt-40 lg:grid-cols-12 lg:gap-8 lg:px-8">
-            <div class="lg:col-span-6">
-                <span data-reveal class="inline-flex w-fit items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300 backdrop-blur-sm">
-                    <span class="relative flex h-1.5 w-1.5">
-                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-400 opacity-75"></span>
-                        <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold-400"></span>
-                    </span>
-                    {{ __('Lembaga Riset Independen') }}
+        {{-- Hero content --}}
+        <div class="relative mx-auto flex w-full max-w-4xl flex-col items-center gap-2 px-6 pb-8 pt-40 text-center lg:px-8">
+            <span data-reveal class="inline-flex w-fit items-center gap-2 rounded-full border border-gold-500/30 bg-gold-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-700 backdrop-blur-sm">
+                <span class="relative flex h-1.5 w-1.5">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-500 opacity-75"></span>
+                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold-500"></span>
                 </span>
+                {{ __('Lembaga Riset Independen') }}
+            </span>
 
-                <h1 x-ref="headline" class="relative z-10 mt-6 font-serif text-4xl font-semibold leading-[1.08] text-cream sm:text-5xl lg:text-6xl">
-                    <span class="block overflow-hidden pb-1"><span data-line class="block">{{ __('Insight with Precision.') }}</span></span>
-                    <span class="block overflow-hidden pb-1">
-                        <span data-line class="block">
-                            {{ __('Strategy with') }}
-                            <span class="relative inline-block whitespace-nowrap text-gold-400">
-                                {{ __('Impact.') }}
-                                <svg class="absolute -bottom-1 left-0 h-2 w-full text-gold-400 sm:h-2.5" viewBox="0 0 220 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
-                                    <path x-ref="underline" d="M2 9.5C40 3 160 2 218 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-                                </svg>
-                            </span>
+            <h1 x-ref="headline" class="relative z-10 mt-6 font-serif text-4xl font-semibold leading-[1.08] text-forest-900 sm:text-5xl lg:text-6xl">
+                <span class="block overflow-hidden pb-1"><span data-line class="block">{{ __('Insight with Precision.') }}</span></span>
+                <span class="block overflow-hidden pb-1">
+                    <span data-line class="block">
+                        {{ __('Strategy with') }}
+                        <span class="relative inline-block whitespace-nowrap text-gold-600">
+                            {{ __('Impact.') }}
+                            <svg class="absolute -bottom-1 left-0 h-2 w-full text-gold-600 sm:h-2.5" viewBox="0 0 220 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
+                                <path x-ref="underline" d="M2 9.5C40 3 160 2 218 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                            </svg>
                         </span>
                     </span>
-                </h1>
+                </span>
+            </h1>
 
-                <div data-reveal class="relative z-10 mt-5 h-6 overflow-hidden text-sm font-medium uppercase tracking-[0.15em] text-sage-300">
-                    <span class="inline-flex items-center gap-2">
-                        {{ __('Spesialis dalam') }}
-                        <span class="relative inline-block overflow-hidden">
-                            <span x-ref="rotatingWord" x-text="words[wordIndex]" class="inline-block text-gold-300"></span>
-                        </span>
+            <div data-reveal class="relative z-10 mt-5 h-6 overflow-hidden text-sm font-medium uppercase tracking-[0.15em] text-forest-600">
+                <span class="inline-flex items-center gap-2">
+                    {{ __('Spesialis dalam') }}
+                    <span class="relative inline-block overflow-hidden">
+                        <span x-ref="rotatingWord" x-text="words[wordIndex]" class="inline-block text-gold-600"></span>
                     </span>
-                </div>
-
-                <p data-reveal class="relative z-10 mt-6 max-w-lg text-lg leading-relaxed text-forest-100/80">
-                    {{ __('Atom Visi Indonesia menghadirkan riset kebijakan publik, analisis politik & geopolitik, survey sosial, serta konsultasi strategis yang membantu para pengambil keputusan bertindak dengan keyakinan.') }}
-                </p>
-
-                <div data-reveal class="relative z-10 mt-10 flex flex-wrap items-center gap-4">
-                    <a href="{{ route('services.index') }}"
-                       class="group relative overflow-hidden rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold text-forest-900 shadow-lg shadow-gold-500/20 transition-all hover:shadow-xl">
-                        <span class="relative z-10">{{ __('Lihat Layanan Kami') }}</span>
-                        <span class="absolute inset-0 -translate-x-full bg-gold-400 transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
-                    </a>
-                    <a href="{{ route('contact') }}"
-                       class="rounded-full border border-cream/30 px-7 py-3.5 text-sm font-semibold text-cream transition-all hover:border-gold-400 hover:text-gold-300">
-                        {{ __('Hubungi Kami') }}
-                    </a>
-                </div>
+                </span>
             </div>
 
-            <div data-reveal class="relative lg:col-span-6">
-                {{-- Floating credibility badges over the image --}}
-                @if ($stats->count() >= 1)
-                    <div data-parallax="16" class="animate-float absolute -left-4 top-6 z-20 hidden items-center gap-3 rounded-2xl bg-cream px-5 py-3 shadow-xl sm:flex lg:-left-10">
-                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-forest-700/10 text-forest-700">
-                            <x-icon :name="$stats->get(2)->icon ?? 'heroicon-o-calendar-days'" class="h-4 w-4" />
-                        </span>
-                        <div class="leading-tight">
-                            <p class="font-serif text-lg font-semibold text-forest-800">{{ $stats->get(2)->value ?? $stats->first()->value }}{{ $stats->get(2)->suffix ?? $stats->first()->suffix }}</p>
-                            <p class="text-[0.65rem] uppercase tracking-wide text-charcoal/50">{{ $stats->get(2)->label ?? $stats->first()->label }}</p>
-                        </div>
-                    </div>
-                @endif
-
-                @if ($stats->count() >= 2)
-                    <div data-parallax="22" class="animate-float-delayed absolute -right-4 top-1/3 z-20 hidden items-center gap-3 rounded-2xl bg-forest-900 px-5 py-3 shadow-xl ring-1 ring-cream/10 sm:flex lg:-right-8">
-                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold-500/15 text-gold-400">
-                            <x-icon :name="$stats->get(1)->icon ?? 'heroicon-o-users'" class="h-4 w-4" />
-                        </span>
-                        <div class="leading-tight">
-                            <p class="font-serif text-lg font-semibold text-cream">{{ $stats->get(1)->value }}{{ $stats->get(1)->suffix }}</p>
-                            <p class="text-[0.65rem] uppercase tracking-wide text-forest-100/60">{{ $stats->get(1)->label }}</p>
-                        </div>
-                    </div>
-                @endif
-
-                @if ($stats->count() >= 1)
-                    <div data-parallax="18" class="animate-float absolute -bottom-6 right-6 z-20 hidden items-center gap-3 rounded-2xl bg-cream px-5 py-3 shadow-xl sm:flex lg:right-10">
-                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-forest-700/10 text-forest-700">
-                            <x-icon :name="$stats->first()->icon ?? 'heroicon-o-magnifying-glass'" class="h-4 w-4" />
-                        </span>
-                        <div class="leading-tight">
-                            <p class="font-serif text-lg font-semibold text-forest-800">{{ $stats->first()->value }}{{ $stats->first()->suffix }}</p>
-                            <p class="text-[0.65rem] uppercase tracking-wide text-charcoal/50">{{ $stats->first()->label }}</p>
-                        </div>
-                    </div>
-                @endif
-
-                <div x-data="tiltCard()"
-                     class="group relative aspect-[4/5] w-full overflow-hidden rounded-[63%_37%_54%_46%/45%_39%_61%_55%] border border-cream/10 shadow-2xl sm:aspect-[5/6]">
-                    <img src="{{ asset('images/hero.jpg') }}" alt="{{ __('Pusat riset dan analisis Atom Visi Indonesia') }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-forest-900/50 via-transparent to-transparent"></div>
-                </div>
-            </div>
         </div>
 
-        {{-- Curved divider into the next section --}}
-        <svg class="pointer-events-none relative z-10 block h-16 w-full text-cream sm:h-24 lg:h-32" viewBox="0 0 1440 100" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
-            <path d="M0,50 C200,195 900,-75 1440,85 L1440,100 L0,100 Z" />
-        </svg>
-    </section>
-
-    {{-- SERVICES --}}
-    <section class="relative bg-cream py-24 sm:py-32">
-        <div class="pointer-events-none absolute inset-0 overflow-hidden">
-            <x-watermark class="absolute -left-40 top-1/2 h-[34rem] w-[34rem] -translate-y-1/2 text-forest-900/[0.03]" />
-        </div>
-
-        <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
-            <x-section-heading :kicker="__('Layanan Kami')" align="center" class="mx-auto">
-                <x-slot:title>{{ __('Solusi Riset & Strategi yang Komprehensif') }}</x-slot:title>
-                <x-slot:description>{{ __('Enam lini layanan utama kami, dirancang untuk mendukung pengambilan keputusan berbasis data dan bukti.') }}</x-slot:description>
-            </x-section-heading>
-
-            @php
+        {{-- Services content --}}
+        <div class="relative pb-12 pt-8 sm:pb-16 sm:pt-10">
+            <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
+                @php
                 $serviceSubItems = [
                     'strategy-private-class' => [
                         __('Analisis Politik & Geopolitik'),
@@ -159,7 +77,7 @@
             @endphp
 
             @if ($services->isNotEmpty())
-                <div x-data="serviceShowcase({{ $services->count() }})" @mouseenter="paused = true" @mouseleave="paused = false" class="mt-16">
+                <div x-data="serviceShowcase({{ $services->count() }})" @mouseenter="paused = true" @mouseleave="paused = false" class="mt-4">
 
                     {{-- ORBIT (desktop) --}}
                     <div class="relative mx-auto hidden aspect-square w-full max-w-xl lg:block" data-aos="zoom-in">
@@ -278,6 +196,7 @@
                     </div>
                 </div>
             @endif
+            </div>
         </div>
     </section>
 
