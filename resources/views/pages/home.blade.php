@@ -110,21 +110,17 @@
 
                             {{-- Floating card(s) anchored to this node --}}
                             @php $subItems = $serviceSubItems[$service->slug] ?? []; @endphp
-                            <div x-show="active === {{ $index }}"
-                                 x-transition:enter="transition ease-out duration-300"
-                                 x-transition:enter-start="opacity-0 scale-95"
-                                 x-transition:enter-end="opacity-100 scale-100"
-                                 x-transition:leave="transition ease-in duration-150"
-                                 x-transition:leave-start="opacity-100 scale-100"
-                                 x-transition:leave-end="opacity-0 scale-95"
-                                 class="absolute z-50 w-96 text-left"
+                            <div class="absolute w-96 text-left transition-all duration-300"
+                                 :class="active === {{ $index }} ? 'z-50 scale-100 opacity-100' : 'z-10 scale-95 opacity-60'"
                                  style="
                                      {{ $isRight ? 'left: calc(' . $nodeX . '% + 2.25rem);' : 'right: calc(' . (100 - $nodeX) . '% + 2.25rem);' }}
                                      {{ $isBottom ? 'top: calc(' . $nodeY . '% - 0.5rem);' : ($isTop ? 'bottom: calc(' . (100 - $nodeY) . '% - 0.5rem);' : 'top: calc(' . $nodeY . '% - 4.5rem);') }}
                                  ">
                                 {{-- Main service card --}}
-                                <div class="rounded-2xl border border-forest-100 bg-white p-6 shadow-2xl shadow-forest-900/10">
-                                    <span class="text-base font-semibold uppercase tracking-wider text-gold-600">
+                                <div class="rounded-2xl border-2 bg-white p-6 shadow-2xl transition-colors duration-300"
+                                     :class="active === {{ $index }} ? 'border-gold-500 shadow-gold-500/20 ring-4 ring-gold-400/20' : 'border-forest-100 shadow-forest-900/10'">
+                                    <span class="text-base font-semibold uppercase tracking-wider transition-colors duration-300"
+                                          :class="active === {{ $index }} ? 'text-gold-600' : 'text-forest-400'">
                                         {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
                                     </span>
                                     <h3 class="mt-1 font-serif text-3xl font-semibold leading-snug text-forest-800">
