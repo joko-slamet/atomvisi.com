@@ -24,7 +24,7 @@
         </div>
 
         {{-- Hero content --}}
-        <div class="relative mx-auto flex w-full max-w-4xl flex-col items-center gap-2 px-6 pb-8 pt-40 text-center lg:px-8">
+        <div class="relative mx-auto flex w-full max-w-4xl flex-col items-center gap-2 px-6 pt-40 text-center lg:px-8">
             <h1 x-ref="headline" class="relative z-10 font-serif text-4xl font-semibold leading-[1.08] text-forest-900 sm:text-5xl lg:text-6xl">
                 <span class="block overflow-hidden pb-1"><span data-line class="block">{{ __('Insight with Precision.') }}</span></span>
                 <span class="block overflow-hidden pb-1">
@@ -52,7 +52,7 @@
         </div>
 
         {{-- Services content --}}
-        <div class="relative pb-12 pt-8 sm:pb-16 sm:pt-10">
+        <div class="relative pb-12 sm:pb-16">
             <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
                 @php
                 $serviceSubItems = [
@@ -69,13 +69,17 @@
             @endphp
 
             @if ($services->isNotEmpty())
-                <div x-data="serviceShowcase({{ $services->count() }})" @mouseenter="paused = true" @mouseleave="paused = false" class="mt-4">
+                <div x-data="serviceShowcase({{ $services->count() }})" @mouseenter="paused = true" @mouseleave="paused = false">
 
                     {{-- ORBIT (desktop) --}}
-                    <div class="relative mx-auto hidden aspect-square w-full max-w-xl lg:block" data-aos="zoom-in">
-                        {{-- decorative orbit rings --}}
-                        <div class="animate-orbit-slow absolute inset-[6%] rounded-full border border-dashed border-forest-200"></div>
-                        <div class="animate-orbit-slow-reverse absolute inset-[20%] rounded-full border border-dashed border-gold-200"></div>
+                    <div x-data="tiltCard()" class="relative mx-auto -mt-32 hidden aspect-square w-full max-w-6xl lg:-mt-48 lg:block" data-aos="zoom-in">
+                        {{-- decorative orbit rings, each carrying a small satellite dot --}}
+                        <div class="animate-orbit-slow absolute inset-[6%] rounded-full border border-dashed border-forest-200/70">
+                            <span class="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-forest-300 shadow-sm"></span>
+                        </div>
+                        <div class="animate-orbit-slow-reverse absolute inset-[20%] rounded-full border border-dashed border-gold-300/70">
+                            <span class="absolute -top-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-gold-400 shadow-sm"></span>
+                        </div>
 
                         {{-- spokes + nodes + per-node cards --}}
                         @foreach ($services as $index => $service)
@@ -90,16 +94,17 @@
                                 $isTop = sin($angleRad) <= -0.15;
                             @endphp
 
-                            <div class="absolute left-1/2 top-1/2 h-px origin-left bg-forest-200"
+                            <div class="absolute left-1/2 top-1/2 h-px origin-left bg-gradient-to-r from-forest-300 to-forest-100/0"
                                  style="width: 42%; transform: rotate({{ $angleDeg }}deg);"></div>
 
                             <button type="button" @click="select({{ $index }})" @mouseenter="select({{ $index }})"
                                     data-aos="zoom-in" data-aos-delay="{{ $index * 80 }}"
-                                    class="absolute z-10 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 bg-white shadow-lg transition-all duration-300"
+                                    class="absolute z-10 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 bg-white shadow-lg transition-all duration-300"
                                     :class="active === {{ $index }} ? 'border-gold-500 scale-110 shadow-gold-500/30' : 'border-forest-100 hover:border-forest-300 hover:scale-105'"
                                     style="left: {{ $nodeX }}%; top: {{ $nodeY }}%;">
-                                <span :class="active === {{ $index }} ? 'text-gold-600' : 'text-forest-700'">
-                                    <x-icon :name="$service->icon ?? 'heroicon-o-briefcase'" class="h-6 w-6" />
+                                <span x-show="active === {{ $index }}" class="animate-ping absolute inset-0 rounded-full bg-gold-400/40"></span>
+                                <span class="relative" :class="active === {{ $index }} ? 'text-gold-600' : 'text-forest-700'">
+                                    <x-icon :name="$service->icon ?? 'heroicon-o-briefcase'" class="h-10 w-10" />
                                 </span>
                             </button>
 
@@ -112,27 +117,27 @@
                                  x-transition:leave="transition ease-in duration-150"
                                  x-transition:leave-start="opacity-100 scale-100"
                                  x-transition:leave-end="opacity-0 scale-95"
-                                 class="absolute z-50 w-56 text-left"
+                                 class="absolute z-50 w-96 text-left"
                                  style="
                                      {{ $isRight ? 'left: calc(' . $nodeX . '% + 2.25rem);' : 'right: calc(' . (100 - $nodeX) . '% + 2.25rem);' }}
                                      {{ $isBottom ? 'top: calc(' . $nodeY . '% - 0.5rem);' : ($isTop ? 'bottom: calc(' . (100 - $nodeY) . '% - 0.5rem);' : 'top: calc(' . $nodeY . '% - 4.5rem);') }}
                                  ">
                                 {{-- Main service card --}}
-                                <div class="rounded-2xl border border-forest-100 bg-white p-4 shadow-2xl shadow-forest-900/10">
-                                    <span class="text-xs font-semibold uppercase tracking-wider text-gold-600">
+                                <div class="rounded-2xl border border-forest-100 bg-white p-6 shadow-2xl shadow-forest-900/10">
+                                    <span class="text-base font-semibold uppercase tracking-wider text-gold-600">
                                         {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
                                     </span>
-                                    <h3 class="mt-1 font-serif text-lg font-semibold leading-snug text-forest-800">
+                                    <h3 class="mt-1 font-serif text-3xl font-semibold leading-snug text-forest-800">
                                         {{ $service->name }}
                                     </h3>
                                     @if (empty($subItems))
-                                        <p class="mt-2 text-sm leading-relaxed text-charcoal/70">
+                                        <p class="mt-3 text-lg leading-relaxed text-charcoal/70">
                                             {{ $service->short_description }}
                                         </p>
                                         <a href="{{ route('services.show', $service) }}"
-                                           class="group mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-forest-700 transition-colors hover:text-gold-600">
+                                           class="group mt-4 inline-flex items-center gap-1.5 text-lg font-semibold text-forest-700 transition-colors hover:text-gold-600">
                                             {{ __('Pelajari Lebih Lanjut') }}
-                                            <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                                             </svg>
                                         </a>
@@ -141,17 +146,17 @@
 
                                 {{-- Sub-item cards --}}
                                 @if (! empty($subItems))
-                                    <div class="mt-2 space-y-2">
+                                    <div class="mt-3 space-y-3">
                                         @foreach ($subItems as $subItem)
-                                            <div class="rounded-xl border border-forest-100 bg-white p-3 shadow-lg shadow-forest-900/5">
-                                                <div class="flex items-start gap-2">
-                                                    <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500"></span>
-                                                    <span class="text-sm leading-snug text-charcoal/80">{{ $subItem }}</span>
+                                            <div class="rounded-xl border border-forest-100 bg-white p-5 shadow-lg shadow-forest-900/5">
+                                                <div class="flex items-start gap-2.5">
+                                                    <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-gold-500"></span>
+                                                    <span class="text-lg leading-snug text-charcoal/80">{{ $subItem }}</span>
                                                 </div>
                                                 <a href="{{ route('services.show', $service) }}"
-                                                   class="group mt-2 inline-flex items-center gap-1 pl-3.5 text-xs font-semibold text-forest-700 transition-colors hover:text-gold-600">
+                                                   class="group mt-2 inline-flex items-center gap-1 pl-[1.125rem] text-base font-semibold text-forest-700 transition-colors hover:text-gold-600">
                                                     {{ __('Pelajari Lebih Lanjut') }}
-                                                    <svg class="h-3 w-3 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                                                     </svg>
                                                 </a>
@@ -163,9 +168,19 @@
                         @endforeach
 
                         {{-- nucleus --}}
-                        <div class="absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-forest-700 shadow-2xl shadow-forest-900/30">
+                        <div class="absolute left-1/2 top-1/2 z-20 flex h-52 w-52 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-forest-700 shadow-2xl shadow-forest-900/30 ring-4 ring-cream">
+                            <span class="absolute -inset-6 -z-10 rounded-full bg-gold-400/10 blur-2xl"></span>
                             <span class="animate-glow-pulse absolute inset-0 rounded-full bg-gold-400/20"></span>
-                            <img src="{{ asset('images/logo-icon.png') }}" alt="Atom Visi Indonesia" class="relative h-16 w-auto">
+
+                            {{-- Autoplay progress ring --}}
+                            <svg class="pointer-events-none absolute left-1/2 top-1/2 z-0 h-60 w-60 -translate-x-1/2 -translate-y-1/2 -rotate-90" viewBox="0 0 100 100" aria-hidden="true">
+                                <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="2" class="text-cream/60" />
+                                <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                        class="text-gold-400" stroke-dasharray="295.3"
+                                        :stroke-dashoffset="295.3 - (295.3 * progress) / 100" />
+                            </svg>
+
+                            <img src="{{ asset('images/logo-icon.png') }}" alt="Atom Visi Indonesia" class="relative h-28 w-auto">
                         </div>
                     </div>
 

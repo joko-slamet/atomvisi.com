@@ -1,10 +1,7 @@
 <header
-    x-data="{ scrolled: false, mobileOpen: false, dropdown: null, scrollProgress: 0 }"
+    x-data="{ mobileOpen: false, dropdown: null, scrollProgress: 0 }"
     x-init="
-        const heroEl = document.getElementById('hero');
-        const threshold = () => heroEl ? heroEl.offsetHeight - 90 : 400;
         const onScroll = () => {
-            scrolled = window.scrollY > threshold();
             const max = document.documentElement.scrollHeight - window.innerHeight;
             scrollProgress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
         };
@@ -19,26 +16,18 @@
 
     <div class="mx-auto max-w-7xl px-4 pt-5 sm:px-6 lg:px-8">
         <nav aria-label="{{ __('Navigasi utama') }}"
-             class="flex items-center justify-between gap-4 rounded-full border py-2.5 pl-4 pr-2.5 backdrop-blur-md transition-colors duration-300"
-             :class="scrolled ? 'border-forest-100/60 bg-cream/95 shadow-lg shadow-forest-900/[0.06]' : 'border-cream/15 bg-forest-900/25 shadow-lg shadow-forest-900/10'">
+             class="flex items-center justify-between gap-4 rounded-full border border-forest-100/60 bg-cream/95 py-2.5 pl-4 pr-2.5 shadow-lg shadow-forest-900/[0.06] backdrop-blur-md">
             <div>
-                <template x-if="scrolled">
-                    <x-logo variant="dark" />
-                </template>
-                <template x-if="!scrolled">
-                    <x-logo variant="light" />
-                </template>
+                <x-logo variant="dark" />
             </div>
 
             <div class="hidden items-center gap-1 lg:flex">
-                <a href="{{ route('home') }}" class="rounded-full px-4 py-2 text-sm font-medium transition-colors"
-                   :class="scrolled ? 'text-charcoal hover:bg-forest-50 hover:text-forest-700' : 'text-cream hover:bg-cream/10 hover:text-gold-300'">
+                <a href="{{ route('home') }}" class="rounded-full px-4 py-2 text-sm font-medium text-charcoal transition-colors hover:bg-forest-50 hover:text-forest-700">
                     {{ __('Home') }}
                 </a>
 
                 <div class="relative" @mouseenter="dropdown = 'about'" @mouseleave="dropdown = null">
-                    <button type="button" class="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-colors"
-                            :class="scrolled ? 'text-charcoal hover:bg-forest-50 hover:text-forest-700' : 'text-cream hover:bg-cream/10 hover:text-gold-300'">
+                    <button type="button" class="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-charcoal transition-colors hover:bg-forest-50 hover:text-forest-700">
                         {{ __('Tentang') }}
                         <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>
                     </button>
@@ -53,19 +42,16 @@
                     </div>
                 </div>
 
-                <a href="{{ route('services.index') }}" class="rounded-full px-4 py-2 text-sm font-medium transition-colors"
-                   :class="scrolled ? 'text-charcoal hover:bg-forest-50 hover:text-forest-700' : 'text-cream hover:bg-cream/10 hover:text-gold-300'">
+                <a href="{{ route('services.index') }}" class="rounded-full px-4 py-2 text-sm font-medium text-charcoal transition-colors hover:bg-forest-50 hover:text-forest-700">
                     {{ __('Layanan') }}
                 </a>
 
-                <a href="{{ route('research.index') }}" class="rounded-full px-4 py-2 text-sm font-medium transition-colors"
-                   :class="scrolled ? 'text-charcoal hover:bg-forest-50 hover:text-forest-700' : 'text-cream hover:bg-cream/10 hover:text-gold-300'">
+                <a href="{{ route('research.index') }}" class="rounded-full px-4 py-2 text-sm font-medium text-charcoal transition-colors hover:bg-forest-50 hover:text-forest-700">
                     {{ __('Riset') }}
                 </a>
 
                 <div class="relative" @mouseenter="dropdown = 'insight'" @mouseleave="dropdown = null">
-                    <button type="button" class="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-colors"
-                            :class="scrolled ? 'text-charcoal hover:bg-forest-50 hover:text-forest-700' : 'text-cream hover:bg-cream/10 hover:text-gold-300'">
+                    <button type="button" class="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-charcoal transition-colors hover:bg-forest-50 hover:text-forest-700">
                         {{ __('Insight') }}
                         <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>
                     </button>
@@ -81,7 +67,7 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <x-language-switcher x-bind:class="scrolled ? 'text-charcoal hover:bg-forest-50 hover:text-forest-700' : 'text-cream hover:bg-cream/10 hover:text-gold-300'" />
+                <x-language-switcher class="text-charcoal hover:bg-forest-50 hover:text-forest-700" />
 
                 <a href="{{ route('contact') }}"
                    class="hidden rounded-full bg-gold-500 px-5 py-2.5 text-sm font-semibold text-forest-900 shadow-sm transition-all hover:bg-gold-400 hover:shadow-md sm:inline-flex">
@@ -89,8 +75,7 @@
                 </a>
 
                 <button type="button" @click="mobileOpen = !mobileOpen"
-                        class="inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors lg:hidden"
-                        :class="scrolled ? 'text-forest-800 hover:bg-forest-50' : 'text-cream hover:bg-cream/10'"
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-full text-forest-800 transition-colors hover:bg-forest-50 lg:hidden"
                         aria-label="{{ __('Buka menu') }}" :aria-expanded="mobileOpen">
                     <svg x-show="!mobileOpen" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" /></svg>
                     <svg x-show="mobileOpen" style="display:none" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" /></svg>
