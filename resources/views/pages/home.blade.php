@@ -173,7 +173,7 @@
                         {{-- nucleus --}}
                         <div class="absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-forest-700 shadow-2xl shadow-forest-900/30">
                             <span class="animate-glow-pulse absolute inset-0 rounded-full bg-gold-400/20"></span>
-                            <x-watermark class="relative h-10 w-10 text-gold-400" />
+                            <img src="{{ asset('images/logo-icon.png') }}" alt="Atom Visi Indonesia" class="relative h-16 w-auto">
                         </div>
                     </div>
 
