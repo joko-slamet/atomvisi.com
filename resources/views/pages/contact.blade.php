@@ -16,7 +16,7 @@
                         </span>
                         <div>
                             <h3 class="text-sm font-semibold text-forest-800">Alamat</h3>
-                            <p class="mt-1 text-sm text-charcoal/70">Lantai 3 Setiabudi 2 Building,<br>Kuningan, Jakarta Selatan</p>
+                            <p class="mt-1 text-sm text-charcoal/70">{!! nl2br(e($settings->address)) !!}</p>
                         </div>
                     </div>
                     <div class="flex gap-4">
@@ -25,7 +25,7 @@
                         </span>
                         <div>
                             <h3 class="text-sm font-semibold text-forest-800">Email</h3>
-                            <p class="mt-1 text-sm text-charcoal/70"><a href="mailto:cs@atomvisi.com" class="hover:text-forest-700">cs@atomvisi.com</a></p>
+                            <p class="mt-1 text-sm text-charcoal/70"><a href="mailto:{{ $settings->email }}" class="hover:text-forest-700">{{ $settings->email }}</a></p>
                         </div>
                     </div>
                     <div class="flex gap-4">
@@ -34,30 +34,34 @@
                         </span>
                         <div>
                             <h3 class="text-sm font-semibold text-forest-800">Telepon</h3>
-                            <p class="mt-1 text-sm text-charcoal/70"><a href="tel:+6282191292596" class="hover:text-forest-700">+62 821-9129-2596</a></p>
+                            <p class="mt-1 text-sm text-charcoal/70"><a href="tel:+{{ $settings->phone_digits }}" class="hover:text-forest-700">{{ $settings->phone }}</a></p>
                         </div>
                     </div>
-                    <div class="flex gap-4">
-                        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest-50 text-forest-700">
-                            <x-icon name="heroicon-o-camera" class="h-5 w-5" />
-                        </span>
-                        <div>
-                            <h3 class="text-sm font-semibold text-forest-800">Instagram</h3>
-                            <p class="mt-1 text-sm text-charcoal/70"><a href="https://www.instagram.com/atomvisi.id" target="_blank" rel="noopener" class="hover:text-forest-700">@atomvisi.id</a></p>
+                    @if ($settings->instagram_url)
+                        <div class="flex gap-4">
+                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest-50 text-forest-700">
+                                <x-icon name="heroicon-o-camera" class="h-5 w-5" />
+                            </span>
+                            <div>
+                                <h3 class="text-sm font-semibold text-forest-800">Instagram</h3>
+                                <p class="mt-1 text-sm text-charcoal/70"><a href="{{ $settings->instagram_url }}" target="_blank" rel="noopener" class="hover:text-forest-700">{{ $settings->instagram_handle }}</a></p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
 
-                <div class="mt-10 aspect-video overflow-hidden rounded-2xl border border-forest-100">
-                    <iframe
-                        title="Lokasi Atom Visi Indonesia"
-                        class="h-full w-full"
-                        loading="lazy"
-                        allowfullscreen
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d7932.719263300207!2d106.830164!3d-6.216214!3m2!1i1024!2i768!4f13.1!2m1!1sSetiabudi%202%20Building!5e0!3m2!1sen!2sus!4v1785980614006!5m2!1sen!2sus">
-                    </iframe>
-                </div>
+                @if ($settings->map_embed_url)
+                    <div class="mt-10 aspect-video overflow-hidden rounded-2xl border border-forest-100">
+                        <iframe
+                            title="Lokasi Atom Visi Indonesia"
+                            class="h-full w-full"
+                            loading="lazy"
+                            allowfullscreen
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            src="{{ $settings->map_embed_url }}">
+                        </iframe>
+                    </div>
+                @endif
             </div>
 
             <div class="lg:col-span-3" data-aos="fade-up" data-aos-delay="150">

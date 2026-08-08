@@ -36,6 +36,8 @@
 
     <x-layouts.footer :wave-color="$footerWaveColor" />
 
+    <x-whatsapp-float />
+
     @livewireScripts
 </body>
 </html>
