@@ -25,15 +25,7 @@
 
         {{-- Hero content --}}
         <div class="relative mx-auto flex w-full max-w-4xl flex-col items-center gap-2 px-6 pb-8 pt-40 text-center lg:px-8">
-            <span data-reveal class="inline-flex w-fit items-center gap-2 rounded-full border border-gold-500/30 bg-gold-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-700 backdrop-blur-sm">
-                <span class="relative flex h-1.5 w-1.5">
-                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-500 opacity-75"></span>
-                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold-500"></span>
-                </span>
-                {{ __('Lembaga Riset Independen') }}
-            </span>
-
-            <h1 x-ref="headline" class="relative z-10 mt-6 font-serif text-4xl font-semibold leading-[1.08] text-forest-900 sm:text-5xl lg:text-6xl">
+            <h1 x-ref="headline" class="relative z-10 font-serif text-4xl font-semibold leading-[1.08] text-forest-900 sm:text-5xl lg:text-6xl">
                 <span class="block overflow-hidden pb-1"><span data-line class="block">{{ __('Insight with Precision.') }}</span></span>
                 <span class="block overflow-hidden pb-1">
                     <span data-line class="block">
