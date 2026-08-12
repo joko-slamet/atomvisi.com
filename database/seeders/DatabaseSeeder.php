@@ -18,8 +18,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::firstOrCreate(
-            ['email' => 'admin@atomvisi.com'],
-            ['name' => 'Admin Atom Visi', 'password' => bcrypt('password')]
+            ['email' => env('ADMIN_EMAIL', 'admin@atomvisi.com')],
+            [
+                'name' => env('ADMIN_NAME', 'Admin Atom Visi'),
+                'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
+            ]
         );
 
         $this->seedCategories();
