@@ -23,7 +23,7 @@ class ResearchController extends Controller
         return view('pages.research.index', compact('featured', 'projects'));
     }
 
-    public function show(ResearchProject $researchProject)
+    public function show(string $locale, ResearchProject $researchProject)
     {
         abort_unless($researchProject->status === 'published', 404);
 

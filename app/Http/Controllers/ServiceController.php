@@ -13,7 +13,7 @@ class ServiceController extends Controller
         return view('pages.services.index', compact('services'));
     }
 
-    public function show(Service $service)
+    public function show(string $locale, Service $service)
     {
         abort_unless($service->is_active, 404);
 

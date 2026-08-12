@@ -63,7 +63,7 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function show(Article $article)
+    public function show(string $locale, Article $article)
     {
         abort_unless($article->status === 'published', 404);
 
