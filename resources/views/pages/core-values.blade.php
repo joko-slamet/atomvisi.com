@@ -20,7 +20,7 @@
 
             <blockquote data-aos="fade-up" class="mx-auto mt-10 max-w-xl rounded-2xl border border-forest-100 bg-forest-50/60 px-8 py-6 text-center">
                 <p class="font-serif text-xl font-medium italic leading-snug text-forest-800 sm:text-2xl">
-                    {{ __('"Insight with Precision. Strategy with Impact."') }}
+                    {{ __('"Wawasan yang Presisi. Strategi yang Berdampak."') }}
                 </p>
             </blockquote>
 

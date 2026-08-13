@@ -32,8 +32,8 @@
                     Admin Panel
                 </span>
                 <h1 class="mt-6 font-serif text-4xl font-semibold leading-tight text-cream">
-                    Insight with <span class="text-gold-400">Precision</span>.
-                    Strategy with <span class="text-gold-400">Impact</span>.
+                    Wawasan yang <span class="text-gold-400">Presisi</span>.
+                    Strategi yang <span class="text-gold-400">Berdampak</span>.
                 </h1>
                 <p class="mt-4 text-sm leading-relaxed text-forest-100/70">
                     Kelola artikel, riset, layanan, dan seluruh konten Atom Visi Indonesia dari satu tempat.

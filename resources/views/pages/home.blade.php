@@ -1,5 +1,5 @@
 <x-layouts.app
-    :description="__('Atom Visi Indonesia adalah lembaga riset independen di bidang riset kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategis. Insight with Precision. Strategy with Impact.')"
+    :description="__('Atom Visi Indonesia adalah lembaga riset independen di bidang riset kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategis. Wawasan yang Presisi. Strategi yang Berdampak.')"
 >
     {{-- HERO + SERVICES --}}
     <section
@@ -26,12 +26,12 @@
         {{-- Hero content --}}
         <div class="relative mx-auto flex w-full max-w-4xl flex-col items-center gap-2 px-6 pt-40 text-center lg:px-8">
             <h1 x-ref="headline" class="relative z-10 font-serif text-4xl font-semibold leading-[1.08] text-forest-900 sm:text-5xl lg:text-6xl">
-                <span class="block overflow-hidden pb-1"><span data-line class="block">{{ __('Insight with Precision.') }}</span></span>
+                <span class="block overflow-hidden pb-1"><span data-line class="block">{{ __('Wawasan yang Presisi.') }}</span></span>
                 <span class="block overflow-hidden pb-1">
                     <span data-line class="block">
-                        {{ __('Strategy with') }}
+                        {{ __('Strategi yang') }}
                         <span class="relative inline-block whitespace-nowrap text-gold-600">
-                            {{ __('Impact.') }}
+                            {{ __('Berdampak.') }}
                             <svg class="absolute -bottom-1 left-0 h-2 w-full text-gold-600 sm:h-2.5" viewBox="0 0 220 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
                                 <path x-ref="underline" d="M2 9.5C40 3 160 2 218 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
                             </svg>

@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ $title ? "$title — Atom Visi Indonesia" : 'Atom Visi Indonesia — Insight with Precision. Strategy with Impact.' }}</title>
+    <title>{{ $title ? "$title — Atom Visi Indonesia" : 'Atom Visi Indonesia — '.__('Wawasan yang Presisi. Strategi yang Berdampak.') }}</title>
     <meta name="description" content="{{ $description }}">
 
     <meta property="og:type" content="website">

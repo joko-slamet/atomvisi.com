@@ -12,7 +12,7 @@
             <div>
                 <x-logo variant="light" />
                 <p class="mt-5 max-w-xs text-sm leading-relaxed text-forest-100/80">
-                    {{ __('Insight with Precision. Strategy with Impact.') }}
+                    {{ __('Wawasan yang Presisi. Strategi yang Berdampak.') }}
                 </p>
                 <div class="mt-6 flex items-center gap-4">
                     @if ($settings->instagram_url)
