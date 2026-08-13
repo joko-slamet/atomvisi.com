@@ -5,11 +5,19 @@ namespace App\Models;
 use Database\Factories\TestimonialFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Testimonial extends Model
 {
     /** @use HasFactory<TestimonialFactory> */
     use HasFactory;
+    use HasTranslations;
+
+    public array $translatable = [
+        'client_role',
+        'client_company',
+        'quote',
+    ];
 
     protected $fillable = [
         'client_name',

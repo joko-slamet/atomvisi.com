@@ -6,12 +6,15 @@ use App\Filament\Resources\PageStatResource\Pages;
 use App\Models\PageStat;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
 class PageStatResource extends Resource
 {
+    use Translatable;
+
     protected static ?string $model = PageStat::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar-square';

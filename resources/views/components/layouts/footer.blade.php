@@ -7,7 +7,7 @@
 
     <x-watermark class="pointer-events-none absolute -bottom-24 -right-24 h-96 w-96 text-forest-700/40" />
 
-    <div class="relative mx-auto max-w-7xl px-6 py-16 lg:px-8">
+    <div class="relative mx-auto max-w-7xl px-6 pt-16 pb-4 lg:px-8">
         <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
             <div>
                 <x-logo variant="light" />
@@ -84,7 +84,7 @@
 
         <div class="mt-14 flex flex-col items-center justify-between gap-4 border-t border-forest-700 pt-8 text-xs text-forest-100/60 md:flex-row">
             <p>&copy; {{ now()->year }} Atom Visi Indonesia. {{ __('Seluruh hak cipta dilindungi.') }}</p>
-            <p class="italic">{{ __('Insight with Precision. Strategy with Impact.') }}</p>
+            <p>{{ __('Built by') }} Aksa Technology</p>
         </div>
     </div>
 </footer>
