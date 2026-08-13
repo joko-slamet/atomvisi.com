@@ -4,6 +4,6 @@
     $src = $variant === 'light' ? asset('images/logo-light.png') : asset('images/logo.png');
 @endphp
 
-<a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="inline-flex items-center" aria-label="Atom Visi Indonesia — Beranda">
+<a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="inline-flex items-center" aria-label="Beranda Atom Visi Indonesia">
     <img src="{{ $src }}" alt="Atom Visi Indonesia" class="h-9 w-auto sm:h-10">
 </a>

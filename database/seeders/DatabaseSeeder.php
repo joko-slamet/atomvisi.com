@@ -141,11 +141,6 @@ class DatabaseSeeder extends Seeder
 
     private function seedTeam(): void
     {
-        $bio = [
-            'id' => 'Peneliti berpengalaman dengan fokus pada isu-isu kebijakan publik dan strategi pembangunan di Indonesia.',
-            'en' => 'An experienced researcher focused on public policy issues and development strategy in Indonesia.',
-        ];
-
         $team = [
             [
                 'name' => 'Dr. Arya Wicaksono',
@@ -176,7 +171,6 @@ class DatabaseSeeder extends Seeder
         foreach ($team as $index => $member) {
             TeamMember::updateOrCreate(['slug' => Str::slug($member['name'])], [
                 ...$member,
-                'bio' => $bio,
                 'order' => $index,
                 'is_active' => true,
             ]);

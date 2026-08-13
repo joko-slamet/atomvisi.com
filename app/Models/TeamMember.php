@@ -16,7 +16,6 @@ class TeamMember extends Model
 
     public array $translatable = [
         'role',
-        'bio',
     ];
 
     protected $fillable = [
@@ -24,7 +23,6 @@ class TeamMember extends Model
         'slug',
         'role',
         'photo',
-        'bio',
         'email',
         'linkedin_url',
         'twitter_url',

@@ -11,11 +11,11 @@
             <div class="space-y-6 text-base leading-relaxed text-charcoal/80" data-aos="fade-up">
                 <p>{{ __('Atom Visi Indonesia lahir dari keyakinan bahwa keputusan strategis yang benar hanya dapat dihasilkan ketika data, konteks wilayah, dan pembacaan dinamika sosial–politik dipadukan secara presisi. Dalam lanskap politik–ekonomi yang semakin kompleks, ketepatan membaca medan menjadi penentu keunggulan. Karena itu, kami berdiri sebagai firma riset dan intelijen strategis yang menjadikan analisis yang mendalam, pemetaan wilayah yang presisi, serta objektivitas berbasis data sebagai fondasi utama dalam setiap kerja konsultasi.') }}</p>
 
-                <p>{{ __('Filosofi kami berakar pada pendekatan ATOM — sebuah prinsip yang menggambarkan unit kecil dengan dampak besar — yang kami terjemahkan ke dalam empat nilai inti:') }} <span class="font-semibold text-forest-800">{{ __('Analytical Excellence') }}</span>, <span class="font-semibold text-forest-800">{{ __('Topographical Intelligence') }}</span>, <span class="font-semibold text-forest-800">{{ __('Objective Rigor') }}</span>, {{ __('dan') }} <span class="font-semibold text-forest-800">{{ __('Mastery in Strategy') }}</span>. {{ __('Keempatnya membentuk metode kerja yang disiplin, berlapis, dan terukur, sehingga setiap temuan, skenario, maupun rekomendasi yang kami hasilkan tidak hanya informatif, tetapi juga dapat ditindaklanjuti dan berpotensi memenangkan kompetisi strategi.') }}</p>
+                <p>{{ __('Filosofi kami berakar pada pendekatan ATOM, sebuah prinsip yang menggambarkan unit kecil dengan dampak besar, yang kami terjemahkan ke dalam empat nilai inti:') }} <span class="font-semibold text-forest-800">{{ __('Analytical Excellence') }}</span>, <span class="font-semibold text-forest-800">{{ __('Topographical Intelligence') }}</span>, <span class="font-semibold text-forest-800">{{ __('Objective Rigor') }}</span>, {{ __('dan') }} <span class="font-semibold text-forest-800">{{ __('Mastery in Strategy') }}</span>. {{ __('Keempatnya membentuk metode kerja yang disiplin, berlapis, dan terukur, sehingga setiap temuan, skenario, maupun rekomendasi yang kami hasilkan tidak hanya informatif, tetapi juga dapat ditindaklanjuti dan berpotensi memenangkan kompetisi strategi.') }}</p>
 
-                <p>{{ __('Kami meyakini bahwa kekuatan analisis tidak berarti tanpa pemahaman lanskap, dan data tidak bernilai tanpa objektivitas. Begitu pula strategi tidak akan efektif tanpa integrasi menyeluruh antara teori, lapangan, dan dinamika kepentingan. Oleh karena itu, kami membangun pendekatan yang menyinergikan seluruh elemen tersebut ke dalam kerangka intelijen yang utuh — kerangka yang mampu menembus lapisan data, mengurai kompleksitas konteks, dan memberi arah yang jelas bagi pengambil keputusan.') }}</p>
+                <p>{{ __('Kami meyakini bahwa kekuatan analisis tidak berarti tanpa pemahaman lanskap, dan data tidak bernilai tanpa objektivitas. Begitu pula strategi tidak akan efektif tanpa integrasi menyeluruh antara teori, lapangan, dan dinamika kepentingan. Oleh karena itu, kami membangun pendekatan yang menyinergikan seluruh elemen tersebut ke dalam kerangka intelijen yang utuh, yang mampu menembus lapisan data, mengurai kompleksitas konteks, dan memberi arah yang jelas bagi pengambil keputusan.') }}</p>
 
-                <p>{{ __('Sebagai firma boutique yang menjunjung tinggi kerahasiaan dan integritas, kami berkomitmen memberi layanan yang eksklusif, berstandar tinggi, dan dapat dipercaya. Setiap proyek bagi kami bukan sekadar penyediaan informasi, tetapi misi untuk menghadirkan insight yang presisi dan strategi yang berdampak — sejalan dengan slogan kami:') }}</p>
+                <p>{{ __('Sebagai firma boutique yang menjunjung tinggi kerahasiaan dan integritas, kami berkomitmen memberi layanan yang eksklusif, berstandar tinggi, dan dapat dipercaya. Setiap proyek bagi kami bukan sekadar penyediaan informasi, tetapi misi untuk menghadirkan insight yang presisi dan strategi yang berdampak, sejalan dengan slogan kami:') }}</p>
             </div>
 
             <blockquote data-aos="fade-up" class="mx-auto mt-10 max-w-xl rounded-2xl border border-forest-100 bg-forest-50/60 px-8 py-6 text-center">
@@ -33,9 +33,9 @@
     {{-- CORE VALUES – ATOM --}}
     <section class="bg-forest-50 py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <x-section-heading kicker="{{ __('Core Values — ATOM') }}" align="center" class="mx-auto">
+            <x-section-heading kicker="{{ __('Core Values ATOM') }}" align="center" class="mx-auto">
                 <x-slot:title>{{ __('Empat Nilai Inti yang Membentuk Cara Kami Bekerja') }}</x-slot:title>
-                <x-slot:description>{{ __('Prinsip ATOM — unit kecil dengan dampak besar — kami terjemahkan menjadi metode kerja yang disiplin, berlapis, dan terukur.') }}</x-slot:description>
+                <x-slot:description>{{ __('Prinsip ATOM, unit kecil dengan dampak besar, kami terjemahkan menjadi metode kerja yang disiplin, berlapis, dan terukur.') }}</x-slot:description>
             </x-section-heading>
 
             @php

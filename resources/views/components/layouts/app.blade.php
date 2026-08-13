@@ -1,6 +1,6 @@
 @props([
     'title' => null,
-    'description' => 'Atom Visi Indonesia — lembaga riset independen di bidang kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategis.',
+    'description' => 'Atom Visi Indonesia adalah lembaga riset independen di bidang kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategis.',
     'ogImage' => null,
     'footerWaveColor' => 'text-cream',
 ])
@@ -11,11 +11,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ $title ? "$title — Atom Visi Indonesia" : 'Atom Visi Indonesia — '.__('Wawasan yang Presisi. Strategi yang Berdampak.') }}</title>
+    <title>{{ $title ? "$title | Atom Visi Indonesia" : 'Atom Visi Indonesia | '.__('Wawasan yang Presisi. Strategi yang Berdampak.') }}</title>
     <meta name="description" content="{{ $description }}">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ $title ? "$title — Atom Visi Indonesia" : 'Atom Visi Indonesia' }}">
+    <meta property="og:title" content="{{ $title ? "$title | Atom Visi Indonesia" : 'Atom Visi Indonesia' }}">
     <meta property="og:description" content="{{ $description }}">
     @if ($ogImage)
         <meta property="og:image" content="{{ $ogImage }}">

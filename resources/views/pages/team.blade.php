@@ -11,7 +11,7 @@
                 @foreach ($members as $index => $member)
                     <div data-aos="fade-up" data-aos-delay="{{ ($index % 3) * 100 }}"
                          class="group overflow-hidden rounded-2xl border border-forest-100 bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-forest-900/10">
-                        <div class="aspect-square w-full overflow-hidden bg-forest-100">
+                        <div class="aspect-[3/4] w-full overflow-hidden bg-forest-100">
                             @if ($member->photo)
                                 <img src="{{ asset('storage/'.$member->photo) }}" alt="{{ $member->name }}" loading="lazy"
                                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
@@ -26,9 +26,6 @@
                         <div class="p-6">
                             <h3 class="font-serif text-lg font-semibold text-forest-800">{{ $member->name }}</h3>
                             <p class="mt-1 text-sm font-medium text-gold-600">{{ $member->role }}</p>
-                            @if ($member->bio)
-                                <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-charcoal/70">{{ $member->bio }}</p>
-                            @endif
                             @if ($member->linkedin_url)
                                 <a href="{{ $member->linkedin_url }}" target="_blank" rel="noopener"
                                    class="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-forest-700 hover:text-gold-600">

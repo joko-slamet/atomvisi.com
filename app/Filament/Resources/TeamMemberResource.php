@@ -43,10 +43,6 @@ class TeamMemberResource extends Resource
                             ->label('Jabatan / Peran')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\Textarea::make('bio')
-                            ->label('Bio')
-                            ->rows(4)
-                            ->columnSpanFull(),
                     ]),
                 Forms\Components\Section::make('Foto & Kontak')
                     ->columnSpan(['lg' => 1])
@@ -54,7 +50,8 @@ class TeamMemberResource extends Resource
                         Forms\Components\FileUpload::make('photo')
                             ->label('Foto')
                             ->image()
-                            ->avatar()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios(['3:4'])
                             ->directory('team'),
                         Forms\Components\TextInput::make('email')
                             ->email()
