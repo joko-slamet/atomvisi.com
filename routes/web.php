@@ -25,6 +25,7 @@ Route::prefix('{locale}')
         Route::get('/vision-mission', [PageController::class, 'vision'])->name('vision');
         Route::get('/team', [TeamController::class, 'index'])->name('team');
         Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+        Route::get('/kalkulator-politik', [PageController::class, 'politicalCalculator'])->name('political-calculator');
 
         Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
         Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');

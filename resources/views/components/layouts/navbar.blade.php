@@ -50,6 +50,10 @@
                     {{ __('Riset') }}
                 </a>
 
+                <a href="{{ route('political-calculator') }}" class="rounded-full px-4 py-2 text-sm font-medium text-charcoal transition-colors hover:bg-forest-50 hover:text-forest-700">
+                    {{ __('Kalkulator Politik') }}
+                </a>
+
                 <div class="relative" @mouseenter="dropdown = 'insight'" @mouseleave="dropdown = null">
                     <button type="button" class="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-charcoal transition-colors hover:bg-forest-50 hover:text-forest-700">
                         {{ __('Insight') }}
@@ -95,6 +99,7 @@
                 <a href="{{ route('team') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-charcoal hover:bg-forest-50">{{ __('Tim Kami') }}</a>
                 <a href="{{ route('services.index') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-charcoal hover:bg-forest-50">{{ __('Layanan') }}</a>
                 <a href="{{ route('research.index') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-charcoal hover:bg-forest-50">{{ __('Riset') }}</a>
+                <a href="{{ route('political-calculator') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-charcoal hover:bg-forest-50">{{ __('Kalkulator Politik') }}</a>
                 <a href="{{ route('articles.index') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-charcoal hover:bg-forest-50">{{ __('Artikel') }}</a>
                 <a href="{{ route('op-ed.index') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-charcoal hover:bg-forest-50">{{ __('Op-Ed') }}</a>
                 <a href="{{ route('newsletter.index') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-charcoal hover:bg-forest-50">{{ __('Newsletter') }}</a>

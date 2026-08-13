@@ -43,4 +43,9 @@ class PageController extends Controller
     {
         return view('pages.contact');
     }
+
+    public function politicalCalculator()
+    {
+        return view('pages.political-calculator');
+    }
 }

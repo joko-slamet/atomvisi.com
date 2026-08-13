@@ -320,6 +320,28 @@
         </section>
     @endif
 
+    {{-- POLITICAL CALCULATOR BANNER --}}
+    <section class="bg-cream py-20">
+        <div class="mx-auto max-w-5xl px-6 lg:px-8">
+            <div data-aos="fade-up" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-forest-800 to-forest-600 px-6 py-14 text-center shadow-2xl shadow-forest-900/20 sm:px-16">
+                <div class="pointer-events-none absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
+                <x-watermark class="pointer-events-none absolute -bottom-16 -left-16 h-72 w-72 text-gold-500/10" />
+                <div class="relative">
+                    <x-section-heading :kicker="__('Alat Bantu Gratis')" align="center" light class="mx-auto">
+                        <x-slot:title>{{ __('Coba Kalkulator Politik Gratis') }}</x-slot:title>
+                        <x-slot:description>{{ __('Dapatkan estimasi jumlah pemilih, strategi pemenangan, dan roadmap 1 tahun untuk wilayah target Anda, didukung AI.') }}</x-slot:description>
+                    </x-section-heading>
+                    <div class="mt-8">
+                        <a href="{{ route('political-calculator') }}"
+                           class="rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold text-forest-900 shadow-lg shadow-gold-500/20 transition-all hover:bg-gold-400 hover:shadow-xl">
+                            {{ __('Coba Sekarang') }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- WHY CHOOSE US --}}
     @php
         $reasons = [
