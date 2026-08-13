@@ -14,7 +14,7 @@
     <p class="mt-3 text-sm leading-relaxed text-charcoal/70">{{ $service->short_description }}</p>
 
     <span class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-forest-700 transition-colors group-hover:text-gold-600">
-        Pelajari Lebih Lanjut
+        {{ __('Pelajari Lebih Lanjut') }}
         <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
     </span>
 </a>
