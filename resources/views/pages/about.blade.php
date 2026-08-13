@@ -1,4 +1,4 @@
-<x-layouts.app title="{{ __('Tentang Kami') }}">
+<x-layouts.app title="{{ __('Tentang Kami') }}" footerWaveColor="text-forest-50">
     <x-page-hero
         kicker="{{ __('Tentang Kami') }}"
         title="{{ __('Lembaga Riset Independen untuk Indonesia yang Lebih Baik') }}"
@@ -17,13 +17,14 @@
                 </div>
             </div>
 
-            <div data-aos="fade-up" data-aos-delay="150" class="relative aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br from-forest-600 to-forest-800">
-                <x-watermark class="absolute inset-0 m-auto h-40 w-40 text-cream/10" />
+            <div data-aos="fade-up" data-aos-delay="150" class="relative aspect-[2500/1432] self-center overflow-hidden rounded-2xl bg-gradient-to-br from-forest-600 to-forest-800">
+                <img src="{{ asset('images/about-us.jpg') }}" alt="{{ __('Tim Atom Visi Indonesia') }}" class="h-full w-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-forest-900/50 via-transparent to-transparent"></div>
             </div>
         </div>
     </section>
 
-    <section class="bg-forest-50/50 py-24 sm:py-32">
+    <section class="bg-forest-50 py-24 sm:py-32">
         <div class="mx-auto max-w-5xl px-6 text-center lg:px-8">
             <x-section-heading kicker="{{ __('Komitmen Kami') }}" align="center" class="mx-auto">
                 <x-slot:title>{{ __('Independensi, Ketelitian, dan Dampak') }}</x-slot:title>
