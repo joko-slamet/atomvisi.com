@@ -205,7 +205,7 @@
 
     {{-- STATS --}}
     @if ($stats->isNotEmpty())
-        <section class="mt-20 relative overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-700 py-24 sm:py-28">
+        <section class="mt-32 relative overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-700 py-24 sm:py-28">
             <div class="pointer-events-none absolute inset-0">
                 <div class="absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
                 <div class="absolute inset-0 bg-dot-grid text-cream/[0.06]"></div>
