@@ -33,11 +33,11 @@ class PoliticalCalculatorSubmissionResource extends Resource
                     ->falseIcon('heroicon-s-envelope')
                     ->trueColor('gray')
                     ->falseColor('warning'),
-                Tables\Columns\TextColumn::make('kota')
+                Tables\Columns\TextColumn::make('provinsi')
                     ->label('Wilayah')
-                    ->searchable()
+                    ->searchable(['provinsi', 'kota'])
                     ->weight(fn ($record) => $record->is_read ? FontWeight::Medium : FontWeight::Bold)
-                    ->description(fn ($record) => "{$record->kecamatan}, {$record->provinsi}"),
+                    ->formatStateUsing(fn ($record) => $record->region_label),
                 Tables\Columns\TextColumn::make('target_jabatan')
                     ->label('Target Jabatan')
                     ->formatStateUsing(fn ($record) => $record->target_jabatan_label)
@@ -100,14 +100,11 @@ class PoliticalCalculatorSubmissionResource extends Resource
                     ->schema([
                         Infolists\Split::make([
                             Infolists\Group::make([
-                                Infolists\TextEntry::make('kota')
+                                Infolists\TextEntry::make('provinsi')
                                     ->label('')
+                                    ->formatStateUsing(fn ($record) => $record->region_label)
                                     ->weight(FontWeight::Bold)
                                     ->size(Infolists\TextEntry\TextEntrySize::Large),
-                                Infolists\TextEntry::make('kecamatan')
-                                    ->label('')
-                                    ->formatStateUsing(fn ($record) => "{$record->kecamatan}, {$record->provinsi}")
-                                    ->color('gray'),
                                 Infolists\TextEntry::make('target_jabatan')
                                     ->label('')
                                     ->formatStateUsing(fn ($record) => $record->target_jabatan_label)

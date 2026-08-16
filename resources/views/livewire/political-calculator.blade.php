@@ -4,7 +4,7 @@
             <div class="rounded-2xl border border-forest-200 bg-forest-50 p-6 text-center">
                 <svg class="mx-auto h-10 w-10 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <h3 class="mt-3 font-serif text-xl font-semibold text-forest-800">{{ __('Estimasi Selesai Dibuat') }}</h3>
-                <p class="mt-1 text-sm text-charcoal/70">{{ $result->kecamatan }}, {{ $result->kota }}, {{ $result->provinsi }} &middot; {{ $result->target_jabatan_label }}</p>
+                <p class="mt-1 text-sm text-charcoal/70">{{ $result->region_label }} &middot; {{ $result->target_jabatan_label }}</p>
             </div>
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -99,29 +99,8 @@
                    class="absolute -left-[9999px] h-0 w-0 opacity-0" aria-hidden="true">
 
             <div>
-                <label for="provinsi" class="block text-sm font-medium text-forest-800">{{ __('Provinsi') }}</label>
-                <input type="text" id="provinsi" wire:model="provinsi" placeholder="{{ __('Contoh: Jawa Barat') }}"
-                       class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors placeholder:text-charcoal/30 focus:outline-none focus:ring-2 {{ $errors->has('provinsi') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
-                @error('provinsi') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
-            </div>
-
-            <div>
-                <label for="kota" class="block text-sm font-medium text-forest-800">{{ __('Kota/Kabupaten') }}</label>
-                <input type="text" id="kota" wire:model="kota" placeholder="{{ __('Contoh: Kabupaten Bandung') }}"
-                       class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors placeholder:text-charcoal/30 focus:outline-none focus:ring-2 {{ $errors->has('kota') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
-                @error('kota') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
-            </div>
-
-            <div>
-                <label for="kecamatan" class="block text-sm font-medium text-forest-800">{{ __('Kecamatan') }}</label>
-                <input type="text" id="kecamatan" wire:model="kecamatan" placeholder="{{ __('Contoh: Soreang') }}"
-                       class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors placeholder:text-charcoal/30 focus:outline-none focus:ring-2 {{ $errors->has('kecamatan') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
-                @error('kecamatan') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
-            </div>
-
-            <div>
                 <label for="target_jabatan" class="block text-sm font-medium text-forest-800">{{ __('Target Jabatan') }}</label>
-                <select id="target_jabatan" wire:model="target_jabatan"
+                <select id="target_jabatan" wire:model.live="target_jabatan"
                         class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors focus:outline-none focus:ring-2 {{ $errors->has('target_jabatan') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
                     <option value="">{{ __('Pilih target jabatan') }}</option>
                     <option value="gubernur">{{ __('Gubernur') }}</option>
@@ -131,6 +110,24 @@
                 </select>
                 @error('target_jabatan') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
             </div>
+
+            @if ($target_jabatan)
+                <div wire:transition>
+                    <label for="provinsi" class="block text-sm font-medium text-forest-800">{{ __('Provinsi') }}</label>
+                    <input type="text" id="provinsi" wire:model="provinsi" placeholder="{{ __('Contoh: Jawa Barat') }}"
+                           class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors placeholder:text-charcoal/30 focus:outline-none focus:ring-2 {{ $errors->has('provinsi') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
+                    @error('provinsi') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                </div>
+
+                @if ($target_jabatan !== 'gubernur')
+                    <div wire:transition>
+                        <label for="kota" class="block text-sm font-medium text-forest-800">{{ __('Kota/Kabupaten') }}</label>
+                        <input type="text" id="kota" wire:model="kota" placeholder="{{ __('Contoh: Kabupaten Bandung') }}"
+                               class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors placeholder:text-charcoal/30 focus:outline-none focus:ring-2 {{ $errors->has('kota') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
+                        @error('kota') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                    </div>
+                @endif
+            @endif
 
             <button type="submit"
                     wire:loading.attr="disabled" wire:target="submit"

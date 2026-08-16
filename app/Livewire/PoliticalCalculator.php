@@ -12,17 +12,14 @@ use Throwable;
 
 class PoliticalCalculator extends Component
 {
+    #[Validate('required|in:gubernur,walikota,bupati,caleg')]
+    public string $target_jabatan = '';
+
     #[Validate('required|string|max:100')]
     public string $provinsi = '';
 
-    #[Validate('required|string|max:100')]
+    #[Validate('required_unless:target_jabatan,gubernur|string|max:100')]
     public string $kota = '';
-
-    #[Validate('required|string|max:100')]
-    public string $kecamatan = '';
-
-    #[Validate('required|in:gubernur,walikota,bupati,caleg')]
-    public string $target_jabatan = '';
 
     // Honeypot: hidden from real visitors via CSS, bots tend to fill every field.
     public string $website = '';
@@ -39,6 +36,13 @@ class PoliticalCalculator extends Component
     public function mount(): void
     {
         $this->renderedAt = now()->timestamp;
+    }
+
+    public function updatedTargetJabatan(): void
+    {
+        if ($this->target_jabatan === 'gubernur') {
+            $this->kota = '';
+        }
     }
 
     public function submit(PoliticalCalculatorAnalyzer $analyzer): void
@@ -84,7 +88,6 @@ class PoliticalCalculator extends Component
             $this->result = $analyzer->generate(
                 $this->provinsi,
                 $this->kota,
-                $this->kecamatan,
                 $this->target_jabatan,
                 $ip,
             );
@@ -97,7 +100,7 @@ class PoliticalCalculator extends Component
 
     public function resetForm(): void
     {
-        $this->reset(['provinsi', 'kota', 'kecamatan', 'target_jabatan', 'website', 'submitted', 'result', 'errorMessage']);
+        $this->reset(['target_jabatan', 'provinsi', 'kota', 'website', 'submitted', 'result', 'errorMessage']);
         $this->mount();
     }
 

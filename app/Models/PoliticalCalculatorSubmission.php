@@ -9,7 +9,6 @@ class PoliticalCalculatorSubmission extends Model
     protected $fillable = [
         'provinsi',
         'kota',
-        'kecamatan',
         'target_jabatan',
         'jumlah_penduduk',
         'jumlah_pemilih_potensial',
@@ -40,5 +39,10 @@ class PoliticalCalculatorSubmission extends Model
             'caleg' => 'Calon Legislatif (Caleg)',
             default => $this->target_jabatan,
         };
+    }
+
+    public function getRegionLabelAttribute(): string
+    {
+        return $this->kota ? "{$this->kota}, {$this->provinsi}" : $this->provinsi;
     }
 }

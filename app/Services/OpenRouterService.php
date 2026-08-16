@@ -23,14 +23,14 @@ class OpenRouterService
      *   roadmap: array<int, array{bulan: int, fokus: string, minggu: array<int, array{minggu: int, aktivitas: string}>}>
      * }
      */
-    public function generatePoliticalAnalysis(string $province, string $city, string $district, string $target, ?string $model = null): array
+    public function generatePoliticalAnalysis(string $province, string $city, string $target, ?string $model = null): array
     {
         try {
-            return $this->requestAnalysis($province, $city, $district, $target, $model);
+            return $this->requestAnalysis($province, $city, $target, $model);
         } catch (RuntimeException $e) {
             // Structured output from the model can occasionally be malformed; one silent retry
             // is cheap insurance against non-compliance without introducing queue infrastructure.
-            return $this->requestAnalysis($province, $city, $district, $target, $model);
+            return $this->requestAnalysis($province, $city, $target, $model);
         }
     }
 
@@ -164,7 +164,7 @@ class OpenRouterService
         ];
     }
 
-    protected function requestAnalysis(string $province, string $city, string $district, string $target, ?string $model): array
+    protected function requestAnalysis(string $province, string $city, string $target, ?string $model): array
     {
         $apiKey = config('services.openrouter.key');
 
@@ -185,6 +185,8 @@ class OpenRouterService
 
             Anda diberi wilayah target dan target jabatan politik. Buat ESTIMASI KASAR yang realistis berdasarkan pengetahuan umum demografi Indonesia (BUKAN data resmi BPS/KPU, ini hanya untuk simulasi awal).
 
+            Jika hanya provinsi yang diberikan (target Gubernur), buat estimasi untuk keseluruhan provinsi tersebut. Jika kota/kabupaten juga diberikan (target Walikota/Bupati/Caleg), buat estimasi khusus untuk wilayah kota/kabupaten tersebut saja, bukan seluruh provinsi.
+
             Balas HANYA dengan satu objek JSON valid (tanpa markdown fence, tanpa teks lain di luar JSON) dengan struktur PERSIS seperti ini:
             {
               "jumlah_penduduk": <integer>,
@@ -204,7 +206,9 @@ class OpenRouterService
             - Semua teks dalam Bahasa Indonesia, singkat sesuai batas kata, tanpa penjelasan tambahan di luar struktur JSON di atas.
             PROMPT;
 
-        $userPrompt = "Provinsi: {$province}\nKota/Kabupaten: {$city}\nKecamatan: {$district}\nTarget jabatan: {$targetLabel}";
+        $userPrompt = $city !== ''
+            ? "Provinsi: {$province}\nKota/Kabupaten: {$city}\nTarget jabatan: {$targetLabel}"
+            : "Provinsi: {$province}\nTarget jabatan: {$targetLabel}";
 
         $response = Http::withToken($apiKey)
             ->withHeaders([
