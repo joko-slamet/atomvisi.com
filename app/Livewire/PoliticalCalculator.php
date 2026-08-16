@@ -5,21 +5,19 @@ namespace App\Livewire;
 use App\Models\PoliticalCalculatorSetting;
 use App\Models\PoliticalCalculatorSubmission;
 use App\Services\PoliticalCalculatorAnalyzer;
+use App\Support\WilayahIndonesia;
 use Illuminate\Support\Facades\RateLimiter;
-use Livewire\Attributes\Validate;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Throwable;
 
 class PoliticalCalculator extends Component
 {
-    #[Validate('required|in:gubernur,walikota,bupati,caleg')]
     public string $target_jabatan = '';
 
-    #[Validate('required|string|max:100')]
-    public string $provinsi = '';
+    public string $provinsi_id = '';
 
-    #[Validate('required_unless:target_jabatan,gubernur|string|max:100')]
-    public string $kota = '';
+    public string $kota_id = '';
 
     // Honeypot: hidden from real visitors via CSS, bots tend to fill every field.
     public string $website = '';
@@ -41,8 +39,37 @@ class PoliticalCalculator extends Component
     public function updatedTargetJabatan(): void
     {
         if ($this->target_jabatan === 'gubernur') {
-            $this->kota = '';
+            $this->kota_id = '';
         }
+    }
+
+    public function updatedProvinsiId(): void
+    {
+        $this->kota_id = '';
+    }
+
+    public function getProvincesProperty(): array
+    {
+        return WilayahIndonesia::provinces();
+    }
+
+    public function getRegenciesProperty(): array
+    {
+        return WilayahIndonesia::regencies($this->provinsi_id);
+    }
+
+    protected function rules(): array
+    {
+        $rules = [
+            'target_jabatan' => ['required', Rule::in(['gubernur', 'walikota', 'bupati', 'caleg'])],
+            'provinsi_id' => ['required', Rule::in(array_keys(WilayahIndonesia::provinces()))],
+        ];
+
+        if ($this->target_jabatan !== 'gubernur') {
+            $rules['kota_id'] = ['required', Rule::in(array_keys(WilayahIndonesia::regencies($this->provinsi_id)))];
+        }
+
+        return $rules;
     }
 
     public function submit(PoliticalCalculatorAnalyzer $analyzer): void
@@ -84,10 +111,13 @@ class PoliticalCalculator extends Component
         RateLimiter::hit($hourKey, 900);
         RateLimiter::hit($dayKey, 86400);
 
+        $province = WilayahIndonesia::provinceName($this->provinsi_id);
+        $city = $this->kota_id ? WilayahIndonesia::regencyName($this->provinsi_id, $this->kota_id) : '';
+
         try {
             $this->result = $analyzer->generate(
-                $this->provinsi,
-                $this->kota,
+                $province,
+                $city,
                 $this->target_jabatan,
                 $ip,
             );
@@ -100,7 +130,7 @@ class PoliticalCalculator extends Component
 
     public function resetForm(): void
     {
-        $this->reset(['target_jabatan', 'provinsi', 'kota', 'website', 'submitted', 'result', 'errorMessage']);
+        $this->reset(['target_jabatan', 'provinsi_id', 'kota_id', 'website', 'submitted', 'result', 'errorMessage']);
         $this->mount();
     }
 

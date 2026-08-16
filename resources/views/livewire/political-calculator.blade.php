@@ -113,18 +113,28 @@
 
             @if ($target_jabatan)
                 <div wire:transition>
-                    <label for="provinsi" class="block text-sm font-medium text-forest-800">{{ __('Provinsi') }}</label>
-                    <input type="text" id="provinsi" wire:model="provinsi" placeholder="{{ __('Contoh: Jawa Barat') }}"
-                           class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors placeholder:text-charcoal/30 focus:outline-none focus:ring-2 {{ $errors->has('provinsi') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
-                    @error('provinsi') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                    <label for="provinsi_id" class="block text-sm font-medium text-forest-800">{{ __('Provinsi') }}</label>
+                    <select id="provinsi_id" wire:model.live="provinsi_id"
+                            class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors focus:outline-none focus:ring-2 {{ $errors->has('provinsi_id') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
+                        <option value="">{{ __('Pilih provinsi') }}</option>
+                        @foreach ($this->provinces as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @error('provinsi_id') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 
-                @if ($target_jabatan !== 'gubernur')
+                @if ($target_jabatan !== 'gubernur' && $provinsi_id)
                     <div wire:transition>
-                        <label for="kota" class="block text-sm font-medium text-forest-800">{{ __('Kota/Kabupaten') }}</label>
-                        <input type="text" id="kota" wire:model="kota" placeholder="{{ __('Contoh: Kabupaten Bandung') }}"
-                               class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors placeholder:text-charcoal/30 focus:outline-none focus:ring-2 {{ $errors->has('kota') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
-                        @error('kota') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                        <label for="kota_id" class="block text-sm font-medium text-forest-800">{{ __('Kota/Kabupaten') }}</label>
+                        <select id="kota_id" wire:model="kota_id"
+                                class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors focus:outline-none focus:ring-2 {{ $errors->has('kota_id') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
+                            <option value="">{{ __('Pilih kota/kabupaten') }}</option>
+                            @foreach ($this->regencies as $id => $name)
+                                <option value="{{ $id }}">{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        @error('kota_id') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
                     </div>
                 @endif
             @endif
