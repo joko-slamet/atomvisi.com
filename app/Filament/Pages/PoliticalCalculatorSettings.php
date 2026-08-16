@@ -48,13 +48,13 @@ class PoliticalCalculatorSettings extends Page implements HasForms
                 Forms\Components\Section::make('Model AI')
                     ->schema([
                         Forms\Components\TextInput::make('model')
-                            ->label('Model OpenAI (opsional)')
-                            ->placeholder(config('services.openai.model', 'gpt-4o-mini'))
-                            ->helperText('Kosongkan untuk memakai model default dari OPENAI_MODEL di .env.'),
+                            ->label('Model OpenRouter (opsional)')
+                            ->placeholder(config('services.openrouter.model', 'google/gemini-2.5-flash'))
+                            ->helperText('Kosongkan untuk memakai model default dari OPENROUTER_MODEL di .env.'),
                     ]),
 
                 Forms\Components\Section::make('Batas Penggunaan')
-                    ->description('Mencegah penyalahgunaan karena setiap submission memanggil OpenAI (berbayar).')
+                    ->description('Mencegah penyalahgunaan karena setiap submission memanggil OpenRouter (berbayar).')
                     ->schema([
                         Forms\Components\TextInput::make('max_submissions_per_ip_per_day')
                             ->label('Maksimal Percobaan per IP per Hari')

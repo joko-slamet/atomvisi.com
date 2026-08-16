@@ -24,6 +24,6 @@ class PoliticalCalculatorSetting extends Model
 
     public function resolvedModel(): string
     {
-        return $this->model ?: config('services.openai.model', 'gpt-4o-mini');
+        return $this->model ?: config('services.openrouter.model', 'google/gemini-2.5-flash');
     }
 }

@@ -37,12 +37,8 @@ return [
 
     'openrouter' => [
         'key' => env('OPENROUTER_API_KEY'),
-        'model' => env('OPENROUTER_MODEL', 'openai/gpt-4o-mini'),
-    ],
-
-    'openai' => [
-        'key' => env('OPENAI_API_KEY'),
-        'model' => env('OPENAI_MODEL', 'gpt-4o-mini'),
+        'model' => env('OPENROUTER_MODEL', 'google/gemini-2.5-flash'),
+        'image_model' => env('OPENROUTER_IMAGE_MODEL', 'google/gemini-2.5-flash-image-preview'),
     ],
 
 ];
