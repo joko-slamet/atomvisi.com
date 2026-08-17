@@ -35,11 +35,15 @@ class OpenRouterService
     }
 
     /**
-     * Generate structured article content (title, excerpt, content) for a given prompt.
+     * Generate structured article content (title, excerpt, content) in both
+     * Indonesian and English for a given prompt, in a single AI call.
      *
-     * @return array{title: string, excerpt: string, content: string}
+     * @return array{
+     *   id: array{title: string, excerpt: string, content: string},
+     *   en: array{title: string, excerpt: string, content: string}
+     * }
      */
-    public function generateArticle(string $prompt, string $type = 'article', string $locale = 'id'): array
+    public function generateArticle(string $prompt, string $type = 'article'): array
     {
         $apiKey = config('services.openrouter.key');
 
@@ -47,7 +51,6 @@ class OpenRouterService
             throw new RuntimeException('OpenRouter API key belum diatur. Set OPENROUTER_API_KEY di file .env.');
         }
 
-        $language = $locale === 'en' ? 'English' : 'Indonesian';
         $typeLabel = match ($type) {
             'op-ed' => 'opinion/op-ed piece',
             'newsletter' => 'newsletter update',
@@ -57,10 +60,17 @@ class OpenRouterService
         $systemPrompt = <<<PROMPT
             You are an expert writer for Atom Visi Indonesia, an independent research institute focused on public policy research, political & geopolitical analysis, social surveys, and strategic consulting.
 
-            Write a well-structured {$typeLabel} in {$language} following the instruction given below. Respond ONLY with a single JSON object (no markdown fences, no commentary) with exactly these keys:
+            Write a well-structured {$typeLabel} following the instruction given below, in BOTH Indonesian and English. Respond ONLY with a single JSON object (no markdown fences, no commentary) with exactly this structure:
+            {
+              "id": {"title": "...", "excerpt": "...", "content": "..."},
+              "en": {"title": "...", "excerpt": "...", "content": "..."}
+            }
+
+            Rules for each language version:
             - "title": a compelling, concise headline (max 100 characters)
             - "excerpt": a 1-2 sentence summary (max 300 characters)
             - "content": the full article body as clean HTML using only <p>, <h2>, <h3>, <ul>, <li>, <strong>, <em> tags. Aim for 400-700 words. Do not include the title inside the content.
+            - The English version must read as if originally written in English (a natural adaptation for that audience), not a literal word-for-word translation of the Indonesian version.
             PROMPT;
 
         $response = Http::withToken($apiKey)
@@ -143,7 +153,10 @@ class OpenRouterService
     }
 
     /**
-     * @return array{title: string, excerpt: string, content: string}
+     * @return array{
+     *   id: array{title: string, excerpt: string, content: string},
+     *   en: array{title: string, excerpt: string, content: string}
+     * }
      */
     protected function parseArticleJson(string $raw): array
     {
@@ -153,15 +166,25 @@ class OpenRouterService
 
         $data = json_decode($cleaned, true);
 
-        if (! is_array($data) || ! isset($data['title'], $data['content'])) {
+        if (! is_array($data)) {
             throw new RuntimeException('Respons AI tidak sesuai format yang diharapkan. Coba lagi.');
         }
 
-        return [
-            'title' => (string) $data['title'],
-            'excerpt' => (string) ($data['excerpt'] ?? ''),
-            'content' => (string) $data['content'],
-        ];
+        $result = [];
+
+        foreach (['id', 'en'] as $locale) {
+            if (! isset($data[$locale]) || ! is_array($data[$locale]) || ! isset($data[$locale]['title'], $data[$locale]['content'])) {
+                throw new RuntimeException("Respons AI tidak lengkap untuk versi \"{$locale}\". Coba lagi.");
+            }
+
+            $result[$locale] = [
+                'title' => (string) $data[$locale]['title'],
+                'excerpt' => (string) ($data[$locale]['excerpt'] ?? ''),
+                'content' => (string) $data[$locale]['content'],
+            ];
+        }
+
+        return $result;
     }
 
     protected function requestAnalysis(string $province, string $city, string $target, ?string $model): array

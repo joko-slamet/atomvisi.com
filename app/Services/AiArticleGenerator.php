@@ -12,9 +12,9 @@ class AiArticleGenerator
 {
     public function __construct(protected OpenRouterService $openRouter) {}
 
-    public function generate(string $prompt, string $type = 'article', string $locale = 'id', ?int $categoryId = null): Article
+    public function generate(string $prompt, string $type = 'article', ?int $categoryId = null): Article
     {
-        $generated = $this->openRouter->generateArticle($prompt, $type, $locale);
+        $generated = $this->openRouter->generateArticle($prompt, $type);
 
         $article = new Article([
             'type' => $type,
@@ -23,12 +23,14 @@ class AiArticleGenerator
             'published_at' => now(),
         ]);
 
-        $article->setTranslation('title', $locale, $generated['title']);
-        $article->setTranslation('excerpt', $locale, $generated['excerpt']);
-        $article->setTranslation('content', $locale, $generated['content']);
+        foreach ($generated as $locale => $content) {
+            $article->setTranslation('title', $locale, $content['title']);
+            $article->setTranslation('excerpt', $locale, $content['excerpt']);
+            $article->setTranslation('content', $locale, $content['content']);
+        }
 
-        $article->slug = $this->uniqueSlug($generated['title']);
-        $article->featured_image = $this->tryGenerateCoverImage($generated['title'], $prompt);
+        $article->slug = $this->uniqueSlug($generated['id']['title']);
+        $article->featured_image = $this->tryGenerateCoverImage($generated['id']['title'], $prompt);
         $article->save();
 
         return $article;

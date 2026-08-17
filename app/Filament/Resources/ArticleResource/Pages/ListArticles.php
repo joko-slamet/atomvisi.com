@@ -44,7 +44,6 @@ class ListArticles extends ListRecords
                         $article = $generator->generate(
                             prompt: $prompt,
                             type: 'article',
-                            locale: app()->getLocale(),
                             categoryId: $category?->id,
                         );
                     } catch (Throwable $e) {

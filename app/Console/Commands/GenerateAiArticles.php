@@ -49,7 +49,6 @@ class GenerateAiArticles extends Command
             $article = $generator->generate(
                 prompt: $prompt,
                 type: $settings->type,
-                locale: 'id',
                 categoryId: $categoryId,
             );
 
