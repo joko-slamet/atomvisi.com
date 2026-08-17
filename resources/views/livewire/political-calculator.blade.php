@@ -1,93 +1,98 @@
-<div>
-    @if ($submitted && $result)
-        <div class="space-y-8" data-aos="fade-up">
-            <div class="rounded-2xl border border-forest-200 bg-forest-50 p-6 text-center">
-                <svg class="mx-auto h-10 w-10 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <h3 class="mt-3 font-serif text-xl font-semibold text-forest-800">{{ __('Estimasi Selesai Dibuat') }}</h3>
-                <p class="mt-1 text-sm text-charcoal/70">{{ $result->region_label }} &middot; {{ $result->target_jabatan_label }}</p>
+<div x-data="politicalCalculatorResult()" x-init="init()">
+    <div x-show="result" style="display: none;" class="space-y-8">
+        <div class="rounded-2xl border border-forest-200 bg-forest-50 p-6 text-center">
+            <svg class="mx-auto h-10 w-10 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <h3 class="mt-3 font-serif text-xl font-semibold text-forest-800">{{ __('Estimasi Selesai Dibuat') }}</h3>
+            <p class="mt-1 text-sm text-charcoal/70">
+                <span x-text="result?.region_label"></span> &middot; <span x-text="result?.target_jabatan_label"></span>
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div class="rounded-2xl border border-forest-100 bg-white p-5 text-center">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ __('Jumlah Penduduk') }}</p>
+                <p class="mt-2 font-serif text-2xl font-semibold text-forest-800" x-text="formatNumber(result?.jumlah_penduduk)"></p>
             </div>
-
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div class="rounded-2xl border border-forest-100 bg-white p-5 text-center">
-                    <p class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ __('Jumlah Penduduk') }}</p>
-                    <p class="mt-2 font-serif text-2xl font-semibold text-forest-800">{{ number_format($result->jumlah_penduduk, 0, ',', '.') }}</p>
-                </div>
-                <div class="rounded-2xl border border-forest-100 bg-white p-5 text-center">
-                    <p class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ __('Jumlah Pemilih Potensial') }}</p>
-                    <p class="mt-2 font-serif text-2xl font-semibold text-forest-800">{{ number_format($result->jumlah_pemilih_potensial, 0, ',', '.') }}</p>
-                </div>
-                <div class="rounded-2xl border border-forest-100 bg-white p-5 text-center">
-                    <p class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ __('Kelompok Umur yang Mendominasi') }}</p>
-                    <p class="mt-2 font-serif text-2xl font-semibold text-forest-800">{{ $result->kelompok_umur_dominan }}</p>
-                </div>
+            <div class="rounded-2xl border border-forest-100 bg-white p-5 text-center">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ __('Jumlah Pemilih Potensial') }}</p>
+                <p class="mt-2 font-serif text-2xl font-semibold text-forest-800" x-text="formatNumber(result?.jumlah_pemilih_potensial)"></p>
             </div>
-
-            <div class="rounded-2xl border border-forest-100 bg-white p-6">
-                <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Langkah-Langkah Strategis yang Disarankan') }}</h4>
-                <ul class="mt-4 space-y-3">
-                    @foreach ($result->langkah_strategis as $langkah)
-                        <li class="flex items-start gap-2.5 text-sm leading-relaxed text-charcoal/80">
-                            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500"></span>
-                            {{ $langkah }}
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-
-            <div class="rounded-2xl border border-forest-100 bg-white p-6">
-                <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Pembagian Porsi Komunikasi') }}</h4>
-                <div class="mt-4 space-y-4">
-                    @foreach ([
-                        'baliho' => __('Baliho'),
-                        'sosialisasi_kunjungan' => __('Sosialisasi & Kunjungan'),
-                        'instagram' => 'Instagram',
-                        'whatsapp' => 'WhatsApp',
-                    ] as $key => $label)
-                        <div>
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="font-medium text-charcoal/80">{{ $label }}</span>
-                                <span class="font-semibold text-forest-700">{{ $result->porsi_komunikasi[$key] ?? 0 }}%</span>
-                            </div>
-                            <div class="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-forest-50">
-                                <div class="h-full rounded-full bg-gold-500" style="width: {{ $result->porsi_komunikasi[$key] ?? 0 }}%"></div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="rounded-2xl border border-forest-100 bg-white p-6" x-data="{ open: 1 }">
-                <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Roadmap 1 Tahun') }}</h4>
-                <div class="mt-4 divide-y divide-forest-100">
-                    @foreach ($result->roadmap as $bulan)
-                        <div class="py-3">
-                            <button type="button" @click="open = (open === {{ $bulan['bulan'] }} ? null : {{ $bulan['bulan'] }})"
-                                    class="flex w-full items-center justify-between gap-4 text-left">
-                                <span class="text-sm font-semibold text-forest-800">{{ __('Bulan') }} {{ $bulan['bulan'] }} &middot; {{ $bulan['fokus'] }}</span>
-                                <svg class="h-4 w-4 shrink-0 text-forest-400 transition-transform" :class="open === {{ $bulan['bulan'] }} ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                            </button>
-                            <div x-show="open === {{ $bulan['bulan'] }}" x-transition class="mt-3 space-y-2 pl-1">
-                                @foreach ($bulan['minggu'] as $minggu)
-                                    <div class="flex items-start gap-2.5 text-sm text-charcoal/75">
-                                        <span class="mt-0.5 shrink-0 font-semibold text-gold-600">{{ __('Minggu') }} {{ $minggu['minggu'] }}</span>
-                                        <span>{{ $minggu['aktivitas'] }}</span>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <p class="text-center text-xs text-charcoal/50">{{ __('Estimasi berbasis AI, bukan data resmi BPS/KPU') }}</p>
-
-            <div class="text-center">
-                <button type="button" wire:click="resetForm" class="text-sm font-semibold text-forest-700 hover:text-gold-600">
-                    {{ __('Hitung Ulang') }}
-                </button>
+            <div class="rounded-2xl border border-forest-100 bg-white p-5 text-center">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ __('Kelompok Umur yang Mendominasi') }}</p>
+                <p class="mt-2 font-serif text-2xl font-semibold text-forest-800" x-text="result?.kelompok_umur_dominan"></p>
             </div>
         </div>
-    @else
+
+        <div class="rounded-2xl border border-forest-100 bg-white p-6">
+            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Langkah-Langkah Strategis yang Disarankan') }}</h4>
+            <ul class="mt-4 space-y-3">
+                <template x-for="(langkah, index) in (result?.langkah_strategis ?? [])" :key="index">
+                    <li class="flex items-start gap-2.5 text-sm leading-relaxed text-charcoal/80">
+                        <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500"></span>
+                        <span x-text="langkah"></span>
+                    </li>
+                </template>
+            </ul>
+        </div>
+
+        <div class="rounded-2xl border border-forest-100 bg-white p-6">
+            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Pembagian Porsi Komunikasi') }}</h4>
+            <div class="mt-4 space-y-4"
+                 x-data="{ items: [
+                     { key: 'baliho', label: @js(__('Baliho')) },
+                     { key: 'sosialisasi_kunjungan', label: @js(__('Sosialisasi & Kunjungan')) },
+                     { key: 'instagram', label: 'Instagram' },
+                     { key: 'whatsapp', label: 'WhatsApp' },
+                 ] }">
+                <template x-for="item in items" :key="item.key">
+                    <div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="font-medium text-charcoal/80" x-text="item.label"></span>
+                            <span class="font-semibold text-forest-700" x-text="(result?.porsi_komunikasi?.[item.key] ?? 0) + '%'"></span>
+                        </div>
+                        <div class="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-forest-50">
+                            <div class="h-full rounded-full bg-gold-500" :style="`width: ${result?.porsi_komunikasi?.[item.key] ?? 0}%`"></div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div class="rounded-2xl border border-forest-100 bg-white p-6">
+            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Roadmap 1 Tahun') }}</h4>
+            <div class="mt-4 divide-y divide-forest-100">
+                <template x-for="bulan in (result?.roadmap ?? [])" :key="bulan.bulan">
+                    <div class="py-3">
+                        <button type="button" @click="openMonth = (openMonth === bulan.bulan ? null : bulan.bulan)"
+                                class="flex w-full items-center justify-between gap-4 text-left">
+                            <span class="text-sm font-semibold text-forest-800">
+                                {{ __('Bulan') }} <span x-text="bulan.bulan"></span> &middot; <span x-text="bulan.fokus"></span>
+                            </span>
+                            <svg class="h-4 w-4 shrink-0 text-forest-400 transition-transform" :class="openMonth === bulan.bulan ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                        </button>
+                        <div x-show="openMonth === bulan.bulan" x-transition class="mt-3 space-y-2 pl-1">
+                            <template x-for="minggu in bulan.minggu" :key="minggu.minggu">
+                                <div class="flex items-start gap-2.5 text-sm text-charcoal/75">
+                                    <span class="mt-0.5 shrink-0 font-semibold text-gold-600">{{ __('Minggu') }} <span x-text="minggu.minggu"></span></span>
+                                    <span x-text="minggu.aktivitas"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <p class="text-center text-xs text-charcoal/50">{{ __('Estimasi berbasis AI, bukan data resmi BPS/KPU') }}</p>
+
+        <div class="text-center">
+            <button type="button" @click="clearResult" class="text-sm font-semibold text-forest-700 hover:text-gold-600">
+                {{ __('Hapus Riwayat & Hitung Ulang') }}
+            </button>
+        </div>
+    </div>
+
+    <div x-show="!result">
         <form wire:submit="submit" class="space-y-5">
             @if ($errorMessage)
                 <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -149,5 +154,5 @@
                 <span wire:loading wire:target="submit">{{ __('Menganalisis wilayah Anda, biasanya 20-30 detik...') }}</span>
             </button>
         </form>
-    @endif
+    </div>
 </div>

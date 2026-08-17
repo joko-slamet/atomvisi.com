@@ -20,6 +20,15 @@ AOS.init({
 
 document.addEventListener('livewire:navigated', () => AOS.refresh());
 
+// Livewire component updates (e.g. the political calculator or contact form
+// swapping in their result view) patch the DOM without a page navigation, so
+// AOS never sees newly-inserted [data-aos] elements unless told to rescan.
+document.addEventListener('livewire:init', () => {
+    Livewire.hook('commit', ({ succeed }) => {
+        succeed(() => AOS.refresh());
+    });
+});
+
 // Alpine ships bundled with Livewire, so custom components are registered
 // via the alpine:init hook rather than importing/starting Alpine ourselves.
 document.addEventListener('alpine:init', () => {
@@ -201,6 +210,43 @@ document.addEventListener('alpine:init', () => {
                 rotateX(0);
                 rotateY(0);
             });
+        },
+    }));
+
+    // Kalkulator politik: hasil dikirim dari Livewire lewat event "calculator-result-ready",
+    // lalu disimpan di localStorage sebagai riwayat sisi klien. "Hapus Riwayat" hanya
+    // menghapus data localStorage ini, record di database (untuk admin) tidak tersentuh.
+    Alpine.data('politicalCalculatorResult', () => ({
+        result: null,
+        openMonth: 1,
+        storageKey: 'atomvisi-political-calculator-result',
+
+        init() {
+            const saved = localStorage.getItem(this.storageKey);
+
+            if (saved) {
+                try {
+                    this.result = JSON.parse(saved);
+                } catch (e) {
+                    localStorage.removeItem(this.storageKey);
+                }
+            }
+
+            this.$wire.on('calculator-result-ready', (event) => {
+                this.result = event.payload;
+                this.openMonth = 1;
+                localStorage.setItem(this.storageKey, JSON.stringify(this.result));
+            });
+        },
+
+        clearResult() {
+            localStorage.removeItem(this.storageKey);
+            this.result = null;
+            this.$wire.resetForm();
+        },
+
+        formatNumber(value) {
+            return new Intl.NumberFormat('id-ID').format(value ?? 0);
         },
     }));
 });

@@ -122,10 +122,32 @@ class PoliticalCalculator extends Component
                 $ip,
             );
             $this->submitted = true;
+
+            // Hasil ditampilkan & disimpan sebagai riwayat di localStorage sisi klien
+            // (lihat politicalCalculatorResult di resources/js/app.js), terpisah dari
+            // record di database yang tetap tersimpan untuk keperluan admin.
+            $this->dispatch('calculator-result-ready', payload: $this->resultPayload());
         } catch (Throwable $e) {
             report($e);
             $this->errorMessage = __('Gagal memproses estimasi. Silakan coba lagi dalam beberapa saat.');
         }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function resultPayload(): array
+    {
+        return [
+            'region_label' => $this->result->region_label,
+            'target_jabatan_label' => $this->result->target_jabatan_label,
+            'jumlah_penduduk' => $this->result->jumlah_penduduk,
+            'jumlah_pemilih_potensial' => $this->result->jumlah_pemilih_potensial,
+            'kelompok_umur_dominan' => $this->result->kelompok_umur_dominan,
+            'langkah_strategis' => $this->result->langkah_strategis,
+            'porsi_komunikasi' => $this->result->porsi_komunikasi,
+            'roadmap' => $this->result->roadmap,
+        ];
     }
 
     public function resetForm(): void
