@@ -1,58 +1,232 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Atom Visi Indonesia — Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website institusi riset Atom Visi Indonesia, dibangun dengan Laravel + Livewire (frontend publik) dan Filament (admin panel).
 
-## About Laravel
+## Daftar Isi
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Tutorial Deploy ke VPS](#tutorial-deploy-ke-vps)
+- [Tutorial Setup Scheduler (Cron)](#tutorial-setup-scheduler-cron)
+- [Masalah Umum & Solusinya](#masalah-umum--solusinya)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tutorial Deploy ke VPS
 
-## Learning Laravel
+Asumsi: VPS Ubuntu dengan Nginx, PHP 8.3, MySQL, Composer, dan Node.js sudah terpasang.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### 1. Clone project
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+cd /var/www
+git clone <url-repo> atomvisi.com
+cd atomvisi.com
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Install dependencies
 
-## Contributing
+```bash
+composer install --no-dev --optimize-autoloader
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Konfigurasi `.env`
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Edit `.env`, isi minimal:
 
-## Security Vulnerabilities
+```env
+APP_NAME="Atom Visi Indonesia"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://domain-asli-anda.com   # WAJIB persis sama dengan domain yang diakses browser
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_DATABASE=...
+DB_USERNAME=...
+DB_PASSWORD=...
 
-## License
+MAIL_ADMIN_ADDRESS=admin@domain-anda.com
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+OPENROUTER_API_KEY=...   # wajib diisi, dipakai fitur Kalkulator Politik & AI Article Generator
+```
+
+> ⚠️ **`APP_URL` harus persis sama** dengan protokol + domain yang benar-benar diakses (termasuk `https://`). Laravel dan Filament memakai nilai ini untuk membangun URL absolut ke asset (CSS/JS Filament, gambar via `Storage::url()`). Kalau salah/beda domain, browser akan diam-diam menolak me-load resource tersebut (mixed content / cross-origin) — biasanya **tidak** muncul sebagai 404 yang jelas di tab Network, jadi gampang bikin bingung. Gejalanya: halaman render normal tapi CSS-nya tidak jalan sama sekali.
+
+### 4. Migrasi & seed database
+
+```bash
+php artisan migrate --force
+```
+
+### 5. Build asset frontend
+
+```bash
+npm run build
+```
+
+### 6. Publish asset Filament
+
+```bash
+php artisan filament:assets
+```
+
+Ini **wajib** dijalankan setiap kali install pertama kali atau setelah `composer update` yang menyentuh Filament — kalau terlewat, CSS/JS bawaan Filament (form, tabel, dsb di admin panel) tidak akan ter-load meskipun `npm run build` sudah dijalankan.
+
+### 7. Symlink storage
+
+```bash
+php artisan storage:link
+```
+
+### 8. Set permission
+
+```bash
+sudo chown -R www-data:www-data /var/www/atomvisi.com
+sudo chmod -R 775 storage bootstrap/cache
+```
+
+Sesuaikan `www-data` dengan user yang sebenarnya menjalankan PHP-FPM di server Anda (cek dengan `ps aux | grep php-fpm`).
+
+### 9. Konfigurasi akses admin panel
+
+Model `App\Models\User` harus meng-implementasikan `Filament\Models\Contracts\FilamentUser` dengan method `canAccessPanel()`. Ini **sudah** diimplementasikan di project ini (lihat `app/Models/User.php`), tapi penting untuk dipahami:
+
+> ⚠️ Filament secara default **menolak akses (403) di semua environment kecuali `local`** kalau `User` tidak meng-implementasikan `canAccessPanel()`. Ini pengaman bawaan, bukan bug — supaya panel admin tidak sengaja terbuka lebar begitu production. Kalau suatu saat method ini dihapus/berubah dan tiba-tiba semua halaman admin jadi 403 setelah login (tapi normal di lokal), ini penyebabnya.
+
+### 10. Konfigurasi Nginx
+
+Contoh server block:
+
+```nginx
+server {
+    server_name domain-anda.com;
+    root /var/www/atomvisi.com/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php;
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
+```
+
+Aktifkan HTTPS dengan Certbot:
+
+```bash
+sudo certbot --nginx -d domain-anda.com
+```
+
+### 11. Cache untuk production (opsional, terakhir setelah semua di atas beres)
+
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+> Kalau nanti ubah `.env` lagi, wajib `php artisan config:clear` dulu (atau `config:cache` ulang) — perubahan `.env` tidak akan kepakai selama config masih ter-cache dari sebelumnya.
+
+---
+
+## Tutorial Setup Scheduler (Cron)
+
+Fitur **AI Article Generator** (generate artikel otomatis terjadwal) butuh Laravel scheduler berjalan tiap menit di server. Tanpa ini, jadwal jam yang diatur di halaman **Pengaturan AI Artikel** tidak akan pernah jalan sendiri — cuma bisa jalan manual lewat tombol "Jalankan Sekarang".
+
+### 1. Cek path PHP
+
+```bash
+which php8.3
+```
+
+### 2. Pasang cron untuk user yang sama dengan web server
+
+Cek dulu user PHP-FPM:
+
+```bash
+ps aux | grep php-fpm
+```
+
+Biasanya `www-data`. Pasang crontab untuk user itu (bukan user pribadi Anda), supaya kepemilikan file yang ditulis scheduler (log, cache, session) konsisten dengan yang dipakai aplikasi sehari-hari:
+
+```bash
+sudo crontab -u www-data -e
+```
+
+Tambahkan baris (sesuaikan path project):
+
+```
+* * * * * cd /var/www/atomvisi.com && php8.3 artisan schedule:run >> /dev/null 2>&1
+```
+
+Simpan, lalu verifikasi:
+
+```bash
+sudo crontab -u www-data -l
+```
+
+### 3. Test manual sebelum menunggu jadwal asli
+
+```bash
+cd /var/www/atomvisi.com
+sudo -u www-data php8.3 artisan articles:generate-ai --force
+```
+
+Kalau berhasil generate 1 artikel published, alurnya sudah benar.
+
+### 4. Verifikasi cron benar-benar jalan tiap menit
+
+```bash
+sudo grep CRON /var/log/syslog | tail -20
+```
+
+Harus muncul baris baru tiap menit yang menyebut `schedule:run`.
+
+### Catatan timezone
+
+Jam yang diisi di halaman **Pengaturan AI Artikel** (misal `11:00`) selalu diinterpretasikan sebagai **WIB (Asia/Jakarta)**, terlepas dari timezone server atau `config('app.timezone')` (yang di-set `UTC`). Logic ini ada di `App\Models\AiArticleSetting::isDue()`. Jadi tidak perlu menyesuaikan timezone server — cron cukup jalan tiap menit seperti biasa, `isDue()` yang menentukan kapan waktunya benar-benar generate.
+
+### Untuk development lokal
+
+Tidak perlu crontab. Cukup jalankan di terminal terpisah:
+
+```bash
+php artisan schedule:work
+```
+
+Ini mensimulasikan cron (cek tiap menit) selama terminal itu dibiarkan terbuka. Tutup terminal = scheduler berhenti — jadi ini hanya untuk testing, bukan untuk production.
+
+---
+
+## Masalah Umum & Solusinya
+
+| Gejala | Penyebab | Solusi |
+|---|---|---|
+| Halaman login/admin polos, CSS tidak muncul | `APP_URL` di `.env` tidak cocok dengan domain asli, atau `filament:assets` belum dijalankan | Betulkan `APP_URL`, jalankan `php artisan filament:assets`, lalu `php artisan config:clear` |
+| Semua halaman admin panel 403 setelah login (tapi normal di lokal) | `User` model belum implement `canAccessPanel()` — default Filament menolak akses di luar `APP_ENV=local` | Pastikan `App\Models\User implements FilamentUser` dengan `canAccessPanel()` |
+| Artikel AI tidak ada gambar cover | Model gambar OpenRouter yang dipakai sudah tidak tersedia, atau `OPENROUTER_API_KEY` belum diisi | Cek `storage/logs/laravel.log`, pastikan `OPENROUTER_API_KEY` terisi dan model di `OPENROUTER_IMAGE_MODEL` masih valid |
+| Jadwal generate artikel otomatis tidak pernah jalan | Belum ada cron `schedule:run` di server, atau cron dipasang untuk user yang beda dari web server | Ikuti [Tutorial Setup Scheduler](#tutorial-setup-scheduler-cron) di atas |
+| Gambar upload manual (tim, layanan, dll) tidak muncul di halaman publik | File tersimpan di disk yang salah | Semua field upload di Filament sudah eksplisit pakai `->disk('public')`, pastikan `php artisan storage:link` sudah dijalankan |
