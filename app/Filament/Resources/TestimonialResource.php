@@ -38,6 +38,7 @@ class TestimonialResource extends Resource
                 Forms\Components\FileUpload::make('photo')
                     ->label('Foto')
                     ->image()
+                    ->disk('public')
                     ->avatar()
                     ->directory('testimonials'),
                 Forms\Components\Textarea::make('quote')
@@ -66,6 +67,7 @@ class TestimonialResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('photo')
                     ->label('')
+                    ->disk('public')
                     ->circular(),
                 Tables\Columns\TextColumn::make('client_name')
                     ->label('Nama Klien')

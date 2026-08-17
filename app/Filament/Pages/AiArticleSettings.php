@@ -3,7 +3,6 @@
 namespace App\Filament\Pages;
 
 use App\Models\AiArticleSetting;
-use App\Models\Category;
 use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -39,6 +38,7 @@ class AiArticleSettings extends Page implements HasForms
         $this->form->fill([
             ...$settings->toArray(),
             'run_times' => $settings->run_times ?? [],
+            'prompt' => $settings->promptOrDefault(),
         ]);
     }
 
@@ -49,7 +49,7 @@ class AiArticleSettings extends Page implements HasForms
         return $form
             ->schema([
                 Forms\Components\Section::make('Jadwal Otomatis')
-                    ->description('Atur jam berapa saja artikel di-generate otomatis setiap hari. Satu jadwal jam = satu artikel draft, dibuat untuk direview sebelum dipublikasikan.')
+                    ->description('Atur jam berapa saja artikel di-generate otomatis setiap hari. Satu jadwal jam = satu artikel, langsung dipublikasikan.')
                     ->schema([
                         Forms\Components\Toggle::make('is_scheduler_enabled')
                             ->label('Aktifkan generate otomatis')
@@ -74,29 +74,16 @@ class AiArticleSettings extends Page implements HasForms
                             ->visible(fn (Forms\Get $get) => $get('is_scheduler_enabled')),
                     ]),
 
-                Forms\Components\Section::make('Konten')
+                Forms\Components\Section::make('Prompt AI')
+                    ->description('Instruksi ini dikirim ke AI setiap kali generate artikel berjalan. Kategori dipilih otomatis secara acak dari kategori bertipe Artikel yang tersedia, dan menggantikan penanda "{kategori}" di bawah ini.')
                     ->schema([
-                        Forms\Components\Select::make('type')
-                            ->label('Jenis Artikel')
-                            ->options([
-                                'article' => 'Artikel / Blog',
-                                'op-ed' => 'Op-Ed',
-                                'newsletter' => 'Newsletter',
-                            ])
+                        Forms\Components\Textarea::make('prompt')
+                            ->label('')
                             ->required()
-                            ->native(false),
-                        Forms\Components\Select::make('category_id')
-                            ->label('Kategori Default')
-                            ->options(fn () => Category::query()->get()->pluck('name', 'id'))
-                            ->searchable()
-                            ->preload(),
-                        Forms\Components\Textarea::make('topics')
-                            ->label('Daftar Topik (satu topik per baris)')
-                            ->rows(6)
-                            ->helperText('Setiap kali generate otomatis berjalan, topik akan dipilih secara acak dari daftar ini.')
+                            ->rows(8)
+                            ->helperText('Gunakan "{kategori}" di mana pun Anda ingin nama kategori yang terpilih muncul.')
                             ->columnSpanFull(),
-                    ])
-                    ->columns(2),
+                    ]),
             ])
             ->statePath('data');
     }
@@ -108,15 +95,13 @@ class AiArticleSettings extends Page implements HasForms
                 ->label('Jalankan Sekarang')
                 ->icon('heroicon-o-play')
                 ->color('gray')
-                ->requiresConfirmation()
-                ->modalDescription('Ini akan langsung generate 1 artikel draft baru dari topik yang dikonfigurasi (di luar jadwal).')
                 ->action(function () {
                     $this->save(silent: true);
 
                     Artisan::call('articles:generate-ai', ['--force' => true]);
 
                     Notification::make()
-                        ->title('Generate selesai')
+                        ->title('Artikel berhasil dipublikasikan')
                         ->body(trim(Artisan::output()))
                         ->success()
                         ->send();

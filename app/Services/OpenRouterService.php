@@ -35,11 +35,11 @@ class OpenRouterService
     }
 
     /**
-     * Generate structured article content (title, excerpt, content) for a given topic.
+     * Generate structured article content (title, excerpt, content) for a given prompt.
      *
      * @return array{title: string, excerpt: string, content: string}
      */
-    public function generateArticle(string $topic, string $type = 'article', string $locale = 'id'): array
+    public function generateArticle(string $prompt, string $type = 'article', string $locale = 'id'): array
     {
         $apiKey = config('services.openrouter.key');
 
@@ -57,7 +57,7 @@ class OpenRouterService
         $systemPrompt = <<<PROMPT
             You are an expert writer for Atom Visi Indonesia, an independent research institute focused on public policy research, political & geopolitical analysis, social surveys, and strategic consulting.
 
-            Write a well-structured {$typeLabel} in {$language} about the given topic. Respond ONLY with a single JSON object (no markdown fences, no commentary) with exactly these keys:
+            Write a well-structured {$typeLabel} in {$language} following the instruction given below. Respond ONLY with a single JSON object (no markdown fences, no commentary) with exactly these keys:
             - "title": a compelling, concise headline (max 100 characters)
             - "excerpt": a 1-2 sentence summary (max 300 characters)
             - "content": the full article body as clean HTML using only <p>, <h2>, <h3>, <ul>, <li>, <strong>, <em> tags. Aim for 400-700 words. Do not include the title inside the content.
@@ -73,7 +73,7 @@ class OpenRouterService
                 'model' => config('services.openrouter.model', 'google/gemini-2.5-flash'),
                 'messages' => [
                     ['role' => 'system', 'content' => $systemPrompt],
-                    ['role' => 'user', 'content' => "Topic: {$topic}"],
+                    ['role' => 'user', 'content' => $prompt],
                 ],
                 'response_format' => ['type' => 'json_object'],
                 'temperature' => 0.7,
@@ -98,7 +98,7 @@ class OpenRouterService
      * Uses an image-capable model through OpenRouter's chat completions endpoint
      * (multimodal "modalities" output), rather than a separate images API.
      */
-    public function generateArticleCoverImage(string $title, string $topic): string
+    public function generateArticleCoverImage(string $title, string $prompt): string
     {
         $apiKey = config('services.openrouter.key');
 
@@ -106,7 +106,7 @@ class OpenRouterService
             throw new RuntimeException('OpenRouter API key belum diatur. Set OPENROUTER_API_KEY di file .env.');
         }
 
-        $prompt = "Professional editorial cover photo for a research/policy article titled \"{$title}\" about \"{$topic}\". Photorealistic photography style — natural lighting, shallow depth of field, corporate/editorial photography. NOT an illustration, NOT a 3D render, NOT a cartoon or flat vector graphic. No text or letters anywhere in the image.";
+        $imagePrompt = "Professional editorial cover photo for a research/policy article titled \"{$title}\" about \"{$prompt}\". Photorealistic photography style — natural lighting, shallow depth of field, corporate/editorial photography. NOT an illustration, NOT a 3D render, NOT a cartoon or flat vector graphic. No text or letters anywhere in the image.";
 
         $response = Http::withToken($apiKey)
             ->withHeaders([
@@ -117,7 +117,7 @@ class OpenRouterService
             ->post(self::ENDPOINT, [
                 'model' => config('services.openrouter.image_model', 'google/gemini-2.5-flash-image-preview'),
                 'messages' => [
-                    ['role' => 'user', 'content' => $prompt],
+                    ['role' => 'user', 'content' => $imagePrompt],
                 ],
                 'modalities' => ['image', 'text'],
             ]);

@@ -3,15 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AiArticleSetting extends Model
 {
+    public const DEFAULT_PROMPT = <<<'PROMPT'
+        Tulis satu artikel orisinal untuk kategori "{kategori}", sesuai fokus riset Atom Visi Indonesia (kebijakan publik, politik & geopolitik, survey sosial, dan konsultasi strategi). Pilih sudut pandang dan isu yang aktual serta relevan dengan situasi terkini di Indonesia.
+
+        Tulis dengan gaya jurnalistik yang informatif dan berbasis data/analisis, mudah dipahami baik oleh pembaca umum maupun pengambil kebijakan. Pastikan artikel SEO-friendly: judul menarik dan memuat kata kunci utama, paragraf pembuka langsung merangkum inti isu, gunakan sub-judul yang jelas, serta sisipkan variasi kata kunci terkait secara alami tanpa terkesan dipaksakan. Tutup artikel dengan insight atau rekomendasi singkat yang actionable.
+        PROMPT;
+
     protected $fillable = [
         'is_scheduler_enabled',
         'run_times',
-        'topics',
-        'category_id',
+        'prompt',
         'type',
         'last_run_at',
     ];
@@ -27,22 +31,16 @@ class AiArticleSetting extends Model
         return static::query()->firstOrCreate(['id' => 1]);
     }
 
-    public function category(): BelongsTo
+    public function promptOrDefault(): string
     {
-        return $this->belongsTo(Category::class);
+        return filled($this->prompt) ? $this->prompt : self::DEFAULT_PROMPT;
     }
 
     /**
-     * @return array<int, string>
+     * Jam di "run_times" diisi admin dalam waktu lokal Indonesia (WIB), terlepas dari
+     * timezone aplikasi (app.timezone = UTC), jadi perbandingannya dilakukan di sini.
      */
-    public function getTopicListAttribute(): array
-    {
-        return collect(preg_split('/\r?\n/', (string) $this->topics))
-            ->map(fn (string $topic) => trim($topic))
-            ->filter()
-            ->values()
-            ->all();
-    }
+    public const SCHEDULE_TIMEZONE = 'Asia/Jakarta';
 
     public function isDue(): bool
     {
@@ -56,7 +54,8 @@ class AiArticleSetting extends Model
             return false;
         }
 
-        $now = now();
+        $now = now(self::SCHEDULE_TIMEZONE);
+        $lastRunAt = $this->last_run_at?->copy()->setTimezone(self::SCHEDULE_TIMEZONE);
 
         foreach ($times as $time) {
             if (! preg_match('/^(\d{1,2}):(\d{2})/', (string) $time, $matches)) {
@@ -70,7 +69,7 @@ class AiArticleSetting extends Model
                 continue;
             }
 
-            if (blank($this->last_run_at) || $this->last_run_at->lt($scheduledAt)) {
+            if (blank($lastRunAt) || $lastRunAt->lt($scheduledAt)) {
                 return true;
             }
         }

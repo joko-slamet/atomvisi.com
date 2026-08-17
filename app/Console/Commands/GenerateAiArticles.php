@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\AiArticleSetting;
+use App\Models\Category;
 use App\Services\AiArticleGenerator;
 use Illuminate\Console\Command;
 use Throwable;
@@ -10,17 +11,17 @@ use Throwable;
 class GenerateAiArticles extends Command
 {
     protected $signature = 'articles:generate-ai
-        {--topic= : Generate a single article for this topic immediately, ignoring the schedule}
+        {--prompt= : Generate a single article for this prompt immediately, ignoring the schedule}
         {--force : Ignore the configured schedule and run now}';
 
-    protected $description = 'Generate one draft article using OpenRouter AI, based on the configured schedule and topics';
+    protected $description = 'Generate and publish one article using OpenRouter AI, based on the configured schedule and a randomly picked article category';
 
     public function handle(AiArticleGenerator $generator): int
     {
         $settings = AiArticleSetting::current();
 
-        if ($topic = $this->option('topic')) {
-            return $this->generateOne($generator, $settings, $topic, updateLastRun: false);
+        if ($prompt = $this->option('prompt')) {
+            return $this->generateOne($generator, $settings, $prompt, null, updateLastRun: false);
         }
 
         if (! $this->option('force') && ! $settings->isDue()) {
@@ -29,30 +30,30 @@ class GenerateAiArticles extends Command
             return self::SUCCESS;
         }
 
-        $topics = $settings->topic_list;
+        $category = Category::query()->where('type', 'article')->inRandomOrder()->first();
 
-        if (empty($topics)) {
-            $this->error('Tidak ada topik yang dikonfigurasi. Tambahkan topik di halaman Pengaturan AI Artikel.');
+        if (! $category) {
+            $this->error('Tidak ada kategori bertipe Artikel yang tersedia. Tambahkan kategori terlebih dahulu.');
 
             return self::FAILURE;
         }
 
-        $topic = collect($topics)->random();
+        $prompt = str_replace('{kategori}', $category->name, $settings->promptOrDefault());
 
-        return $this->generateOne($generator, $settings, $topic, updateLastRun: true);
+        return $this->generateOne($generator, $settings, $prompt, $category->id, updateLastRun: true);
     }
 
-    protected function generateOne(AiArticleGenerator $generator, AiArticleSetting $settings, string $topic, bool $updateLastRun): int
+    protected function generateOne(AiArticleGenerator $generator, AiArticleSetting $settings, string $prompt, ?int $categoryId, bool $updateLastRun): int
     {
         try {
             $article = $generator->generate(
-                topic: $topic,
+                prompt: $prompt,
                 type: $settings->type,
                 locale: 'id',
-                categoryId: $settings->category_id,
+                categoryId: $categoryId,
             );
 
-            $this->info("Berhasil: \"{$article->title}\" (draft #{$article->id})");
+            $this->info("Berhasil: \"{$article->title}\" (dipublikasikan #{$article->id})");
 
             if ($updateLastRun) {
                 $settings->update(['last_run_at' => now()]);
@@ -60,7 +61,7 @@ class GenerateAiArticles extends Command
 
             return self::SUCCESS;
         } catch (Throwable $e) {
-            $this->error("Gagal untuk topik \"{$topic}\": {$e->getMessage()}");
+            $this->error("Gagal untuk prompt \"{$prompt}\": {$e->getMessage()}");
 
             return self::FAILURE;
         }

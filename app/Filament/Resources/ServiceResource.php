@@ -72,6 +72,7 @@ class ServiceResource extends Resource
                         Forms\Components\FileUpload::make('image')
                             ->label('Gambar')
                             ->image()
+                            ->disk('public')
                             ->directory('services')
                             ->imageEditor(),
                         Forms\Components\TextInput::make('order')
@@ -104,6 +105,7 @@ class ServiceResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->label('')
+                    ->disk('public')
                     ->square(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama')

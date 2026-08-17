@@ -65,10 +65,12 @@ class ResearchProjectResource extends Resource
                         Forms\Components\FileUpload::make('featured_image')
                             ->label('Gambar Utama')
                             ->image()
+                            ->disk('public')
                             ->directory('research')
                             ->imageEditor(),
                         Forms\Components\FileUpload::make('report_file')
                             ->label('File Laporan (PDF)')
+                            ->disk('public')
                             ->directory('research/reports')
                             ->acceptedFileTypes(['application/pdf']),
                         Forms\Components\Toggle::make('is_featured')
@@ -97,6 +99,7 @@ class ResearchProjectResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('featured_image')
                     ->label('')
+                    ->disk('public')
                     ->square(),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Judul')

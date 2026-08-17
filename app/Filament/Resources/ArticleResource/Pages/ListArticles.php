@@ -27,35 +27,25 @@ class ListArticles extends ListRecords
                 ->icon('heroicon-o-sparkles')
                 ->color('gray')
                 ->form([
-                    Forms\Components\Textarea::make('topic')
-                        ->label('Topik / Judul yang diinginkan')
+                    Forms\Components\Textarea::make('prompt')
+                        ->label('Prompt')
                         ->required()
-                        ->rows(2)
-                        ->helperText('Jelaskan topik artikel, semakin spesifik semakin baik hasilnya.'),
-                    Forms\Components\Select::make('type')
-                        ->label('Jenis')
-                        ->options([
-                            'article' => 'Artikel / Blog',
-                            'op-ed' => 'Op-Ed',
-                            'newsletter' => 'Newsletter',
-                        ])
-                        ->default(fn () => AiArticleSetting::current()->type ?? 'article')
-                        ->required()
-                        ->native(false),
-                    Forms\Components\Select::make('category_id')
-                        ->label('Kategori')
-                        ->options(fn () => Category::query()->get()->pluck('name', 'id'))
-                        ->searchable()
-                        ->preload()
-                        ->default(fn () => AiArticleSetting::current()->category_id),
+                        ->rows(6)
+                        ->default(fn () => AiArticleSetting::current()->promptOrDefault())
+                        ->helperText('Instruksi untuk AI tentang artikel yang diinginkan. Kategori dipilih secara acak dari seluruh kategori artikel yang ada dan menggantikan penanda "{kategori}".'),
                 ])
                 ->action(function (array $data, AiArticleGenerator $generator) {
+                    $category = Category::query()->where('type', 'article')->inRandomOrder()->first();
+                    $prompt = $category
+                        ? str_replace('{kategori}', $category->name, $data['prompt'])
+                        : $data['prompt'];
+
                     try {
                         $article = $generator->generate(
-                            topic: $data['topic'],
-                            type: $data['type'],
+                            prompt: $prompt,
+                            type: 'article',
                             locale: app()->getLocale(),
-                            categoryId: $data['category_id'] ?? null,
+                            categoryId: $category?->id,
                         );
                     } catch (Throwable $e) {
                         Notification::make()
@@ -68,7 +58,7 @@ class ListArticles extends ListRecords
                     }
 
                     Notification::make()
-                        ->title('Draft artikel berhasil dibuat')
+                        ->title('Artikel berhasil dipublikasikan')
                         ->body($article->title)
                         ->success()
                         ->send();

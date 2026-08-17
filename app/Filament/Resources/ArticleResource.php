@@ -89,6 +89,7 @@ class ArticleResource extends Resource
                         Forms\Components\FileUpload::make('featured_image')
                             ->label('Gambar Utama')
                             ->image()
+                            ->disk('public')
                             ->directory('articles')
                             ->imageEditor(),
                     ]),
@@ -107,6 +108,7 @@ class ArticleResource extends Resource
                         Forms\Components\FileUpload::make('og_image')
                             ->label('OG Image')
                             ->image()
+                            ->disk('public')
                             ->directory('articles/og'),
                     ]),
             ])
@@ -119,6 +121,7 @@ class ArticleResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('featured_image')
                     ->label('')
+                    ->disk('public')
                     ->square(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
@@ -161,6 +164,13 @@ class ArticleResource extends Resource
                     ]),
             ])
             ->actions([
+                Tables\Actions\Action::make('view')
+                    ->label('Lihat Artikel')
+                    ->icon('heroicon-o-eye')
+                    ->color('gray')
+                    ->url(fn (Article $record) => route('articles.show', ['locale' => app()->getLocale() ?: 'id', 'article' => $record]))
+                    ->openUrlInNewTab()
+                    ->visible(fn (Article $record) => $record->status === 'published'),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

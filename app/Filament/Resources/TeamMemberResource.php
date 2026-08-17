@@ -50,6 +50,7 @@ class TeamMemberResource extends Resource
                         Forms\Components\FileUpload::make('photo')
                             ->label('Foto')
                             ->image()
+                            ->disk('public')
                             ->imageEditor()
                             ->imageEditorAspectRatios(['3:4'])
                             ->directory('team'),
@@ -83,6 +84,7 @@ class TeamMemberResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('photo')
                     ->label('')
+                    ->disk('public')
                     ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama')
