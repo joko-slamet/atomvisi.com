@@ -9,6 +9,11 @@
             </p>
         </div>
 
+        <div class="rounded-2xl border border-forest-100 bg-white p-6" x-show="result?.ringkasan_analisis">
+            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Ringkasan Analisis') }}</h4>
+            <p class="mt-3 text-sm leading-relaxed text-charcoal/80" x-text="result?.ringkasan_analisis"></p>
+        </div>
+
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div class="rounded-2xl border border-forest-100 bg-white p-5 text-center">
                 <p class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ __('Jumlah Penduduk') }}</p>
@@ -24,6 +29,15 @@
             </div>
         </div>
 
+        <div class="rounded-2xl border border-forest-100 bg-white p-6" x-show="(result?.pesan_utama ?? []).length">
+            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Pesan Utama Kampanye') }}</h4>
+            <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <template x-for="(pesan, index) in (result?.pesan_utama ?? [])" :key="index">
+                    <div class="rounded-xl border border-gold-200 bg-gold-50/60 p-4 text-sm leading-relaxed text-charcoal/80" x-text="pesan"></div>
+                </template>
+            </div>
+        </div>
+
         <div class="rounded-2xl border border-forest-100 bg-white p-6">
             <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Langkah-Langkah Strategis yang Disarankan') }}</h4>
             <ul class="mt-4 space-y-3">
@@ -34,6 +48,18 @@
                     </li>
                 </template>
             </ul>
+        </div>
+
+        <div class="rounded-2xl border border-forest-100 bg-white p-6" x-show="(result?.fokus_isu ?? []).length">
+            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Pendekatan per Isu Utama') }}</h4>
+            <div class="mt-4 space-y-4">
+                <template x-for="(item, index) in (result?.fokus_isu ?? [])" :key="index">
+                    <div class="rounded-xl border border-forest-100 bg-forest-50/40 p-4">
+                        <p class="text-sm font-semibold text-forest-800" x-text="item.isu"></p>
+                        <p class="mt-1.5 text-sm leading-relaxed text-charcoal/75" x-text="item.rekomendasi"></p>
+                    </div>
+                </template>
+            </div>
         </div>
 
         <div class="rounded-2xl border border-forest-100 bg-white p-6">

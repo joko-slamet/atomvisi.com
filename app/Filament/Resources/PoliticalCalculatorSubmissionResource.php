@@ -145,6 +145,14 @@ class PoliticalCalculatorSubmissionResource extends Resource
                     ])
                     ->columns(3),
 
+                Infolists\Section::make('Ringkasan Analisis')
+                    ->schema([
+                        Infolists\TextEntry::make('ringkasan_analisis')
+                            ->label('')
+                            ->formatStateUsing(fn (?string $state) => $state ?: '-')
+                            ->columnSpanFull(),
+                    ]),
+
                 Infolists\Section::make('Demografi')
                     ->schema([
                         Infolists\TextEntry::make('jumlah_penduduk')
@@ -157,6 +165,15 @@ class PoliticalCalculatorSubmissionResource extends Resource
                             ->label('Kelompok Umur yang Mendominasi'),
                     ])
                     ->columns(3),
+
+                Infolists\Section::make('Pesan Utama Kampanye')
+                    ->schema([
+                        Infolists\TextEntry::make('pesan_utama')
+                            ->label('')
+                            ->listWithLineBreaks()
+                            ->bulleted()
+                            ->columnSpanFull(),
+                    ]),
 
                 Infolists\Section::make('Langkah Strategis')
                     ->schema([
@@ -175,6 +192,18 @@ class PoliticalCalculatorSubmissionResource extends Resource
                         Infolists\TextEntry::make('porsi_komunikasi.whatsapp')->label('WhatsApp')->suffix('%'),
                     ])
                     ->columns(4),
+
+                Infolists\Section::make('Pendekatan per Isu Utama')
+                    ->schema([
+                        Infolists\RepeatableEntry::make('fokus_isu')
+                            ->label('')
+                            ->schema([
+                                Infolists\TextEntry::make('isu')->label('Isu')->weight(FontWeight::Bold),
+                                Infolists\TextEntry::make('rekomendasi')->label('Rekomendasi'),
+                            ])
+                            ->columns(2)
+                            ->columnSpanFull(),
+                    ]),
 
                 Infolists\Section::make('Roadmap 1 Tahun')
                     ->schema([

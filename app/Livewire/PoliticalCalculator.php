@@ -174,11 +174,14 @@ class PoliticalCalculator extends Component
         return [
             'region_label' => $this->result->region_label,
             'target_jabatan_label' => $this->result->target_jabatan_label,
+            'ringkasan_analisis' => $this->result->ringkasan_analisis,
             'jumlah_penduduk' => $this->result->jumlah_penduduk,
             'jumlah_pemilih_potensial' => $this->result->jumlah_pemilih_potensial,
             'kelompok_umur_dominan' => $this->result->kelompok_umur_dominan,
+            'pesan_utama' => $this->result->pesan_utama,
             'langkah_strategis' => $this->result->langkah_strategis,
             'porsi_komunikasi' => $this->result->porsi_komunikasi,
+            'fokus_isu' => $this->result->fokus_isu,
             'roadmap' => $this->result->roadmap,
         ];
     }

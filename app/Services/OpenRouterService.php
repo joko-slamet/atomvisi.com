@@ -216,15 +216,20 @@ class OpenRouterService
 
             Jika hanya provinsi yang diberikan (target Gubernur), buat estimasi untuk keseluruhan provinsi tersebut. Jika kota/kabupaten juga diberikan (target Walikota/Bupati/Caleg), buat estimasi khusus untuk wilayah kota/kabupaten tersebut saja, bukan seluruh provinsi.
 
-            PENTING: Manfaatkan profil kandidat (rentang usia, status pencalonan, tingkat pengenalan publik, kelompok masyarakat prioritas, prioritas sosialisasi saat ini, isu utama di wilayah, dan latar belakang kandidat jika diberikan) supaya "langkah_strategis", "porsi_komunikasi", dan "roadmap" benar-benar spesifik dan personal untuk kandidat ini — bukan generik. Contoh: kandidat baru dengan pengenalan publik rendah butuh roadmap awal yang fokus pada perkenalan diri, sementara petahana dengan pengenalan tinggi bisa langsung fokus penguatan dukungan pada isu prioritas. Sesuaikan juga porsi komunikasi dan langkah strategis dengan kelompok masyarakat prioritas serta isu utama yang dipilih.
+            PENTING: Manfaatkan profil kandidat (rentang usia, status pencalonan, tingkat pengenalan publik, kelompok masyarakat prioritas, prioritas sosialisasi saat ini, isu utama di wilayah, dan latar belakang kandidat jika diberikan) supaya SELURUH bagian output benar-benar spesifik dan personal untuk kandidat ini — bukan generik/template. Contoh: kandidat baru dengan pengenalan publik rendah butuh roadmap awal yang fokus pada perkenalan diri, sementara petahana dengan pengenalan tinggi bisa langsung fokus penguatan dukungan pada isu prioritas. Rujuk latar belakang kandidat (jika diberikan) secara eksplisit di "ringkasan_analisis" agar terasa personal, bukan template.
 
             Balas HANYA dengan satu objek JSON valid (tanpa markdown fence, tanpa teks lain di luar JSON) dengan struktur PERSIS seperti ini:
             {
+              "ringkasan_analisis": "<string 3-4 kalimat, sintesis kondisi & posisi strategis kandidat berdasarkan seluruh profil yang diberikan>",
               "jumlah_penduduk": <integer>,
               "jumlah_pemilih_potensial": <integer>,
               "kelompok_umur_dominan": "<string singkat, contoh '25-34 tahun'>",
+              "pesan_utama": ["<string, maksimal 20 kata>", ... TEPAT 3 item, pesan kampanye inti untuk kelompok masyarakat prioritas & isu utama yang dipilih],
               "langkah_strategis": ["<string, maksimal 25 kata>", ... total 5 sampai 7 item],
               "porsi_komunikasi": {"baliho": <integer>, "sosialisasi_kunjungan": <integer>, "instagram": <integer>, "whatsapp": <integer>},
+              "fokus_isu": [
+                {"isu": "<nama isu, sama persis dengan salah satu isu utama yang diberikan>", "rekomendasi": "<string, maksimal 30 kata, pendekatan/narasi spesifik untuk isu ini>"}
+              ],
               "roadmap": [
                 {"bulan": <integer 1-12>, "fokus": "<string, maksimal 8 kata>",
                  "minggu": [{"minggu": 1, "aktivitas": "<string, maksimal 15 kata>"}, {"minggu": 2, "aktivitas": "..."}, {"minggu": 3, "aktivitas": "..."}, {"minggu": 4, "aktivitas": "..."}]}
@@ -232,8 +237,10 @@ class OpenRouterService
             }
 
             Aturan wajib:
+            - "pesan_utama": harus TEPAT 3 item.
+            - "fokus_isu": jumlah item harus SAMA PERSIS dengan jumlah isu utama yang diberikan di bawah (satu objek per isu, field "isu" mengulang nama isu tersebut apa adanya).
             - "porsi_komunikasi": 4 angka integer (baliho, sosialisasi_kunjungan, instagram, whatsapp), totalnya harus PERSIS 100.
-            - "roadmap": harus TEPAT 12 objek bulan (bulan 1 sampai 12 berurutan), masing-masing harus TEPAT 4 objek minggu. Jangan kurang, jangan lebih.
+            - "roadmap": harus TEPAT 12 objek bulan (bulan 1 sampai 12 berurutan), masing-masing harus TEPAT 4 objek minggu. Jangan kurang, jangan lebih. Urutan fokus bulanan harus selaras dengan prioritas sosialisasi saat ini yang diberikan.
             - Semua teks dalam Bahasa Indonesia, singkat sesuai batas kata, tanpa penjelasan tambahan di luar struktur JSON di atas.
             PROMPT;
 
@@ -282,11 +289,14 @@ class OpenRouterService
 
     /**
      * @return array{
+     *   ringkasan_analisis: string,
      *   jumlah_penduduk: int,
      *   jumlah_pemilih_potensial: int,
      *   kelompok_umur_dominan: string,
+     *   pesan_utama: array<int, string>,
      *   langkah_strategis: array<int, string>,
      *   porsi_komunikasi: array{baliho: int, sosialisasi_kunjungan: int, instagram: int, whatsapp: int},
+     *   fokus_isu: array<int, array{isu: string, rekomendasi: string}>,
      *   roadmap: array<int, array{bulan: int, fokus: string, minggu: array<int, array{minggu: int, aktivitas: string}>}>
      * }
      */
@@ -302,7 +312,7 @@ class OpenRouterService
             throw new RuntimeException('Respons AI tidak sesuai format yang diharapkan.');
         }
 
-        $requiredKeys = ['jumlah_penduduk', 'jumlah_pemilih_potensial', 'kelompok_umur_dominan', 'langkah_strategis', 'porsi_komunikasi', 'roadmap'];
+        $requiredKeys = ['ringkasan_analisis', 'jumlah_penduduk', 'jumlah_pemilih_potensial', 'kelompok_umur_dominan', 'pesan_utama', 'langkah_strategis', 'porsi_komunikasi', 'fokus_isu', 'roadmap'];
         foreach ($requiredKeys as $key) {
             if (! array_key_exists($key, $data)) {
                 throw new RuntimeException("Respons AI tidak lengkap, field \"{$key}\" hilang.");
@@ -311,15 +321,44 @@ class OpenRouterService
 
         $porsiKomunikasi = $this->validatePorsiKomunikasi($data['porsi_komunikasi']);
         $roadmap = $this->validateRoadmap($data['roadmap']);
+        $fokusIsu = $this->validateFokusIsu($data['fokus_isu']);
 
         return [
+            'ringkasan_analisis' => (string) $data['ringkasan_analisis'],
             'jumlah_penduduk' => (int) $data['jumlah_penduduk'],
             'jumlah_pemilih_potensial' => (int) $data['jumlah_pemilih_potensial'],
             'kelompok_umur_dominan' => (string) $data['kelompok_umur_dominan'],
+            'pesan_utama' => array_values(array_map('strval', (array) $data['pesan_utama'])),
             'langkah_strategis' => array_values(array_map('strval', (array) $data['langkah_strategis'])),
             'porsi_komunikasi' => $porsiKomunikasi,
+            'fokus_isu' => $fokusIsu,
             'roadmap' => $roadmap,
         ];
+    }
+
+    /**
+     * @return array<int, array{isu: string, rekomendasi: string}>
+     */
+    protected function validateFokusIsu(mixed $fokusIsu): array
+    {
+        if (! is_array($fokusIsu) || empty($fokusIsu)) {
+            throw new RuntimeException('Respons AI untuk fokus isu tidak valid.');
+        }
+
+        $result = [];
+
+        foreach (array_values($fokusIsu) as $item) {
+            if (! is_array($item) || ! isset($item['isu'], $item['rekomendasi'])) {
+                throw new RuntimeException('Respons AI untuk fokus isu tidak lengkap.');
+            }
+
+            $result[] = [
+                'isu' => (string) $item['isu'],
+                'rekomendasi' => (string) $item['rekomendasi'],
+            ];
+        }
+
+        return $result;
     }
 
     /**
