@@ -168,6 +168,16 @@ return [
         'phone' => 'nomor telepon',
         'subject' => 'subjek',
         'message' => 'pesan',
+        'target_jabatan' => 'target jabatan',
+        'provinsi_id' => 'provinsi',
+        'kota_id' => 'kota/kabupaten',
+        'age_range' => 'rentang usia',
+        'candidate_status' => 'status pencalonan',
+        'public_recognition' => 'tingkat pengenalan publik',
+        'voter_target' => 'kelompok masyarakat prioritas',
+        'main_goal' => 'prioritas sosialisasi',
+        'local_issues' => 'isu utama',
+        'about_you' => 'tentang Anda',
     ],
 
 ];

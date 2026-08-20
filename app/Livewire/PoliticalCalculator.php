@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\PoliticalCalculatorSetting;
 use App\Models\PoliticalCalculatorSubmission;
 use App\Services\PoliticalCalculatorAnalyzer;
+use App\Support\PoliticalCalculatorOptions;
 use App\Support\WilayahIndonesia;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\Rule;
@@ -18,6 +19,21 @@ class PoliticalCalculator extends Component
     public string $provinsi_id = '';
 
     public string $kota_id = '';
+
+    public string $age_range = '';
+
+    public string $candidate_status = '';
+
+    public string $public_recognition = '';
+
+    public string $voter_target = '';
+
+    public string $main_goal = '';
+
+    /** @var array<int, string> */
+    public array $local_issues = [];
+
+    public string $about_you = '';
 
     // Honeypot: hidden from real visitors via CSS, bots tend to fill every field.
     public string $website = '';
@@ -63,6 +79,14 @@ class PoliticalCalculator extends Component
         $rules = [
             'target_jabatan' => ['required', Rule::in(['gubernur', 'walikota', 'bupati', 'caleg'])],
             'provinsi_id' => ['required', Rule::in(array_keys(WilayahIndonesia::provinces()))],
+            'age_range' => ['required', Rule::in(array_keys(PoliticalCalculatorOptions::ageRanges()))],
+            'candidate_status' => ['required', Rule::in(array_keys(PoliticalCalculatorOptions::candidateStatuses()))],
+            'public_recognition' => ['required', Rule::in(array_keys(PoliticalCalculatorOptions::recognitionLevels()))],
+            'voter_target' => ['required', Rule::in(array_keys(PoliticalCalculatorOptions::voterTargets()))],
+            'main_goal' => ['required', Rule::in(array_keys(PoliticalCalculatorOptions::mainGoals()))],
+            'local_issues' => ['required', 'array', 'min:1', 'max:3'],
+            'local_issues.*' => [Rule::in(array_keys(PoliticalCalculatorOptions::localIssues()))],
+            'about_you' => ['nullable', 'string', 'max:1000'],
         ];
 
         if ($this->target_jabatan !== 'gubernur') {
@@ -120,6 +144,15 @@ class PoliticalCalculator extends Component
                 $city,
                 $this->target_jabatan,
                 $ip,
+                [
+                    'age_range' => $this->age_range,
+                    'candidate_status' => $this->candidate_status,
+                    'public_recognition' => $this->public_recognition,
+                    'voter_target' => $this->voter_target,
+                    'main_goal' => $this->main_goal,
+                    'local_issues' => $this->local_issues,
+                    'about_you' => $this->about_you !== '' ? $this->about_you : null,
+                ],
             );
             $this->submitted = true;
 
@@ -152,7 +185,11 @@ class PoliticalCalculator extends Component
 
     public function resetForm(): void
     {
-        $this->reset(['target_jabatan', 'provinsi_id', 'kota_id', 'website', 'submitted', 'result', 'errorMessage']);
+        $this->reset([
+            'target_jabatan', 'provinsi_id', 'kota_id',
+            'age_range', 'candidate_status', 'public_recognition', 'voter_target', 'main_goal', 'local_issues', 'about_you',
+            'website', 'submitted', 'result', 'errorMessage',
+        ]);
         $this->mount();
     }
 

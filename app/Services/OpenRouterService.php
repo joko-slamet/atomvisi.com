@@ -23,14 +23,17 @@ class OpenRouterService
      *   roadmap: array<int, array{bulan: int, fokus: string, minggu: array<int, array{minggu: int, aktivitas: string}>}>
      * }
      */
-    public function generatePoliticalAnalysis(string $province, string $city, string $target, ?string $model = null): array
+    /**
+     * @param  array{age_range_label: string, candidate_status_label: string, public_recognition_label: string, voter_target_label: string, main_goal_label: string, local_issues_labels: array<int, string>, about_you: ?string}  $profile
+     */
+    public function generatePoliticalAnalysis(string $province, string $city, string $target, ?string $model = null, array $profile = []): array
     {
         try {
-            return $this->requestAnalysis($province, $city, $target, $model);
+            return $this->requestAnalysis($province, $city, $target, $model, $profile);
         } catch (RuntimeException $e) {
             // Structured output from the model can occasionally be malformed; one silent retry
             // is cheap insurance against non-compliance without introducing queue infrastructure.
-            return $this->requestAnalysis($province, $city, $target, $model);
+            return $this->requestAnalysis($province, $city, $target, $model, $profile);
         }
     }
 
@@ -187,7 +190,10 @@ class OpenRouterService
         return $result;
     }
 
-    protected function requestAnalysis(string $province, string $city, string $target, ?string $model): array
+    /**
+     * @param  array{age_range_label?: string, candidate_status_label?: string, public_recognition_label?: string, voter_target_label?: string, main_goal_label?: string, local_issues_labels?: array<int, string>, about_you?: ?string}  $profile
+     */
+    protected function requestAnalysis(string $province, string $city, string $target, ?string $model, array $profile = []): array
     {
         $apiKey = config('services.openrouter.key');
 
@@ -206,9 +212,11 @@ class OpenRouterService
         $systemPrompt = <<<PROMPT
             Anda adalah konsultan riset politik senior di Atom Visi Indonesia, lembaga riset independen yang fokus pada riset kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategi pemenangan.
 
-            Anda diberi wilayah target dan target jabatan politik. Buat ESTIMASI KASAR yang realistis berdasarkan pengetahuan umum demografi Indonesia (BUKAN data resmi BPS/KPU, ini hanya untuk simulasi awal).
+            Anda diberi wilayah target, target jabatan politik, dan profil kandidat. Buat ESTIMASI KASAR yang realistis berdasarkan pengetahuan umum demografi Indonesia (BUKAN data resmi BPS/KPU, ini hanya untuk simulasi awal).
 
             Jika hanya provinsi yang diberikan (target Gubernur), buat estimasi untuk keseluruhan provinsi tersebut. Jika kota/kabupaten juga diberikan (target Walikota/Bupati/Caleg), buat estimasi khusus untuk wilayah kota/kabupaten tersebut saja, bukan seluruh provinsi.
+
+            PENTING: Manfaatkan profil kandidat (rentang usia, status pencalonan, tingkat pengenalan publik, kelompok masyarakat prioritas, prioritas sosialisasi saat ini, isu utama di wilayah, dan latar belakang kandidat jika diberikan) supaya "langkah_strategis", "porsi_komunikasi", dan "roadmap" benar-benar spesifik dan personal untuk kandidat ini — bukan generik. Contoh: kandidat baru dengan pengenalan publik rendah butuh roadmap awal yang fokus pada perkenalan diri, sementara petahana dengan pengenalan tinggi bisa langsung fokus penguatan dukungan pada isu prioritas. Sesuaikan juga porsi komunikasi dan langkah strategis dengan kelompok masyarakat prioritas serta isu utama yang dipilih.
 
             Balas HANYA dengan satu objek JSON valid (tanpa markdown fence, tanpa teks lain di luar JSON) dengan struktur PERSIS seperti ini:
             {
@@ -232,6 +240,18 @@ class OpenRouterService
         $userPrompt = $city !== ''
             ? "Provinsi: {$province}\nKota/Kabupaten: {$city}\nTarget jabatan: {$targetLabel}"
             : "Provinsi: {$province}\nTarget jabatan: {$targetLabel}";
+
+        $userPrompt .= "\n\nProfil Kandidat:";
+        $userPrompt .= "\n- Rentang usia: ".($profile['age_range_label'] ?? '-');
+        $userPrompt .= "\n- Status pencalonan: ".($profile['candidate_status_label'] ?? '-');
+        $userPrompt .= "\n- Tingkat pengenalan publik saat ini: ".($profile['public_recognition_label'] ?? '-');
+        $userPrompt .= "\n- Kelompok masyarakat prioritas: ".($profile['voter_target_label'] ?? '-');
+        $userPrompt .= "\n- Prioritas sosialisasi saat ini: ".($profile['main_goal_label'] ?? '-');
+        $userPrompt .= "\n- Isu utama di wilayah: ".(filled($profile['local_issues_labels'] ?? null) ? implode(', ', $profile['local_issues_labels']) : '-');
+
+        if (filled($profile['about_you'] ?? null)) {
+            $userPrompt .= "\n- Latar belakang kandidat: {$profile['about_you']}";
+        }
 
         $response = Http::withToken($apiKey)
             ->withHeaders([

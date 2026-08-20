@@ -1,3 +1,4 @@
+@php use App\Support\PoliticalCalculatorOptions; @endphp
 <div x-data="politicalCalculatorResult()" x-init="init()">
     <div x-show="result" style="display: none;" class="space-y-8">
         <div class="rounded-2xl border border-forest-200 bg-forest-50 p-6 text-center">
@@ -142,13 +143,103 @@
                         @error('kota_id') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
                     </div>
                 @endif
+
+                @if ($provinsi_id && ($target_jabatan === 'gubernur' || $kota_id))
+                    <div wire:transition class="space-y-5 border-t border-forest-100 pt-5">
+                        <div>
+                            <label for="age_range" class="block text-sm font-medium text-forest-800">{{ __('Rentang Usia Anda') }}</label>
+                            <select id="age_range" wire:model="age_range"
+                                    class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors focus:outline-none focus:ring-2 {{ $errors->has('age_range') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
+                                <option value="">{{ __('Pilih rentang usia') }}</option>
+                                @foreach (PoliticalCalculatorOptions::ageRanges() as $key => $label)
+                                    <option value="{{ $key }}">{{ __($label) }}</option>
+                                @endforeach
+                            </select>
+                            @error('age_range') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="candidate_status" class="block text-sm font-medium text-forest-800">{{ __('Status Pencalonan') }}</label>
+                            <select id="candidate_status" wire:model="candidate_status"
+                                    class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors focus:outline-none focus:ring-2 {{ $errors->has('candidate_status') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
+                                <option value="">{{ __('Pilih status pencalonan') }}</option>
+                                @foreach (PoliticalCalculatorOptions::candidateStatuses() as $key => $label)
+                                    <option value="{{ $key }}">{{ __($label) }}</option>
+                                @endforeach
+                            </select>
+                            @error('candidate_status') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="public_recognition" class="block text-sm font-medium text-forest-800">{{ __('Tingkat Pengenalan Publik') }}</label>
+                            <select id="public_recognition" wire:model="public_recognition"
+                                    class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors focus:outline-none focus:ring-2 {{ $errors->has('public_recognition') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
+                                <option value="">{{ __('Pilih tingkat pengenalan publik') }}</option>
+                                @foreach (PoliticalCalculatorOptions::recognitionLevels() as $key => $label)
+                                    <option value="{{ $key }}">{{ __($label) }}</option>
+                                @endforeach
+                            </select>
+                            @error('public_recognition') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="voter_target" class="block text-sm font-medium text-forest-800">{{ __('Kelompok Masyarakat Prioritas') }}</label>
+                            <select id="voter_target" wire:model="voter_target"
+                                    class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors focus:outline-none focus:ring-2 {{ $errors->has('voter_target') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
+                                <option value="">{{ __('Pilih kelompok masyarakat prioritas') }}</option>
+                                @foreach (PoliticalCalculatorOptions::voterTargets() as $key => $label)
+                                    <option value="{{ $key }}">{{ __($label) }}</option>
+                                @endforeach
+                            </select>
+                            @error('voter_target') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="main_goal" class="block text-sm font-medium text-forest-800">{{ __('Prioritas Sosialisasi Saat Ini') }}</label>
+                            <select id="main_goal" wire:model="main_goal"
+                                    class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors focus:outline-none focus:ring-2 {{ $errors->has('main_goal') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
+                                <option value="">{{ __('Pilih prioritas sosialisasi') }}</option>
+                                @foreach (PoliticalCalculatorOptions::mainGoals() as $key => $label)
+                                    <option value="{{ $key }}">{{ __($label) }}</option>
+                                @endforeach
+                            </select>
+                            @error('main_goal') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-forest-800">{{ __('Isu Utama di Wilayah Anda') }}</label>
+                            <p class="mt-1 text-xs text-charcoal/60">{{ __('Pilih maksimal 3 isu yang paling menjadi perhatian masyarakat') }}</p>
+                            <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                @foreach (PoliticalCalculatorOptions::localIssues() as $key => $label)
+                                    <label class="flex cursor-pointer items-center gap-2.5 rounded-xl border border-forest-200 bg-white px-4 py-2.5 text-sm text-charcoal transition-colors has-checked:border-forest-500 has-checked:bg-forest-50">
+                                        <input type="checkbox" wire:model="local_issues" value="{{ $key }}"
+                                               class="h-4 w-4 shrink-0 rounded border-forest-300 text-forest-600 focus:ring-forest-500/30">
+                                        {{ __($label) }}
+                                    </label>
+                                @endforeach
+                            </div>
+                            @error('local_issues') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="about_you" class="block text-sm font-medium text-forest-800">
+                                {{ __('Tentang Anda (Pilihan)') }}
+                            </label>
+                            <p class="mt-1 text-xs text-charcoal/60">{{ __('Bantu kami mempersonalisasi strategi Anda. Ceritakan secara singkat latar belakang, pengalaman, aktivitas di masyarakat, kekuatan utama, atau hal yang membedakan Anda dari kandidat lainnya.') }}</p>
+                            <textarea id="about_you" wire:model="about_you" rows="4"
+                                      placeholder="{{ __('Contoh: "Pengusaha lokal, lahir dan besar di Kabupaten Bandung, aktif dalam komunitas UMKM selama 12 tahun, namun relatif baru di dunia politik."') }}"
+                                      class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors focus:outline-none focus:ring-2 {{ $errors->has('about_you') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}"></textarea>
+                            @error('about_you') <span class="mt-1.5 block text-xs text-red-600">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+                @endif
             @endif
 
             <button type="submit"
                     wire:loading.attr="disabled" wire:target="submit"
                     class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-forest-700 px-7 py-3.5 text-sm font-semibold text-cream shadow-sm transition-all hover:bg-forest-600 hover:shadow-md disabled:opacity-60">
                 <span wire:loading.remove wire:target="submit" class="inline-flex items-center gap-2">
-                    {{ __('Hitung Estimasi') }}
+                    {{ __('Bangun Strategi Kemenangan Saya') }}
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
                 </span>
                 <span wire:loading wire:target="submit">{{ __('Menganalisis wilayah Anda, biasanya 20-30 detik...') }}</span>

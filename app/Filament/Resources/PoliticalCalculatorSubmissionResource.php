@@ -118,6 +118,33 @@ class PoliticalCalculatorSubmissionResource extends Resource
                         ])->from('md'),
                     ]),
 
+                Infolists\Section::make('Profil Kandidat')
+                    ->schema([
+                        Infolists\TextEntry::make('age_range')
+                            ->label('Rentang Usia')
+                            ->formatStateUsing(fn ($record) => $record->age_range_label ?? '-'),
+                        Infolists\TextEntry::make('candidate_status')
+                            ->label('Status Pencalonan')
+                            ->formatStateUsing(fn ($record) => $record->candidate_status_label ?? '-'),
+                        Infolists\TextEntry::make('public_recognition')
+                            ->label('Tingkat Pengenalan Publik')
+                            ->formatStateUsing(fn ($record) => $record->public_recognition_label ?? '-'),
+                        Infolists\TextEntry::make('voter_target')
+                            ->label('Kelompok Masyarakat Prioritas')
+                            ->formatStateUsing(fn ($record) => $record->voter_target_label ?? '-'),
+                        Infolists\TextEntry::make('main_goal')
+                            ->label('Prioritas Sosialisasi')
+                            ->formatStateUsing(fn ($record) => $record->main_goal_label ?? '-'),
+                        Infolists\TextEntry::make('local_issues')
+                            ->label('Isu Utama')
+                            ->formatStateUsing(fn ($record) => filled($record->local_issues_labels) ? implode(', ', $record->local_issues_labels) : '-'),
+                        Infolists\TextEntry::make('about_you')
+                            ->label('Tentang Kandidat')
+                            ->formatStateUsing(fn (?string $state) => $state ?: '-')
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(3),
+
                 Infolists\Section::make('Demografi')
                     ->schema([
                         Infolists\TextEntry::make('jumlah_penduduk')
