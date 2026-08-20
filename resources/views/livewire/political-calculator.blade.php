@@ -159,7 +159,7 @@
                 @if ($target_jabatan !== 'gubernur' && $provinsi_id)
                     <div wire:transition>
                         <label for="kota_id" class="block text-sm font-medium text-forest-800">{{ __('Kota/Kabupaten') }}</label>
-                        <select id="kota_id" wire:model="kota_id"
+                        <select id="kota_id" wire:model.live="kota_id"
                                 class="mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-charcoal shadow-sm transition-colors focus:outline-none focus:ring-2 {{ $errors->has('kota_id') ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-forest-200 focus:border-forest-500 focus:ring-forest-500/20' }}">
                             <option value="">{{ __('Pilih kota/kabupaten') }}</option>
                             @foreach ($this->regencies as $id => $name)
