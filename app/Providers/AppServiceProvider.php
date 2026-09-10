@@ -33,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
             'components.layouts.footer',
             'components.whatsapp-float',
             'pages.contact',
+            'pages.political-calculator',
         ], function ($view) {
             $view->with('settings', Setting::current());
         });
