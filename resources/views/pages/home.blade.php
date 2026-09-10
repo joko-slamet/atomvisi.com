@@ -2,17 +2,32 @@
     :description="__('Atom Visi Indonesia adalah lembaga riset independen di bidang riset kebijakan publik, analisis politik & geopolitik, survey sosial, dan konsultasi strategis. Wawasan yang Presisi. Strategi yang Berdampak.')"
 >
     {{-- HERO + SERVICES --}}
+    {{-- HERO --}}
     <section
         id="hero"
-        x-data="heroSection({{ Illuminate\Support\Js::from([
-            __('Riset Kebijakan Publik'),
-            __('Analisis Politik & Geopolitik'),
-            __('Survey & Kajian Sosial'),
-            __('Strategi & Konsultasi'),
-        ]) }})"
-        class="relative isolate z-10 bg-cream"
+        x-data="{
+            ...heroSection({{ Illuminate\Support\Js::from([
+                __('Riset Kebijakan Publik'),
+                __('Analisis Politik & Geopolitik'),
+                __('Survey & Kajian Sosial'),
+                __('Strategi & Konsultasi'),
+            ]) }}),
+            activeImage: 0,
+            heroImages: [
+                '{{ asset('images/hero-politics-1.jpg') }}',
+                '{{ asset('images/hero-politics-2.jpg') }}',
+                '{{ asset('images/hero-politics-3.jpg') }}'
+            ],
+            startSlideshow() {
+                setInterval(() => {
+                    this.activeImage = (this.activeImage + 1) % this.heroImages.length;
+                }, 5000);
+            }
+        }"
+        x-init="startSlideshow()"
+        class="relative isolate z-10 min-h-screen bg-cream overflow-hidden flex items-center lg:h-screen lg:max-h-screen"
     >
-        {{-- Shared atmosphere across hero + services: grain, dot-grid, parallax watermarks --}}
+        {{-- Shared atmosphere across hero: grain, dot-grid, parallax watermarks --}}
         <div class="pointer-events-none absolute inset-0 overflow-hidden">
             <div class="absolute inset-0 bg-noise opacity-[0.05] mix-blend-multiply"></div>
             <div class="absolute inset-0 bg-dot-grid text-forest-900/[0.06]"></div>
@@ -23,38 +38,122 @@
             <x-watermark class="absolute -left-40 top-[65%] h-[34rem] w-[34rem] -translate-y-1/2 text-forest-900/[0.03]" />
         </div>
 
-        {{-- Hero content --}}
-        <div class="relative mx-auto flex w-full max-w-4xl flex-col items-center gap-2 px-6 pt-40 text-center lg:px-8">
-            <h1 x-ref="headline" class="relative z-10 font-serif text-4xl font-semibold leading-[1.08] text-forest-900 sm:text-5xl lg:text-6xl">
-                <span class="block overflow-hidden pb-1"><span data-line class="block">{{ __('Wawasan yang Presisi.') }}</span></span>
-                <span class="block overflow-hidden pb-1">
-                    <span data-line class="block">
-                        {{ __('Strategi yang') }}
-                        <span class="relative inline-block whitespace-nowrap text-gold-600">
-                            {{ __('Berdampak.') }}
-                            <svg class="absolute -bottom-1 left-0 h-2 w-full text-gold-600 sm:h-2.5" viewBox="0 0 220 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
-                                <path x-ref="underline" d="M2 9.5C40 3 160 2 218 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-                            </svg>
-                        </span>
-                    </span>
-                </span>
-            </h1>
+        {{-- Right Side Hero Image Carousel with Smooth Horizontal Gradient Fade --}}
+        <div class="absolute inset-y-0 right-0 w-full lg:w-7/12 pointer-events-none overflow-hidden">
+            {{-- Image carousel --}}
+            @foreach(['images/hero-politics-1.jpg', 'images/hero-politics-2.jpg', 'images/hero-politics-3.jpg'] as $idx => $heroImg)
+                <div
+                    x-show="activeImage === {{ $idx }}"
+                    x-transition:enter="transition ease-out duration-1000"
+                    x-transition:enter-start="opacity-0 scale-105"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-1000"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    class="absolute inset-0 h-full w-full"
+                >
+                    <img src="{{ asset($heroImg) }}" alt="Atom Visi Politik" class="h-full w-full object-cover object-center" />
+                </div>
+            @endforeach
 
-            <div data-reveal class="relative z-10 mt-5 h-6 overflow-hidden text-sm font-medium uppercase tracking-[0.15em] text-forest-600">
-                <span class="inline-flex items-center gap-2">
-                    {{ __('Spesialis dalam') }}
-                    <span class="relative inline-block overflow-hidden">
-                        <span x-ref="rotatingWord" x-text="words[wordIndex]" class="inline-block text-gold-600"></span>
-                    </span>
-                </span>
-            </div>
-
+            {{-- Gradient overlay layers for seamless fade into content --}}
+            <div class="absolute inset-0 bg-gradient-to-r from-cream via-cream/80 via-35% to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-cream/90 via-transparent via-20% to-cream/90"></div>
         </div>
 
-        {{-- Services content --}}
-        <div class="relative pb-12 sm:pb-16">
-            <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
-                @php
+        {{-- Hero Content (Positioned on the Left) --}}
+        <div class="relative z-20 mx-auto w-full max-w-7xl px-6 pt-28 pb-16 lg:px-8 lg:pt-0 lg:pb-0">
+            <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+                <div class="flex flex-col items-start text-left lg:col-span-7">
+                    {{-- Kicker Badge --}}
+                    <div data-reveal class="mb-6 inline-flex items-center gap-2 rounded-full border border-forest-900/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-forest-800 backdrop-blur-md shadow-sm">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-gold-500"></span>
+                        </span>
+                        <span>{{ __('Lembaga Riset Kebijakan & Strategi Politik') }}</span>
+                    </div>
+
+                    {{-- Main Headline --}}
+                    <h1 x-ref="headline" class="font-serif text-4xl font-semibold leading-[1.08] text-forest-900 sm:text-5xl lg:text-6xl">
+                        <span class="block overflow-hidden pb-1"><span data-line class="block">{{ __('Wawasan yang Presisi.') }}</span></span>
+                        <span class="block overflow-hidden pb-1">
+                            <span data-line class="block">
+                                {{ __('Strategi yang') }}
+                                <span class="relative inline-block whitespace-nowrap text-gold-600">
+                                    {{ __('Berdampak.') }}
+                                    <svg class="absolute -bottom-1 left-0 h-2 w-full text-gold-600 sm:h-2.5" viewBox="0 0 220 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
+                                        <path x-ref="underline" d="M2 9.5C40 3 160 2 218 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                            </span>
+                        </span>
+                    </h1>
+
+                    {{-- Rotating word specialty --}}
+                    <div data-reveal class="mt-4 h-7 overflow-hidden text-sm font-medium uppercase tracking-[0.15em] text-forest-700">
+                        <span class="inline-flex items-center gap-2">
+                            {{ __('Spesialis dalam') }}
+                            <span class="relative inline-block overflow-hidden font-semibold">
+                                <span x-ref="rotatingWord" x-text="words[wordIndex]" class="inline-block text-gold-600"></span>
+                            </span>
+                        </span>
+                    </div>
+
+                    {{-- Subtitle / Description --}}
+                    <p data-reveal class="mt-6 max-w-xl text-base leading-relaxed text-charcoal/80 sm:text-lg">
+                        {{ __('Atom Visi Indonesia menghadirkan analisis kebijakan publik independen, pemetaan sosial-politik presisi, dan formulasi strategi elektoral berbasis data empiris.') }}
+                    </p>
+
+                    {{-- Action Buttons --}}
+                    <div data-reveal class="mt-8 flex flex-wrap items-center gap-4">
+                        <a href="{{ route('contact') }}" class="group relative inline-flex items-center justify-center gap-2.5 rounded-full bg-forest-800 px-7 py-3.5 text-sm font-semibold text-cream shadow-xl shadow-forest-900/15 transition-all duration-300 hover:bg-forest-900 hover:shadow-2xl hover:scale-[1.02]">
+                            <span>{{ __('Konsultasi Strategis') }}</span>
+                            <svg class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                            </svg>
+                        </a>
+                        <a href="#services" class="inline-flex items-center justify-center gap-2 rounded-full border border-forest-800/20 bg-white/80 px-6 py-3.5 text-sm font-semibold text-forest-800 backdrop-blur-sm transition-all duration-300 hover:border-forest-700 hover:bg-white hover:shadow-md">
+                            <span>{{ __('Jelajahi Layanan') }}</span>
+                        </a>
+                    </div>
+
+                    {{-- Indicators for background images --}}
+                    <div data-reveal class="mt-10 flex items-center gap-4 pt-6 border-t border-forest-900/10 w-full max-w-md">
+                        <div class="flex items-center gap-2">
+                            @foreach([0, 1, 2] as $idx)
+                                <button
+                                    type="button"
+                                    @click="activeImage = {{ $idx }}"
+                                    class="h-2 rounded-full transition-all duration-300 pointer-events-auto"
+                                    :class="activeImage === {{ $idx }} ? 'w-8 bg-gold-500' : 'w-2 bg-forest-900/30 hover:bg-forest-900/50'"
+                                    aria-label="Slide {{ $idx + 1 }}"
+                                ></button>
+                            @endforeach
+                        </div>
+                        <span class="text-xs uppercase tracking-wider text-forest-600 font-medium ml-auto">
+                            <span x-text="activeImage + 1"></span> / 3 {{ __('Perspektif Riset') }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- SERVICES --}}
+    <section id="services" class="relative isolate z-10 bg-cream py-20 lg:py-28 overflow-hidden border-t border-forest-900/5">
+        <div class="pointer-events-none absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 bg-noise opacity-[0.03] mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-dot-grid text-forest-900/[0.04]"></div>
+        </div>
+
+        <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
+            <x-section-heading :kicker="__('Solusi Integratif')" align="center" class="mx-auto">
+                <x-slot:title>{{ __('Layanan Unggulan Kami') }}</x-slot:title>
+                <x-slot:description>{{ __('Menghubungkan data riset lapangan dengan eksekusi strategi politik dan kebijakan publik.') }}</x-slot:description>
+            </x-section-heading>
+
+            @php
                 $serviceSubItems = [
                     'strategy-private-class' => [
                         __('Analisis Politik & Geopolitik'),
@@ -69,10 +168,10 @@
             @endphp
 
             @if ($services->isNotEmpty())
-                <div x-data="serviceShowcase({{ $services->count() }})" @mouseenter="paused = true" @mouseleave="paused = false">
+                <div x-data="serviceShowcase({{ $services->count() }})" @mouseenter="paused = true" @mouseleave="paused = false" class="mt-12">
 
                     {{-- ORBIT (desktop) --}}
-                    <div x-data="tiltCard()" class="relative mx-auto mt-40 hidden aspect-square w-full max-w-xl lg:block">
+                    <div x-data="tiltCard()" class="relative mx-auto mt-24 hidden aspect-square w-full max-w-xl lg:block">
                         {{-- decorative orbit rings, each carrying a small satellite dot --}}
                         <div class="animate-orbit-slow absolute inset-[6%] rounded-full border border-dashed border-forest-200/70">
                             <span class="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-forest-300 shadow-sm"></span>
@@ -199,7 +298,6 @@
                     </div>
                 </div>
             @endif
-            </div>
         </div>
     </section>
 
