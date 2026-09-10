@@ -10,7 +10,7 @@
             </span>
         @endif
 
-        <h1 data-aos="fade-up" data-aos-delay="100" class="mt-6 font-serif text-4xl font-semibold leading-tight text-cream sm:text-5xl">
+        <h1 data-aos="fade-up" data-aos-delay="100" class="mt-6 font-sans text-4xl font-semibold leading-tight text-cream sm:text-5xl">
             {{ $title }}
         </h1>
 

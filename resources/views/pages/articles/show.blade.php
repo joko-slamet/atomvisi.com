@@ -22,7 +22,7 @@
                 <span>{{ $article->published_at?->translatedFormat('d F Y') }}</span>
             </div>
 
-            <h1 data-aos="fade-up" data-aos-delay="120" class="mt-4 font-serif text-3xl font-semibold leading-tight text-cream sm:text-4xl">
+            <h1 data-aos="fade-up" data-aos-delay="120" class="mt-4 font-sans text-3xl font-semibold leading-tight text-cream sm:text-4xl">
                 {{ $article->title }}
             </h1>
 
@@ -41,7 +41,7 @@
                      class="mb-10 aspect-video w-full rounded-2xl object-cover" data-aos="fade-up">
             @endif
 
-            <div data-aos="fade-up" class="prose max-w-none prose-headings:font-serif prose-headings:text-forest-800 prose-a:text-forest-700 prose-strong:text-forest-800">
+            <div data-aos="fade-up" class="prose max-w-none prose-headings:font-sans prose-headings:text-forest-800 prose-a:text-forest-700 prose-strong:text-forest-800">
                 {!! $article->content !!}
             </div>
         </div>
@@ -61,7 +61,7 @@
                             @if ($item->category)
                                 <span class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ $item->category->name }}</span>
                             @endif
-                            <h3 class="mt-2 font-serif text-base font-semibold leading-snug text-forest-800 group-hover:text-forest-600">{{ $item->title }}</h3>
+                            <h3 class="mt-2 font-sans text-base font-semibold leading-snug text-forest-800 group-hover:text-forest-600">{{ $item->title }}</h3>
                             <span class="mt-3 block text-xs text-charcoal/50">{{ $item->published_at?->translatedFormat('d F Y') }}</span>
                         </a>
                     @endforeach

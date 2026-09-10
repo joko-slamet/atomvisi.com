@@ -9,7 +9,7 @@
             <div data-aos="fade-up" data-aos-delay="80" class="mx-auto mt-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-forest-700/60 text-gold-400">
                 <x-icon :name="$service->icon ?? 'heroicon-o-briefcase'" class="h-8 w-8" />
             </div>
-            <h1 data-aos="fade-up" data-aos-delay="120" class="mt-6 font-serif text-4xl font-semibold leading-tight text-cream sm:text-5xl">
+            <h1 data-aos="fade-up" data-aos-delay="120" class="mt-6 font-sans text-4xl font-semibold leading-tight text-cream sm:text-5xl">
                 {{ $service->name }}
             </h1>
             <p data-aos="fade-up" data-aos-delay="200" class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-forest-100/80">
@@ -20,12 +20,12 @@
 
     <section class="bg-cream py-24 sm:py-32">
         <div class="mx-auto max-w-3xl px-6 lg:px-8">
-            <div data-aos="fade-up" class="prose max-w-none prose-headings:font-serif prose-headings:text-forest-800 prose-a:text-forest-700 prose-strong:text-forest-800">
+            <div data-aos="fade-up" class="prose max-w-none prose-headings:font-sans prose-headings:text-forest-800 prose-a:text-forest-700 prose-strong:text-forest-800">
                 {!! $service->description !!}
             </div>
 
             <div data-aos="fade-up" data-aos-delay="150" class="mt-12 rounded-2xl border border-forest-100 bg-forest-50/60 p-8 text-center">
-                <h2 class="font-serif text-xl font-semibold text-forest-800">{{ __('Tertarik dengan Layanan Ini?') }}</h2>
+                <h2 class="font-sans text-xl font-semibold text-forest-800">{{ __('Tertarik dengan Layanan Ini?') }}</h2>
                 <p class="mt-2 text-sm text-charcoal/70">{{ __('Hubungi tim kami untuk mendiskusikan kebutuhan riset atau konsultasi strategis Anda.') }}</p>
                 <a href="{{ route('contact') }}" class="mt-6 inline-flex rounded-full bg-forest-700 px-7 py-3 text-sm font-semibold text-cream shadow-sm transition-all hover:bg-forest-600">
                     {{ __('Hubungi Kami') }}

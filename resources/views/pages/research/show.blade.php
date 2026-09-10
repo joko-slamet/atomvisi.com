@@ -9,7 +9,7 @@
             <span data-aos="fade-up" data-aos-delay="80" class="mt-6 block text-xs font-semibold uppercase tracking-[0.25em] text-gold-300">
                 {{ $project->category?->name }} &middot; {{ $project->year }}
             </span>
-            <h1 data-aos="fade-up" data-aos-delay="120" class="mt-4 font-serif text-3xl font-semibold leading-tight text-cream sm:text-4xl">
+            <h1 data-aos="fade-up" data-aos-delay="120" class="mt-4 font-sans text-3xl font-semibold leading-tight text-cream sm:text-4xl">
                 {{ $project->title }}
             </h1>
             @if ($project->client)
@@ -29,7 +29,7 @@
                 <p data-aos="fade-up" class="text-lg leading-relaxed text-charcoal/80">{{ $project->summary }}</p>
             @endif
 
-            <div data-aos="fade-up" data-aos-delay="100" class="prose mt-8 max-w-none prose-headings:font-serif prose-headings:text-forest-800 prose-a:text-forest-700 prose-strong:text-forest-800">
+            <div data-aos="fade-up" data-aos-delay="100" class="prose mt-8 max-w-none prose-headings:font-sans prose-headings:text-forest-800 prose-a:text-forest-700 prose-strong:text-forest-800">
                 {!! $project->content !!}
             </div>
 

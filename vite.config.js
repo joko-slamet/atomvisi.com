@@ -12,9 +12,9 @@ export default defineConfig({
                 bunny('Inter', {
                     weights: [400, 500, 600, 700],
                 }),
+                // Fraunces is now used only by the homepage hero headline (font-semibold).
                 bunny('Fraunces', {
-                    weights: [400, 500, 600, 700],
-                    styles: ['normal', 'italic'],
+                    weights: [600],
                 }),
             ],
         }),

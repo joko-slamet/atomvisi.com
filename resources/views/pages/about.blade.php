@@ -9,7 +9,7 @@
         <div class="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-6 lg:grid-cols-2 lg:px-8">
             <div data-aos="fade-up">
                 <span class="text-xs font-semibold uppercase tracking-[0.25em] text-gold-600">{{ __('Sejarah Singkat') }}</span>
-                <h2 class="mt-4 font-serif text-3xl font-semibold text-forest-800">{{ __('Berangkat dari Kebutuhan akan Riset yang Independen') }}</h2>
+                <h2 class="mt-4 font-sans text-3xl font-semibold text-forest-800">{{ __('Berangkat dari Kebutuhan akan Riset yang Independen') }}</h2>
                 <div class="mt-6 space-y-4 text-base leading-relaxed text-charcoal/75">
                     <p>{{ __('Atom Visi Indonesia didirikan oleh sekelompok peneliti dan praktisi kebijakan yang meyakini bahwa keputusan strategis, baik di sektor publik maupun swasta, harus dilandasi oleh riset yang independen, akurat, dan aplikatif.') }}</p>
                     <p>{{ __('Sejak awal berdiri, kami berkomitmen untuk menghadirkan riset kebijakan publik, analisis politik & geopolitik, survey sosial, serta konsultasi strategis yang membantu para pemangku kepentingan memahami lanskap yang terus berubah dengan lebih jernih.') }}</p>

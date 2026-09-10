@@ -10,7 +10,7 @@
         <x-icon :name="$service->icon ?? 'heroicon-o-briefcase'" class="h-7 w-7" />
     </span>
 
-    <h3 class="mt-6 font-serif text-xl font-semibold text-forest-800">{{ $service->name }}</h3>
+    <h3 class="mt-6 font-sans text-xl font-semibold text-forest-800">{{ $service->name }}</h3>
     <p class="mt-3 text-sm leading-relaxed text-charcoal/70">{{ $service->short_description }}</p>
 
     <span class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-forest-700 transition-colors group-hover:text-gold-600">

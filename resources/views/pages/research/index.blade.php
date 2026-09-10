@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="flex flex-1 flex-col p-6">
                                     <span class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ $project->category?->name }} &middot; {{ $project->year }}</span>
-                                    <h3 class="mt-2 font-serif text-lg font-semibold leading-snug text-forest-800">{{ $project->title }}</h3>
+                                    <h3 class="mt-2 font-sans text-lg font-semibold leading-snug text-forest-800">{{ $project->title }}</h3>
                                     <p class="mt-2 line-clamp-2 flex-1 text-sm text-charcoal/70">{{ $project->summary }}</p>
                                 </div>
                             </a>
@@ -41,7 +41,7 @@
                     <a href="{{ route('research.show', $project) }}" data-aos="fade-up" data-aos-delay="{{ ($index % 3) * 100 }}"
                        class="group rounded-2xl border border-forest-100 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-forest-900/10">
                         <span class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ $project->category?->name }} &middot; {{ $project->year }}</span>
-                        <h3 class="mt-2 font-serif text-base font-semibold leading-snug text-forest-800 group-hover:text-forest-600">{{ $project->title }}</h3>
+                        <h3 class="mt-2 font-sans text-base font-semibold leading-snug text-forest-800 group-hover:text-forest-600">{{ $project->title }}</h3>
                         <p class="mt-2 line-clamp-2 text-sm text-charcoal/70">{{ $project->summary }}</p>
                         @if ($project->client)
                             <p class="mt-3 text-xs text-charcoal/50">{{ __('Mitra') }}: {{ $project->client }}</p>

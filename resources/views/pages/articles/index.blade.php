@@ -24,7 +24,7 @@
                                 @if ($article->category)
                                     <span class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ $article->category->name }}</span>
                                 @endif
-                                <h3 class="mt-2 font-serif text-lg font-semibold leading-snug text-forest-800 group-hover:text-forest-600">{{ $article->title }}</h3>
+                                <h3 class="mt-2 font-sans text-lg font-semibold leading-snug text-forest-800 group-hover:text-forest-600">{{ $article->title }}</h3>
                                 <p class="mt-2 line-clamp-2 flex-1 text-sm text-charcoal/70">{{ $article->excerpt }}</p>
                                 <span class="mt-4 text-xs text-charcoal/50">{{ $article->published_at?->translatedFormat('d F Y') }}</span>
                             </div>

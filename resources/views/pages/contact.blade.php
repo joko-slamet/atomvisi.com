@@ -8,7 +8,7 @@
     <section class="bg-cream py-24 sm:py-32">
         <div class="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-6 lg:grid-cols-5 lg:px-8">
             <div class="lg:col-span-2" data-aos="fade-up">
-                <h2 class="font-serif text-2xl font-semibold text-forest-800">{{ __('Informasi Kontak') }}</h2>
+                <h2 class="font-sans text-2xl font-semibold text-forest-800">{{ __('Informasi Kontak') }}</h2>
                 <div class="mt-8 space-y-6">
                     <div class="flex gap-4">
                         <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest-50 text-forest-700">
@@ -66,7 +66,7 @@
 
             <div class="lg:col-span-3" data-aos="fade-up" data-aos-delay="150">
                 <div class="rounded-2xl border border-forest-100 bg-white p-8 sm:p-10">
-                    <h2 class="font-serif text-2xl font-semibold text-forest-800">{{ __('Kirim Pesan') }}</h2>
+                    <h2 class="font-sans text-2xl font-semibold text-forest-800">{{ __('Kirim Pesan') }}</h2>
                     <p class="mt-2 text-sm text-charcoal/60">{{ __('Isi form di bawah ini dan tim kami akan merespons dalam 1–2 hari kerja.') }}</p>
                     <div class="mt-8">
                         @livewire('contact-form')

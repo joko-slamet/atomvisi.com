@@ -46,7 +46,7 @@
         @endif
     </div>
 
-    <span class="mt-5 font-serif text-4xl font-semibold text-cream sm:text-5xl">
+    <span class="mt-5 font-sans text-4xl font-semibold text-cream sm:text-5xl">
         <span x-text="display">0</span>{{ $suffix }}
     </span>
     <span class="mt-2 text-sm font-medium uppercase tracking-wide text-forest-100/70">{{ $label }}</span>

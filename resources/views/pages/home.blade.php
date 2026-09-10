@@ -123,7 +123,7 @@
                                           :class="active === {{ $index }} ? 'text-gold-600' : 'text-forest-400'">
                                         {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
                                     </span>
-                                    <h3 class="mt-1 font-serif text-lg font-semibold leading-snug text-forest-800">
+                                    <h3 class="mt-1 font-sans text-lg font-semibold leading-snug text-forest-800">
                                         {{ $service->name }}
                                     </h3>
                                     @if (empty($subItems))
@@ -237,7 +237,7 @@
                                 "
                                 class="relative"
                             >
-                                <span class="pointer-events-none absolute -left-4 -top-10 select-none font-serif text-[12rem] leading-none text-cream/[0.04]" aria-hidden="true">
+                                <span class="pointer-events-none absolute -left-4 -top-10 select-none font-sans text-[12rem] leading-none text-cream/[0.04]" aria-hidden="true">
                                     <x-icon :name="$featured->icon ?? 'heroicon-o-chart-bar'" class="h-40 w-40" />
                                 </span>
 
@@ -245,7 +245,7 @@
                                     <x-icon :name="$featured->icon ?? 'heroicon-o-chart-bar'" class="h-6 w-6" />
                                 </span>
 
-                                <span class="relative mt-4 block font-serif text-7xl font-semibold text-cream sm:text-8xl">
+                                <span class="relative mt-4 block font-sans text-7xl font-semibold text-cream sm:text-8xl">
                                     <span x-text="display">0</span>{{ $featured->suffix }}
                                 </span>
                                 <span class="relative mt-2 block text-base font-medium uppercase tracking-wide text-gold-300">
@@ -283,7 +283,7 @@
                                 <div class="flex-1">
                                     <div class="flex items-baseline justify-between gap-3">
                                         <span class="text-sm font-medium text-forest-100/70">{{ $stat->label }}</span>
-                                        <span class="font-serif text-2xl font-semibold text-cream">
+                                        <span class="font-sans text-2xl font-semibold text-cream">
                                             <span x-text="display">0</span>{{ $stat->suffix }}
                                         </span>
                                     </div>
@@ -351,7 +351,7 @@
                                 @if ($article->category)
                                     <span class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ $article->category->name }}</span>
                                 @endif
-                                <h3 class="mt-2 font-serif text-lg font-semibold leading-snug text-forest-800 group-hover:text-forest-600">
+                                <h3 class="mt-2 font-sans text-lg font-semibold leading-snug text-forest-800 group-hover:text-forest-600">
                                     {{ $article->title }}
                                 </h3>
                                 <p class="mt-2 line-clamp-2 flex-1 text-sm text-charcoal/70">{{ $article->excerpt }}</p>
@@ -416,7 +416,7 @@
                         </x-section-heading>
 
                         <div class="mt-10 flex items-center gap-6">
-                            <span class="font-serif text-6xl font-semibold text-gold-500" x-text="String(active + 1).padStart(2, '0')">01</span>
+                            <span class="font-sans text-6xl font-semibold text-gold-500" x-text="String(active + 1).padStart(2, '0')">01</span>
                             <span class="text-sm text-charcoal/30">/ {{ str_pad($reasonCount, 2, '0', STR_PAD_LEFT) }}</span>
                         </div>
 
@@ -442,13 +442,13 @@
                 <div x-ref="items" class="space-y-24 lg:col-span-8 lg:space-y-32">
                     @foreach ($reasons as $index => $reason)
                         <div data-reason class="flex gap-6 transition-opacity duration-500" :class="active === {{ $index }} ? 'opacity-100' : 'opacity-40'">
-                            <span class="shrink-0 font-serif text-sm text-gold-600">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                            <span class="shrink-0 font-sans text-sm text-gold-600">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
                             <div>
                                 <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-forest-700 text-gold-400 shadow-lg transition-transform duration-500"
                                       :class="active === {{ $index }} ? 'scale-100' : 'scale-90'">
                                     <x-icon :name="$reason['icon']" class="h-7 w-7" />
                                 </span>
-                                <h3 class="mt-6 font-serif text-3xl font-semibold leading-snug text-forest-800 sm:text-4xl">
+                                <h3 class="mt-6 font-sans text-3xl font-semibold leading-snug text-forest-800 sm:text-4xl">
                                     {{ $reason['title'] }}
                                 </h3>
                                 <p class="mt-4 max-w-md text-base leading-relaxed text-charcoal/70">
@@ -477,7 +477,7 @@
                             <svg class="h-8 w-8 text-gold-400" fill="currentColor" viewBox="0 0 32 32"><path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm17.472 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L26.824 4z"/></svg>
                             <p class="mt-4 flex-1 text-sm leading-relaxed text-charcoal/80">&ldquo;{{ $testimonial->quote }}&rdquo;</p>
                             <div class="mt-6 flex items-center gap-3">
-                                <div class="flex h-11 w-11 items-center justify-center rounded-full bg-forest-100 font-serif text-sm font-semibold text-forest-700">
+                                <div class="flex h-11 w-11 items-center justify-center rounded-full bg-forest-100 font-sans text-sm font-semibold text-forest-700">
                                     {{ collect(explode(' ', $testimonial->client_name))->map(fn ($w) => $w[0])->take(2)->implode('') }}
                                 </div>
                                 <div>

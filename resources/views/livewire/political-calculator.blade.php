@@ -3,34 +3,34 @@
     <div x-show="result" style="display: none;" class="space-y-8">
         <div class="rounded-2xl border border-forest-200 bg-forest-50 p-6 text-center">
             <svg class="mx-auto h-10 w-10 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            <h3 class="mt-3 font-serif text-xl font-semibold text-forest-800">{{ __('Estimasi Selesai Dibuat') }}</h3>
+            <h3 class="mt-3 font-sans text-xl font-semibold text-forest-800">{{ __('Estimasi Selesai Dibuat') }}</h3>
             <p class="mt-1 text-sm text-charcoal/70">
                 <span x-text="result?.region_label"></span> &middot; <span x-text="result?.target_jabatan_label"></span>
             </p>
         </div>
 
         <div class="rounded-2xl border border-forest-100 bg-white p-6" x-show="result?.ringkasan_analisis">
-            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Ringkasan Analisis') }}</h4>
+            <h4 class="font-sans text-lg font-semibold text-forest-800">{{ __('Ringkasan Analisis') }}</h4>
             <p class="mt-3 text-sm leading-relaxed text-charcoal/80" x-text="result?.ringkasan_analisis"></p>
         </div>
 
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div class="rounded-2xl border border-forest-100 bg-white p-5 text-center">
                 <p class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ __('Jumlah Penduduk') }}</p>
-                <p class="mt-2 font-serif text-2xl font-semibold text-forest-800" x-text="formatNumber(result?.jumlah_penduduk)"></p>
+                <p class="mt-2 font-sans text-2xl font-semibold text-forest-800" x-text="formatNumber(result?.jumlah_penduduk)"></p>
             </div>
             <div class="rounded-2xl border border-forest-100 bg-white p-5 text-center">
                 <p class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ __('Jumlah Pemilih Potensial') }}</p>
-                <p class="mt-2 font-serif text-2xl font-semibold text-forest-800" x-text="formatNumber(result?.jumlah_pemilih_potensial)"></p>
+                <p class="mt-2 font-sans text-2xl font-semibold text-forest-800" x-text="formatNumber(result?.jumlah_pemilih_potensial)"></p>
             </div>
             <div class="rounded-2xl border border-forest-100 bg-white p-5 text-center">
                 <p class="text-xs font-semibold uppercase tracking-wider text-gold-600">{{ __('Kelompok Umur yang Mendominasi') }}</p>
-                <p class="mt-2 font-serif text-2xl font-semibold text-forest-800" x-text="result?.kelompok_umur_dominan"></p>
+                <p class="mt-2 font-sans text-2xl font-semibold text-forest-800" x-text="result?.kelompok_umur_dominan"></p>
             </div>
         </div>
 
         <div class="rounded-2xl border border-forest-100 bg-white p-6" x-show="(result?.pesan_utama ?? []).length">
-            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Pesan Utama Kampanye') }}</h4>
+            <h4 class="font-sans text-lg font-semibold text-forest-800">{{ __('Pesan Utama Kampanye') }}</h4>
             <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <template x-for="(pesan, index) in (result?.pesan_utama ?? [])" :key="index">
                     <div class="rounded-xl border border-gold-200 bg-gold-50/60 p-4 text-sm leading-relaxed text-charcoal/80" x-text="pesan"></div>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="rounded-2xl border border-forest-100 bg-white p-6">
-            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Langkah-Langkah Strategis yang Disarankan') }}</h4>
+            <h4 class="font-sans text-lg font-semibold text-forest-800">{{ __('Langkah-Langkah Strategis yang Disarankan') }}</h4>
             <ul class="mt-4 space-y-3">
                 <template x-for="(langkah, index) in (result?.langkah_strategis ?? [])" :key="index">
                     <li class="flex items-start gap-2.5 text-sm leading-relaxed text-charcoal/80">
@@ -51,7 +51,7 @@
         </div>
 
         <div class="rounded-2xl border border-forest-100 bg-white p-6" x-show="(result?.fokus_isu ?? []).length">
-            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Pendekatan per Isu Utama') }}</h4>
+            <h4 class="font-sans text-lg font-semibold text-forest-800">{{ __('Pendekatan per Isu Utama') }}</h4>
             <div class="mt-4 space-y-4">
                 <template x-for="(item, index) in (result?.fokus_isu ?? [])" :key="index">
                     <div class="rounded-xl border border-forest-100 bg-forest-50/40 p-4">
@@ -63,7 +63,7 @@
         </div>
 
         <div class="rounded-2xl border border-forest-100 bg-white p-6">
-            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Pembagian Porsi Komunikasi') }}</h4>
+            <h4 class="font-sans text-lg font-semibold text-forest-800">{{ __('Pembagian Porsi Komunikasi') }}</h4>
             <div class="mt-4 space-y-4"
                  x-data="{ items: [
                      { key: 'baliho', label: @js(__('Baliho')) },
@@ -86,7 +86,7 @@
         </div>
 
         <div class="rounded-2xl border border-forest-100 bg-white p-6">
-            <h4 class="font-serif text-lg font-semibold text-forest-800">{{ __('Roadmap 1 Tahun') }}</h4>
+            <h4 class="font-sans text-lg font-semibold text-forest-800">{{ __('Roadmap 1 Tahun') }}</h4>
             <div class="mt-4 divide-y divide-forest-100">
                 <template x-for="bulan in (result?.roadmap ?? [])" :key="bulan.bulan">
                     <div class="py-3">

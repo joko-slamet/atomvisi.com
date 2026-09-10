@@ -17,14 +17,14 @@
                                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
                             @else
                                 <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-forest-600 to-forest-800">
-                                    <span class="font-serif text-4xl font-semibold text-cream/70">
+                                    <span class="font-sans text-4xl font-semibold text-cream/70">
                                         {{ collect(explode(' ', $member->name))->map(fn ($w) => $w[0])->take(2)->implode('') }}
                                     </span>
                                 </div>
                             @endif
                         </div>
                         <div class="p-6">
-                            <h3 class="font-serif text-lg font-semibold text-forest-800">{{ $member->name }}</h3>
+                            <h3 class="font-sans text-lg font-semibold text-forest-800">{{ $member->name }}</h3>
                             <p class="mt-1 text-sm font-medium text-gold-600">{{ $member->role }}</p>
                             @if ($member->linkedin_url)
                                 <a href="{{ $member->linkedin_url }}" target="_blank" rel="noopener"

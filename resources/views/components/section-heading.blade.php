@@ -20,7 +20,7 @@
         </span>
     @endif
 
-    <h2 class="mt-4 font-serif text-3xl font-semibold leading-tight {{ $titleColor }} sm:text-4xl">
+    <h2 class="mt-4 font-sans text-3xl font-semibold leading-tight {{ $titleColor }} sm:text-4xl">
         {{ $title ?? $slot }}
     </h2>
 

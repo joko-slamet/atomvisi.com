@@ -31,7 +31,7 @@
                 <span class="inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300">
                     Admin Panel
                 </span>
-                <h1 class="mt-6 font-serif text-4xl font-semibold leading-tight text-cream">
+                <h1 class="mt-6 font-sans text-4xl font-semibold leading-tight text-cream">
                     Wawasan yang <span class="text-gold-400">Presisi</span>.
                     Strategi yang <span class="text-gold-400">Berdampak</span>.
                 </h1>
@@ -52,7 +52,7 @@
                     <x-logo />
                 </div>
 
-                <h2 class="font-serif text-3xl font-semibold text-forest-800">
+                <h2 class="font-sans text-3xl font-semibold text-forest-800">
                     Selamat Datang Kembali
                 </h2>
                 <p class="mt-2 text-sm text-charcoal/60">

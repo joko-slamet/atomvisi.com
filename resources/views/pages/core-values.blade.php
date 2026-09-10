@@ -19,7 +19,7 @@
             </div>
 
             <blockquote data-aos="fade-up" class="mx-auto mt-10 max-w-xl rounded-2xl border border-forest-100 bg-forest-50/60 px-8 py-6 text-center">
-                <p class="font-serif text-xl font-medium italic leading-snug text-forest-800 sm:text-2xl">
+                <p class="font-sans text-xl font-medium italic leading-snug text-forest-800 sm:text-2xl">
                     {{ __('"Wawasan yang Presisi. Strategi yang Berdampak."') }}
                 </p>
             </blockquote>
@@ -51,12 +51,12 @@
                 @foreach ($values as $index => $value)
                     <div data-aos="fade-up" data-aos-delay="{{ $index * 100 }}"
                          class="group relative overflow-hidden rounded-2xl border border-forest-100 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-forest-900/10">
-                        <span class="pointer-events-none absolute -right-3 -top-6 select-none font-serif text-8xl font-bold text-forest-50" aria-hidden="true">{{ $value['letter'] }}</span>
+                        <span class="pointer-events-none absolute -right-3 -top-6 select-none font-sans text-8xl font-bold text-forest-50" aria-hidden="true">{{ $value['letter'] }}</span>
                         <div class="relative">
                             <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-forest-50 text-forest-700 transition-colors duration-300 group-hover:bg-forest-700 group-hover:text-gold-400">
                                 <x-icon :name="$value['icon']" class="h-7 w-7" />
                             </span>
-                            <h3 class="mt-6 font-serif text-xl font-semibold text-forest-800">{{ $value['title'] }}</h3>
+                            <h3 class="mt-6 font-sans text-xl font-semibold text-forest-800">{{ $value['title'] }}</h3>
                             <p class="mt-3 text-sm leading-relaxed text-charcoal/70">{{ $value['text'] }}</p>
                         </div>
                     </div>

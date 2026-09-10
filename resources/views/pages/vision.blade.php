@@ -23,7 +23,7 @@
                 {{ __('Visi') }}
                 <span class="h-px w-6 bg-current"></span>
             </span>
-            <p data-aos="fade-up" data-aos-delay="200" class="mx-auto mt-6 max-w-3xl font-serif text-2xl font-medium leading-snug text-cream sm:text-3xl lg:text-4xl">
+            <p data-aos="fade-up" data-aos-delay="200" class="mx-auto mt-6 max-w-3xl font-sans text-2xl font-medium leading-snug text-cream sm:text-3xl lg:text-4xl">
                 {{ __('Menjadi firma riset dan konsultansi strategis terdepan yang menyediakan intelijen politik–ekonomi berbasis data, pemetaan wilayah, dan analisis mendalam untuk mendukung pengambilan keputusan yang presisi dan berdampak.') }}
             </p>
         </div>
@@ -60,7 +60,7 @@
                         <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-forest-50 text-forest-700 transition-colors duration-300 group-hover:bg-forest-700 group-hover:text-gold-400">
                             <x-icon :name="$mission['icon']" class="h-7 w-7" />
                         </span>
-                        <h3 class="mt-6 font-serif text-xl font-semibold text-forest-800">{{ $mission['title'] }}</h3>
+                        <h3 class="mt-6 font-sans text-xl font-semibold text-forest-800">{{ $mission['title'] }}</h3>
                         <p class="mt-3 text-sm leading-relaxed text-charcoal/70">{{ $mission['text'] }}</p>
                     </div>
                 @endforeach

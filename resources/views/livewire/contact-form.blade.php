@@ -2,7 +2,7 @@
     @if ($sent)
         <div class="rounded-2xl border border-forest-200 bg-forest-50 p-8 text-center" data-aos="fade-up">
             <svg class="mx-auto h-12 w-12 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            <h3 class="mt-4 font-serif text-xl font-semibold text-forest-800">{{ __('Pesan Terkirim') }}</h3>
+            <h3 class="mt-4 font-sans text-xl font-semibold text-forest-800">{{ __('Pesan Terkirim') }}</h3>
             <p class="mt-2 text-sm text-charcoal/70">{{ __('Terima kasih telah menghubungi kami. Tim kami akan segera merespons pesan Anda.') }}</p>
             <button type="button" wire:click="$set('sent', false)" class="mt-6 text-sm font-semibold text-forest-700 hover:text-gold-600">
                 {{ __('Kirim pesan lain') }}
