@@ -5,6 +5,8 @@ namespace App\Models;
 use Database\Factories\ServiceFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class Service extends Model
@@ -22,6 +24,7 @@ class Service extends Model
     protected $fillable = [
         'name',
         'slug',
+        'parent_id',
         'icon',
         'short_description',
         'description',
@@ -44,6 +47,26 @@ class Service extends Model
     public function scopeOrdered($query)
     {
         return $query->orderBy('order');
+    }
+
+    public function scopeTopLevel($query)
+    {
+        return $query->whereNull('parent_id');
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(self::class, 'parent_id')->ordered();
+    }
+
+    public function activeChildren(): HasMany
+    {
+        return $this->children()->where('is_active', true);
     }
 
     public function getRouteKeyName(): string

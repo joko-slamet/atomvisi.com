@@ -11,7 +11,12 @@ class PageController extends Controller
 {
     public function home()
     {
-        $services = Service::query()->active()->ordered()->get();
+        $services = Service::query()
+            ->active()
+            ->topLevel()
+            ->ordered()
+            ->with(['activeChildren' => fn ($query) => $query->ordered()])
+            ->get();
         $stats = PageStat::query()->active()->ordered()->get();
         $testimonials = Testimonial::query()->active()->ordered()->get();
         $latestArticles = Article::query()

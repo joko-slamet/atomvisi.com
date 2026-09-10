@@ -52,6 +52,21 @@ class ServiceResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
+                        Forms\Components\Select::make('parent_id')
+                            ->label('Bagian dari Layanan (opsional)')
+                            ->helperText('Kosongkan untuk layanan utama. Pilih induk untuk menjadikannya sub-layanan.')
+                            ->relationship(
+                                name: 'parent',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn ($query, ?Service $record) => $query
+                                    ->whereNull('parent_id')
+                                    ->when($record, fn ($q) => $q->whereKeyNot($record->getKey())),
+                            )
+                            ->getOptionLabelFromRecordUsing(fn (Service $record) => $record->name)
+                            ->searchable()
+                            ->preload()
+                            ->native(false)
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('short_description')
                             ->label('Deskripsi Singkat')
                             ->helperText('Tampil di card ringkasan layanan pada homepage.')
@@ -109,6 +124,7 @@ class ServiceResource extends Resource
                     ->square(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama')
+                    ->description(fn (Service $record) => $record->parent?->name ? 'Sub-layanan dari: '.$record->parent->name : null)
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('short_description')
@@ -125,6 +141,16 @@ class ServiceResource extends Resource
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('Aktif'),
+                Tables\Filters\TernaryFilter::make('parent_id')
+                    ->label('Jenis')
+                    ->placeholder('Semua')
+                    ->trueLabel('Hanya sub-layanan')
+                    ->falseLabel('Hanya layanan utama')
+                    ->queries(
+                        true: fn ($query) => $query->whereNotNull('parent_id'),
+                        false: fn ($query) => $query->whereNull('parent_id'),
+                        blank: fn ($query) => $query,
+                    ),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

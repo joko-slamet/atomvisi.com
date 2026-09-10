@@ -133,15 +133,92 @@ document.addEventListener('alpine:init', () => {
         paused: false,
         progress: 0,
         timer: null,
+        fitFrame: null,
 
         init() {
             this.$watch('active', () => {
                 this.progress = 0;
+                this.fitOrbit();
+                // Re-measure once the active card finishes its scale transition.
+                setTimeout(() => this.fitOrbit(), 350);
             });
 
             if (!prefersReducedMotion) {
                 this.startAutoplay();
             }
+
+            // Reserve just enough space around the orbit so no floating card is clipped.
+            this.fitFrame = this.$el.querySelector('[data-orbit-frame]');
+            this.fitOrbit();
+            requestAnimationFrame(() => {
+                this.fitOrbit();
+                requestAnimationFrame(() => this.fitOrbit());
+            });
+
+            let raf = null;
+            this.onResize = () => {
+                if (raf) {
+                    return;
+                }
+                raf = requestAnimationFrame(() => {
+                    raf = null;
+                    this.fitOrbit();
+                });
+            };
+            window.addEventListener('resize', this.onResize, { passive: true });
+
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => this.fitOrbit());
+            }
+            window.addEventListener('load', this.onResize, { passive: true, once: true });
+        },
+
+        destroy() {
+            if (this.onResize) {
+                window.removeEventListener('resize', this.onResize);
+            }
+        },
+
+        fitOrbit() {
+            const frame = this.fitFrame;
+            const box = frame && frame.querySelector('[data-orbit-box]');
+
+            if (!frame || !box || !frame.offsetParent) {
+                return;
+            }
+
+            frame.style.padding = '0px';
+
+            const cards = box.querySelectorAll('[data-orbit-card]');
+            const bounds = box.getBoundingClientRect();
+            let top = 0;
+            let right = 0;
+            let bottom = 0;
+            let left = 0;
+
+            cards.forEach((card) => {
+                const rect = card.getBoundingClientRect();
+                top = Math.max(top, bounds.top - rect.top);
+                right = Math.max(right, rect.right - bounds.right);
+                bottom = Math.max(bottom, rect.bottom - bounds.bottom);
+                left = Math.max(left, bounds.left - rect.left);
+            });
+
+            const buffer = 32;
+            const px = (value) => Math.ceil(Math.max(0, value) + buffer);
+
+            // Vertical padding is free (it never shrinks a width-driven square).
+            frame.style.paddingTop = `${px(top)}px`;
+            frame.style.paddingBottom = `${px(bottom)}px`;
+
+            // Horizontal padding competes with the orbit width, so keep the square
+            // at a sensible minimum before letting the section absorb the rest.
+            const minBox = Math.min(512, frame.clientWidth);
+            const roomEachSide = Math.max(0, (frame.clientWidth - minBox) / 2);
+            const cap = Math.max(24, Math.round(roomEachSide));
+
+            frame.style.paddingLeft = `${Math.min(cap, px(left))}px`;
+            frame.style.paddingRight = `${Math.min(cap, px(right))}px`;
         },
 
         select(index) {

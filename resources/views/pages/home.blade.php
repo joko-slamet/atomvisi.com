@@ -141,7 +141,7 @@
     </section>
 
     {{-- SERVICES --}}
-    <section id="services" class="relative isolate z-10 bg-cream py-20 lg:py-28 overflow-hidden border-t border-forest-900/5">
+    <section id="services" class="relative isolate z-10 bg-cream pt-20 lg:pt-28 pb-16 lg:pb-20 overflow-hidden border-t border-forest-900/5">
         <div class="pointer-events-none absolute inset-0 overflow-hidden">
             <div class="absolute inset-0 bg-noise opacity-[0.03] mix-blend-multiply"></div>
             <div class="absolute inset-0 bg-dot-grid text-forest-900/[0.04]"></div>
@@ -153,25 +153,13 @@
                 <x-slot:description>{{ __('Menghubungkan data riset lapangan dengan eksekusi strategi politik dan kebijakan publik.') }}</x-slot:description>
             </x-section-heading>
 
-            @php
-                $serviceSubItems = [
-                    'strategy-private-class' => [
-                        __('Analisis Politik & Geopolitik'),
-                        __('Kajian Strategis & Rekomendasi Program'),
-                    ],
-                    'survey-data-analyses' => [
-                        __('Riset Kebijakan Publik'),
-                        __('Survey & Kajian Sosial Strategis'),
-                        __('Kajian Strategis & Rekomendasi Program'),
-                    ],
-                ];
-            @endphp
-
             @if ($services->isNotEmpty())
                 <div x-data="serviceShowcase({{ $services->count() }})" @mouseenter="paused = true" @mouseleave="paused = false" class="mt-12">
 
                     {{-- ORBIT (desktop) --}}
-                    <div x-data="tiltCard()" class="relative mx-auto mt-24 hidden aspect-square w-full max-w-xl lg:block">
+                    {{-- Outer frame absorbs card overflow via JS-computed padding so no card is clipped --}}
+                    <div x-ref="orbitFrame" data-orbit-frame class="relative mx-auto mt-24 hidden w-full lg:block">
+                    <div x-data="tiltCard()" data-orbit-box class="relative mx-auto aspect-square w-full max-w-xl">
                         {{-- decorative orbit rings, each carrying a small satellite dot --}}
                         <div class="animate-orbit-slow absolute inset-[6%] rounded-full border border-dashed border-forest-200/70">
                             <span class="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-forest-300 shadow-sm"></span>
@@ -208,8 +196,8 @@
                             </button>
 
                             {{-- Floating card(s) anchored to this node --}}
-                            @php $subItems = $serviceSubItems[$service->slug] ?? []; @endphp
-                            <div class="absolute w-56 text-left transition-all duration-300"
+                            @php $subItems = $service->activeChildren; @endphp
+                            <div data-orbit-card class="absolute w-56 text-left transition-all duration-300"
                                  :class="active === {{ $index }} ? 'z-50 scale-100 opacity-100' : 'z-10 scale-95 opacity-60'"
                                  style="
                                      {{ $isRight ? 'left: calc(' . $nodeX . '% + 2.25rem);' : 'right: calc(' . (100 - $nodeX) . '% + 2.25rem);' }}
@@ -225,7 +213,7 @@
                                     <h3 class="mt-1 font-sans text-lg font-semibold leading-snug text-forest-800">
                                         {{ $service->name }}
                                     </h3>
-                                    @if (empty($subItems))
+                                    @if ($subItems->isEmpty())
                                         <p class="mt-2 text-sm leading-relaxed text-charcoal/70">
                                             {{ $service->short_description }}
                                         </p>
@@ -236,26 +224,31 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                                             </svg>
                                         </a>
+                                    @else
+                                        <a href="{{ route('services.show', $service) }}"
+                                           class="mt-1 inline-block text-xs font-semibold text-forest-500 underline-offset-2 transition-colors hover:text-gold-600 hover:underline">
+                                            {{ __('Lihat ringkasan layanan') }}
+                                        </a>
                                     @endif
                                 </div>
 
-                                {{-- Sub-item cards --}}
-                                @if (! empty($subItems))
+                                {{-- Sub-service cards --}}
+                                @if ($subItems->isNotEmpty())
                                     <div class="mt-2 space-y-2">
                                         @foreach ($subItems as $subItem)
-                                            <div class="rounded-xl border border-forest-100 bg-white p-3 shadow-lg shadow-forest-900/5">
+                                            <a href="{{ route('services.show', $subItem) }}"
+                                               class="group block rounded-xl border border-forest-100 bg-white p-3 shadow-lg shadow-forest-900/5 transition-colors hover:border-gold-400">
                                                 <div class="flex items-start gap-2">
                                                     <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500"></span>
-                                                    <span class="text-sm leading-snug text-charcoal/80">{{ $subItem }}</span>
+                                                    <span class="text-sm leading-snug text-charcoal/80 group-hover:text-forest-800">{{ $subItem->name }}</span>
                                                 </div>
-                                                <a href="{{ route('services.show', $service) }}"
-                                                   class="group mt-2 inline-flex items-center gap-1 pl-3.5 text-xs font-semibold text-forest-700 transition-colors hover:text-gold-600">
+                                                <span class="mt-2 inline-flex items-center gap-1 pl-3.5 text-xs font-semibold text-forest-700 transition-colors group-hover:text-gold-600">
                                                     {{ __('Pelajari Lebih Lanjut') }}
                                                     <svg class="h-3 w-3 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                                                     </svg>
-                                                </a>
-                                            </div>
+                                                </span>
+                                            </a>
                                         @endforeach
                                     </div>
                                 @endif
@@ -278,6 +271,7 @@
                             <img src="{{ asset('images/logo-icon.png') }}" alt="Atom Visi Indonesia" class="relative h-16 w-auto">
                         </div>
                     </div>
+                    </div>
 
                     {{-- Progress dots (desktop, indicates autoplay + lets you jump) --}}
                     <div class="mt-8 hidden items-center justify-center gap-2 lg:flex">
@@ -291,8 +285,29 @@
                     {{-- Fallback grid (mobile/tablet) --}}
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:hidden">
                         @foreach ($services as $index => $service)
-                            <div data-aos="fade-up" data-aos-delay="{{ ($index % 2) * 100 }}">
+                            <div data-aos="fade-up" data-aos-delay="{{ ($index % 2) * 100 }}" class="flex flex-col gap-3">
                                 <x-service-card :service="$service" />
+                                @if ($service->activeChildren->isNotEmpty())
+                                    <div class="rounded-2xl border border-forest-100 bg-white p-4">
+                                        <span class="text-xs font-semibold uppercase tracking-wider text-forest-400">{{ __('Sub-layanan') }}</span>
+                                        <ul class="mt-2 divide-y divide-forest-100">
+                                            @foreach ($service->activeChildren as $subItem)
+                                                <li>
+                                                    <a href="{{ route('services.show', $subItem) }}"
+                                                       class="group flex items-center justify-between gap-2 py-2.5 text-sm text-charcoal/80 transition-colors hover:text-gold-600">
+                                                        <span class="flex items-start gap-2">
+                                                            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500"></span>
+                                                            {{ $subItem->name }}
+                                                        </span>
+                                                        <svg class="h-3.5 w-3.5 shrink-0 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                                                        </svg>
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             </div>
                         @endforeach
                     </div>
@@ -303,7 +318,7 @@
 
     {{-- STATS --}}
     @if ($stats->isNotEmpty())
-        <section class="mt-32 relative overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-700 py-24 sm:py-28">
+        <section class="relative overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-700 py-24 sm:py-28">
             <div class="pointer-events-none absolute inset-0">
                 <div class="absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
                 <div class="absolute inset-0 bg-dot-grid text-cream/[0.06]"></div>
