@@ -61,7 +61,7 @@ class AdminPanelProvider extends PanelProvider
                 ],
             ])
             ->renderHook(
-                PanelsRenderHook::TOPBAR_END,
+                PanelsRenderHook::USER_MENU_BEFORE,
                 fn () => view('filament.topbar.view-website-button'),
             )
             ->renderHook(
