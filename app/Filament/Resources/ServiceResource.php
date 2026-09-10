@@ -99,17 +99,6 @@ class ServiceResource extends Resource
                             ->label('Aktif / Tampilkan')
                             ->default(true),
                     ]),
-                Forms\Components\Section::make('SEO')
-                    ->columnSpan(3)
-                    ->collapsible()
-                    ->collapsed()
-                    ->schema([
-                        Forms\Components\TextInput::make('meta_title')
-                            ->maxLength(255),
-                        Forms\Components\Textarea::make('meta_description')
-                            ->rows(2)
-                            ->maxLength(255),
-                    ]),
             ])
             ->columns(3);
     }
