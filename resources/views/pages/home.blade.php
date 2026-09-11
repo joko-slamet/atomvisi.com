@@ -31,11 +31,11 @@
         <div class="pointer-events-none absolute inset-0 overflow-hidden">
             <div class="absolute inset-0 bg-noise opacity-[0.05] mix-blend-multiply"></div>
             <div class="absolute inset-0 bg-dot-grid text-forest-900/[0.06]"></div>
-            <x-watermark
+            <x-logo-watermark
                 data-parallax="25"
                 class="absolute -right-32 -top-24 h-[36rem] w-[36rem] text-forest-500/10 sm:-right-16"
             />
-            <x-watermark class="absolute -left-40 top-[65%] h-[34rem] w-[34rem] -translate-y-1/2 text-forest-900/[0.03]" />
+            <x-logo-watermark class="absolute -left-40 top-[65%] h-[34rem] w-[34rem] -translate-y-1/2 text-forest-900/[0.03]" />
         </div>
 
         {{-- Right Side Hero Image Carousel with Smooth Horizontal Gradient Fade --}}
