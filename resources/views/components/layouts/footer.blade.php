@@ -5,7 +5,7 @@
         <path d="M0,50 C200,195 900,-75 1440,85 L1440,0 L0,0 Z" />
     </svg>
 
-    <x-watermark class="pointer-events-none absolute -bottom-24 -right-24 h-96 w-96 text-forest-700/40" />
+    <x-logo-watermark class="pointer-events-none absolute -bottom-24 -right-24 h-96 w-96 text-forest-700/40" />
 
     <div class="relative mx-auto max-w-7xl px-6 pt-16 pb-4 lg:px-8">
         <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">

@@ -323,7 +323,7 @@
                 <div class="absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
                 <div class="absolute inset-0 bg-dot-grid text-cream/[0.06]"></div>
                 <div class="animate-drift-slow absolute -right-24 top-0 h-96 w-96 rounded-full bg-gold-500/10 blur-3xl"></div>
-                <x-watermark class="absolute -bottom-24 -left-24 h-80 w-80 text-forest-600/30" />
+                <x-logo-watermark class="absolute -bottom-24 -left-24 h-80 w-80 text-forest-600/30" />
             </div>
 
             <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
@@ -456,7 +456,7 @@
                                          loading="lazy" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
                                 @else
                                     <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-forest-600 to-forest-800">
-                                        <x-watermark class="h-16 w-16 text-cream/20" />
+                                        <x-logo-watermark class="h-16 w-16 text-cream/20" />
                                     </div>
                                 @endif
                             </div>
@@ -482,7 +482,7 @@
         <div class="mx-auto max-w-5xl px-6 lg:px-8">
             <div data-aos="fade-up" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-forest-800 to-forest-600 px-6 py-14 text-center shadow-2xl shadow-forest-900/20 sm:px-16">
                 <div class="pointer-events-none absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
-                <x-watermark class="pointer-events-none absolute -bottom-16 -left-16 h-72 w-72 text-gold-500/10" />
+                <x-logo-watermark class="pointer-events-none absolute -bottom-16 -left-16 h-72 w-72 text-gold-500/10" />
                 <div class="relative">
                     <x-section-heading :kicker="__('Alat Bantu Gratis')" align="center" light class="mx-auto">
                         <x-slot:title>{{ __('Coba Kalkulator Politik Gratis') }}</x-slot:title>
@@ -610,7 +610,7 @@
         <div class="mx-auto max-w-5xl px-6 lg:px-8">
             <div data-aos="fade-up" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-forest-800 to-forest-600 px-6 py-16 text-center shadow-2xl shadow-forest-900/20 sm:px-16 sm:py-20">
                 <div class="pointer-events-none absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
-                <x-watermark class="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-forest-500/20" />
+                <x-logo-watermark class="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-forest-500/20" />
 
                 <div class="relative">
                     <x-section-heading :kicker="__('Tetap Terhubung')" align="center" light class="mx-auto">

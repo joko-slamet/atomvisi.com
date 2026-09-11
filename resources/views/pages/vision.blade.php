@@ -11,7 +11,7 @@
             <div class="absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
             <div class="absolute inset-0 bg-dot-grid text-cream/[0.06]"></div>
             <div class="animate-drift-slow absolute -right-24 top-0 h-96 w-96 rounded-full bg-gold-500/10 blur-3xl"></div>
-            <x-watermark class="absolute -bottom-24 -left-24 h-80 w-80 text-forest-600/30" />
+            <x-logo-watermark class="absolute -bottom-24 -left-24 h-80 w-80 text-forest-600/30" />
         </div>
 
         <div class="relative mx-auto max-w-4xl px-6 pb-24 text-center sm:pb-32 lg:px-8">

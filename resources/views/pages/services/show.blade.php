@@ -1,6 +1,6 @@
 <x-layouts.app :title="$service->name" :description="$service->meta_description ?? $service->short_description">
     <section class="relative overflow-hidden bg-gradient-to-br from-forest-800 to-forest-600 pb-20 pt-40">
-        <x-watermark class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 text-forest-500/20" />
+        <x-logo-watermark class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 text-forest-500/20" />
 
         <div class="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
             @if ($service->parent)

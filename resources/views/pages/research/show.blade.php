@@ -1,6 +1,6 @@
 <x-layouts.app :title="$project->title" :description="$project->summary">
     <section class="relative overflow-hidden bg-gradient-to-br from-forest-800 to-forest-600 pb-20 pt-40">
-        <x-watermark class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 text-forest-500/20" />
+        <x-logo-watermark class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 text-forest-500/20" />
 
         <div class="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
             <a href="{{ route('research.index') }}" data-aos="fade-up" class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-300 hover:text-gold-200">

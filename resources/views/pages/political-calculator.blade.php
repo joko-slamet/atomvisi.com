@@ -19,7 +19,7 @@
         <div class="mx-auto max-w-5xl px-6 lg:px-8">
             <div data-aos="fade-up" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-forest-800 to-forest-600 px-6 py-14 text-center shadow-2xl shadow-forest-900/20 sm:px-16">
                 <div class="pointer-events-none absolute inset-0 bg-noise opacity-[0.05] mix-blend-overlay"></div>
-                <x-watermark class="pointer-events-none absolute -bottom-16 -left-16 h-72 w-72 text-gold-500/10" />
+                <x-logo-watermark class="pointer-events-none absolute -bottom-16 -left-16 h-72 w-72 text-gold-500/10" />
                 <div class="relative">
                     <x-section-heading :kicker="__('Langkah Selanjutnya')" align="center" light class="mx-auto">
                         <x-slot:title>{{ __('Butuh Strategi Pemenangan yang Lebih Mendalam?') }}</x-slot:title>

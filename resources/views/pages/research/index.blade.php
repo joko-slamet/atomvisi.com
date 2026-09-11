@@ -20,7 +20,7 @@
                                              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
                                     @else
                                         <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-forest-600 to-forest-800">
-                                            <x-watermark class="h-14 w-14 text-cream/20" />
+                                            <x-logo-watermark class="h-14 w-14 text-cream/20" />
                                         </div>
                                     @endif
                                 </div>
