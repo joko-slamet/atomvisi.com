@@ -1,4 +1,9 @@
-<x-layouts.app :title="$article->title" :description="$article->meta_description ?? $article->excerpt" :og-image="$article->og_image ? asset('storage/'.$article->og_image) : null">
+<x-layouts.app
+    :title="$article->title"
+    :description="$article->meta_description ?? $article->excerpt"
+    :og-image="$article->og_image ? asset('storage/'.$article->og_image) : null"
+    :footer-wave-color="$related->isNotEmpty() ? 'text-forest-50' : 'text-cream'"
+>
     <section class="relative overflow-hidden bg-gradient-to-br from-forest-800 to-forest-600 pb-20 pt-40">
         <x-logo-watermark class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 text-forest-500/20" />
 
@@ -48,7 +53,7 @@
     </section>
 
     @if ($related->isNotEmpty())
-        <section class="bg-forest-50/50 py-24">
+        <section class="bg-forest-50 py-24">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <x-section-heading kicker="{{ __('Baca Juga') }}" align="center" class="mx-auto">
                     <x-slot:title>{{ __('Artikel Terkait') }}</x-slot:title>

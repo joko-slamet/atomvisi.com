@@ -1,4 +1,8 @@
-<x-layouts.app :title="$service->name" :description="$service->meta_description ?? $service->short_description">
+<x-layouts.app
+    :title="$service->name"
+    :description="$service->meta_description ?? $service->short_description"
+    :footer-wave-color="$otherServices->isNotEmpty() ? 'text-forest-50' : 'text-cream'"
+>
     <section class="relative overflow-hidden bg-gradient-to-br from-forest-800 to-forest-600 pb-20 pt-40">
         <x-logo-watermark class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 text-forest-500/20" />
 
@@ -26,6 +30,11 @@
 
     <section class="bg-cream py-24 sm:py-32">
         <div class="mx-auto max-w-3xl px-6 lg:px-8">
+            @if ($service->image)
+                <img src="{{ asset('storage/'.$service->image) }}" alt="{{ $service->name }}"
+                     class="mb-10 aspect-video w-full rounded-2xl object-cover" data-aos="fade-up">
+            @endif
+
             <div data-aos="fade-up" class="prose max-w-none prose-headings:font-sans prose-headings:text-forest-800 prose-a:text-forest-700 prose-strong:text-forest-800">
                 {!! $service->description !!}
             </div>
@@ -65,7 +74,7 @@
     </section>
 
     @if ($otherServices->isNotEmpty())
-        <section class="bg-forest-50/50 py-24">
+        <section class="bg-forest-50 py-24">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <x-section-heading kicker="{{ __('Layanan Lainnya') }}" align="center" class="mx-auto">
                     <x-slot:title>{{ __('Jelajahi Layanan Kami yang Lain') }}</x-slot:title>
