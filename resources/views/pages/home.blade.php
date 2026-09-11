@@ -65,15 +65,6 @@
         <div class="relative z-20 mx-auto w-full max-w-7xl px-6 pt-28 pb-16 lg:px-8 lg:pt-0 lg:pb-0">
             <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
                 <div class="flex flex-col items-start text-left lg:col-span-7">
-                    {{-- Kicker Badge --}}
-                    <div data-reveal class="mb-6 inline-flex items-center gap-2 rounded-full border border-forest-900/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-forest-800 backdrop-blur-md shadow-sm">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-gold-500"></span>
-                        </span>
-                        <span>{{ __('Lembaga Riset Kebijakan & Strategi Politik') }}</span>
-                    </div>
-
                     {{-- Main Headline --}}
                     <h1 x-ref="headline" class="font-serif text-4xl font-semibold leading-[1.08] text-forest-900 sm:text-5xl lg:text-6xl">
                         <span class="block overflow-hidden pb-1"><span data-line class="block">{{ __('Wawasan yang Presisi.') }}</span></span>
@@ -91,10 +82,10 @@
                     </h1>
 
                     {{-- Rotating word specialty --}}
-                    <div data-reveal class="mt-4 h-7 overflow-hidden text-sm font-medium uppercase tracking-[0.15em] text-forest-700">
-                        <span class="inline-flex items-center gap-2">
+                    <div data-reveal class="mt-4 text-sm font-medium uppercase tracking-[0.15em] text-forest-700">
+                        <span class="flex flex-wrap items-center gap-x-2 gap-y-1">
                             {{ __('Spesialis dalam') }}
-                            <span class="relative inline-block overflow-hidden font-semibold">
+                            <span class="relative inline-block overflow-hidden font-semibold leading-tight">
                                 <span x-ref="rotatingWord" x-text="words[wordIndex]" class="inline-block text-gold-600"></span>
                             </span>
                         </span>
